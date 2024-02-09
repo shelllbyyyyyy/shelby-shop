@@ -1,0 +1,23 @@
+{
+  "name": "@shelby/supabase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "keywords": [],
+  "author": "Shelllbyyyyy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.1.0",
+    "@t3-oss/env-core": "^0.8.0",
+    "zod": "^3.22.4"
+  }
+}

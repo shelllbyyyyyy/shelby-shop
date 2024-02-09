@@ -1,0 +1,23 @@
+{
+  "name": "shelby-shop",
+  "private": true,
+  "author": "Shelllbyyyyy",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@shelby/eslint-config": "workspace:*",
+    "@shelby/typescript-config": "workspace:*",
+    "@shelby/db": "workspace:*",
+    "@shelby/supabase": "workspace:*",
+    "prettier": "^3.1.1",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
+  }
+}

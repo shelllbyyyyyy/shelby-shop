@@ -1,0 +1,27 @@
+{
+  "name": "@shelby/db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "db:generate": "pnpm prisma generate",
+    "db:push": "pnpm prisma db push --skip-generate",
+    "db:migration": "pnpm prisma migrate dev",
+    "db:deploy": "pnpm prisma migrate deploy",
+    "db:pull": "pnpm prisma db pull",
+    "build": "tsc && npx prisma generate"
+  },
+  "keywords": [],
+  "author": "Shelllbyyyyy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.9.1"
+  }
+}
