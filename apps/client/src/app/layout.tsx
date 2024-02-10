@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Rajdhani } from "next/font/google";
 import "./globals.css";
 
-import NavigationBar from "@/components/elements/Navigationbar";
-import Footer from "@/components/elements/Footer";
+import SessionProvider from "@/components/provider/session-provider";
 
 const rajdhani = Rajdhani({
   subsets: ["latin"],
@@ -23,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={rajdhani.className}>
-        <NavigationBar />
-        {children}
-        <Footer />
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );
