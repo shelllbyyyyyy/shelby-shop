@@ -13,6 +13,7 @@
     "@shelby/typescript-config": "workspace:*",
     "@shelby/db": "workspace:*",
     "@shelby/supabase": "workspace:*",
+    "@shelby/api": "workspace:*",
     "prettier": "^3.1.1",
     "turbo": "latest"
   },
