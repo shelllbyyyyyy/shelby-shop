@@ -53,9 +53,18 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
+      '@shelby/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@shelby/supabase':
         specifier: workspace:*
         version: link:../../packages/supabase
+      '@tanstack/react-query':
+        specifier: ^5.20.1
+        version: 5.20.1(react@18.2.0)
+      axios:
+        specifier: ^1.6.7
+        version: 1.6.7
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
