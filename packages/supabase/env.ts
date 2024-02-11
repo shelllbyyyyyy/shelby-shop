@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const env = createEnv({
   client: {
-    NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
-    NEXT_PUBLIC_SUPABASE_KEY: z.string().min(1),
+    NEXT_PUBLIC_SUPABASE_URL: z.string(),
+    NEXT_PUBLIC_SUPABASE_KEY: z.string(),
   },
   runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.SUPABASE_URL,

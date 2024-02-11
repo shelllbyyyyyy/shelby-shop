@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  transpilePackages: ["@shelby/db", "@shelby/supabase"],
+  env: {
+    SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    SUPABASE_KEY: process.env.NEXT_PUBLIC_SUPABASE_KEY,
+  },
+};
 
 export default nextConfig;

@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
+
+import { LoggerMiddleware } from '@/core/logger/logger.middleware';
+import { SupabaseModule } from '@/core/auth/supabase/supabase.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [PassportModule, SupabaseModule],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
