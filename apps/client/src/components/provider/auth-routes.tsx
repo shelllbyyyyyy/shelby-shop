@@ -21,7 +21,7 @@ const AuthRoutes = ({ children }: AuthProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{children};</>;
+  return <>{children}</>;
 };
 
 export default AuthRoutes;
