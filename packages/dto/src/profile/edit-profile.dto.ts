@@ -6,8 +6,8 @@ export class EditProfileDTO {
   readonly name?: string;
 
   @IsString()
-  @Length(2, 9)
-  readonly phone_number?: string;
+  @Length(12)
+  readonly phoneNumber?: string;
 
   @IsString()
   readonly address?: string;
