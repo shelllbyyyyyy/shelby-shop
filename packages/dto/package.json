@@ -1,0 +1,26 @@
+{
+  "name": "@shelby/dto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "keywords": [],
+  "author": "Shelllbyyyyy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@shelby/db": "workspace:*",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
+  }
+}
