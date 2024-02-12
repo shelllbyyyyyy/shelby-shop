@@ -1,5 +1,5 @@
 {
-  "name": "@shelby/api",
+  "name": "@shelby/dto",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -12,16 +12,12 @@
   "author": "Shelllbyyyyy",
   "license": "ISC",
   "devDependencies": {
-    "@shelby/typescript-config": "workspace:*",
-    "@types/react": "^18",
+    "@types/node": "^20.11.16",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "@shelby/db": "workspace:*",
-    "@tanstack/react-query": "^5.20.1",
-    "axios": "^1.6.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "type-fest": "^4.10.2"
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
   }
 }

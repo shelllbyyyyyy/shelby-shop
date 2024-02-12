@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { QueryClientProvider } from "@tanstack/react-query";
 
-import { ApiClientProvider } from "@shelby/api";
+import { ApiClientProvider, QueryClientProvider } from "@shelby/api";
 import {
   Session,
   SessionContextProvider,
@@ -27,8 +26,10 @@ const SessionProvider = ({ children }: SessionProviderProps) => {
       data: { subscription },
     } = supabaseClient.auth.onAuthStateChange((event, session) => {
       if (session) {
+        localStorage.setItem("access_token", session?.access_token);
         setSession(session);
       } else if (event === "SIGNED_OUT") {
+        localStorage.clear();
         setSession(null);
       }
     });

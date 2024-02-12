@@ -1,16 +1,16 @@
 import React from "react";
 
 import Container from "@/components/elements/Container";
-import GuestRoutes from "@/components/provider/guest-routes";
+import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
 const HomePage = () => {
   return (
     <>
-      <GuestRoutes>
+      <AuthenticatedRoute>
         <Container className="flex h-screen justify-center items-center">
           Home
         </Container>
-      </GuestRoutes>
+      </AuthenticatedRoute>
     </>
   );
 };

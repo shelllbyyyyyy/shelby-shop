@@ -14,7 +14,7 @@ export class AxiosManager {
   private async authRequestInterceptor(
     axiosConfig: InternalAxiosRequestConfig
   ) {
-    let token;
+    const token = localStorage.getItem("access_token");
 
     if (axiosConfig.headers) {
       if (token) {

@@ -4,16 +4,14 @@
   "description": "",
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "scripts": {
     "db:generate": "pnpm prisma generate",
     "db:push": "pnpm prisma db push --skip-generate",
     "db:migration": "pnpm prisma migrate dev",
     "db:deploy": "pnpm prisma migrate deploy",
     "db:pull": "pnpm prisma db pull",
-    "build": "tsc && npx prisma generate"
+    "build": "tsc && npx prisma generate",
+    "dev": "tsc -w"
   },
   "keywords": [],
   "author": "Shelllbyyyyy",

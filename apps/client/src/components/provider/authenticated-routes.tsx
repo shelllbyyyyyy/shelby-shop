@@ -4,17 +4,17 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseClient } from "@shelby/supabase";
 
-type AuthProps = {
+type AuthenticatedProps = {
   children: React.ReactNode;
 };
 
-const AuthRoutes = ({ children }: AuthProps) => {
+const AuthenticatedRoutes = ({ children }: AuthenticatedProps) => {
   const router = useRouter();
 
   useEffect(() => {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.replace("/home");
+      if (session === null) {
+        router.replace("/auth");
       }
     });
 
@@ -24,4 +24,4 @@ const AuthRoutes = ({ children }: AuthProps) => {
   return <>{children}</>;
 };
 
-export default AuthRoutes;
+export default AuthenticatedRoutes;
