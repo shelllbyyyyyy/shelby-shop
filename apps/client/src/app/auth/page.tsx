@@ -3,16 +3,16 @@ import React from "react";
 import Container from "@/components/elements/Container";
 
 import { Form } from "@/features/auth/form";
-import AuthRoutes from "@/components/provider/auth-routes";
+import GuestRoute from "@/components/provider/guest-routes";
 
 const AuthPage = () => {
   return (
     <>
-      <AuthRoutes>
+      <GuestRoute>
         <Container className="flex h-screen justify-center items-center py-10">
           <Form />
         </Container>
-      </AuthRoutes>
+      </GuestRoute>
     </>
   );
 };

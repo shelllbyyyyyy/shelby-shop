@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEditProfileMutation } from "@shelby/api";
 import { AxiosError } from "axios";
 
-import GuestRoutes from "@/components/provider/guest-routes";
+import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 import { HeadMetaData } from "@/components/meta/HeadMetaData";
 import {
   EditProfileFormInner,
@@ -41,7 +41,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <GuestRoutes>
+    <AuthenticatedRoute>
       <HeadMetaData title="Profile" />
       <main className="container flex min-h-screen max-w-screen-md flex-col gap-8 lg:gap-10">
         {isEditMode ? (
@@ -55,7 +55,7 @@ const ProfilePage = () => {
           <ProfileDisplaySection onEditProfile={() => setIsEditMode(true)} />
         )}
       </main>
-    </GuestRoutes>
+    </AuthenticatedRoute>
   );
 };
 

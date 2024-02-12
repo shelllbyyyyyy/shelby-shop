@@ -3,13 +3,13 @@ import NavigationBar from "@/components/elements/Navigationbar";
 import Footer from "@/components/elements/Footer";
 
 import { Button } from "@/components/ui/button";
-import AuthRoutes from "@/components/provider/auth-routes";
+import GuestRoute from "@/components/provider/guest-routes";
 import Link from "next/link";
 
 export default function LandingPage() {
   return (
     <>
-      <AuthRoutes>
+      <GuestRoute>
         <NavigationBar />
         <Container>
           <div className="flex flex-col w-full justify-center items-center h-screen text-center gap-2 md:gap-1">
@@ -21,7 +21,7 @@ export default function LandingPage() {
           </div>
         </Container>
         <Footer />
-      </AuthRoutes>
+      </GuestRoute>
     </>
   );
 }

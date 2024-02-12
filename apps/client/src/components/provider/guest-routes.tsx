@@ -13,8 +13,8 @@ const GuestRoutes = ({ children }: GuestProps) => {
 
   useEffect(() => {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      if (session === null) {
-        router.replace("/auth");
+      if (session) {
+        router.replace("/home");
       }
     });
 
