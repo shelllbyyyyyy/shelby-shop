@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { QueryClientProvider } from "@tanstack/react-query";
 
-import { ApiClientProvider } from "@shelby/api";
+import { ApiClientProvider, QueryClientProvider } from "@shelby/api";
 import {
   Session,
   SessionContextProvider,
