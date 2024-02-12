@@ -1,14 +1,14 @@
-import { IsNumber, IsString, Length } from "class-validator";
+import { IsString, Length } from "class-validator";
 
 export class EditProfileDTO {
   @IsString()
   @Length(4, 16)
-  readonly name: string;
-
-  @IsNumber()
-  @Length(2, 9)
-  readonly phone_number: number;
+  readonly name?: string;
 
   @IsString()
-  readonly address: string;
+  @Length(2, 9)
+  readonly phone_number?: string;
+
+  @IsString()
+  readonly address?: string;
 }

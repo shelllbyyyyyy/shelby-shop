@@ -78,7 +78,7 @@ model Profiles {
   email             String?    @unique(map: "User_email_key") @db.VarChar
   name              String?
   profilePictureUrl String?
-  phoneNumber       Int?
+  phoneNumber       String?   @db.VarChar(50)
   address           String?   @db.VarChar
   createdAt         DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
   updatedAt         DateTime? @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
