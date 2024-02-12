@@ -4,7 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import Wrapper from "@/components/elements/Wrapper";
 
-import { SignInWithGithubButton, SignInWithGoogleButton } from "../components";
+import {
+  SignInWithFacebookButton,
+  SignInWithGithubButton,
+  SignInWithGoogleButton,
+} from "../components";
 import Login from "./login";
 import Register from "./register";
 
@@ -27,9 +31,10 @@ export function Form() {
 
         <div>or</div>
 
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-3 w-full">
           <SignInWithGithubButton />
           <SignInWithGoogleButton />
+          <SignInWithFacebookButton />
         </div>
       </Wrapper>
     </>

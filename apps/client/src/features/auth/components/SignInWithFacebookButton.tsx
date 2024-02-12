@@ -1,25 +1,25 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { supabaseClient } from "@shelby/supabase";
-import Google from "@/assets/images/google.svg";
+import Facebook from "@/assets/images/facebook.svg";
 
-export const SignInWithGoogleButton = () => {
-  const signInWithGoogle = async () => {
+export const SignInWithFacebookButton = () => {
+  const signInWithFacebook = async () => {
     await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
+      provider: "facebook",
     });
   };
 
   return (
-    <Button onClick={signInWithGoogle} size="lg" variant="outline">
+    <Button onClick={signInWithFacebook} size="lg" variant="outline">
       <Image
-        src={Google}
+        src={Facebook}
         height={20}
         width={20}
         alt="google logo"
         className="mr-2"
       />
-      Continue with google
+      Continue with facebook
     </Button>
   );
 };

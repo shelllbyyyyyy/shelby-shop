@@ -11,10 +11,10 @@ export default function LandingPage() {
     <>
       <AuthRoutes>
         <NavigationBar />
-        <Container className="flex flex-col h-screen w-full  justify-center items-center">
-          <div className="text-center">
-            <h3>Meet shelby</h3>
-            <h1 className="text-5xl md:text-6xl">E-Commerce Simplified</h1>
+        <Container>
+          <div className="flex flex-col w-full justify-center items-center h-screen text-center gap-2 md:gap-1">
+            <h3 className="text-sm md:text-md">Meet shelby</h3>
+            <h1 className="text-4xl md:text-6xl">E-Commerce Simplified</h1>
             <Link href="/home">
               <Button size="lg">START SHOPPING</Button>
             </Link>

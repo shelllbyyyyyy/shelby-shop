@@ -17,19 +17,17 @@ const NavigationBar = () => {
   return (
     <>
       <Container>
-        <NavigationMenu className="bg-white-500 shadow px-20 py-10">
+        <NavigationMenu className="bg-white shadow px-5 py-5 md:px-20 md:py-10">
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <div className="items-center">
-                <NavigationMenuLink href="/">
-                  <h1 className="text-2xl font-bold uppercase">
-                    <span className="text-red-500">S</span>helby.Shop
-                  </h1>
-                </NavigationMenuLink>
-              </div>
+            <NavigationMenuItem className="flex justify-center items-center">
+              <NavigationMenuLink href="/">
+                <h1 className="text-lg md:text-2xl font-bold uppercase">
+                  <span className="text-red-500">S</span>helby.Shop
+                </h1>
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <div className="flex justify-center items-center gap-5 md:gap-8 text-sm font-bold">
+              <div className="flex justify-center items-center gap-3 text-[11px] md:gap-8 md:text-sm font-bold">
                 <NavigationMenuLink href="/home">
                   <h2 className="hover:text-accent">Home</h2>
                 </NavigationMenuLink>
