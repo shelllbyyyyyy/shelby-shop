@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { supabaseClient } from "@shelby/supabase";
-import Google from "@/assets/images/google.svg";
+import Google from "../../../assets/icon/google.svg";
 
 export const SignInWithGoogleButton = () => {
   const signInWithGoogle = async () => {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { supabaseClient } from "@shelby/supabase";
-import Facebook from "@/assets/images/facebook.svg";
+import Facebook from "../../../assets/icon/facebook.svg";
 
 export const SignInWithFacebookButton = () => {
   const signInWithFacebook = async () => {

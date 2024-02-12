@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { supabaseClient } from "@shelby/supabase";
 import Image from "next/image";
-import Github from "@/assets/images/github.svg";
+import Github from "../../../assets/icon/github.svg";
 
 export const SignInWithGithubButton = () => {
   const signInWithGithub = async () => {
