@@ -10,7 +10,7 @@ type WrapperProps = {
 const Wrapper = ({ children, className }: WrapperProps) => {
   return (
     <div
-      className={cn("h-auto w-3/4 md:w-8/12 lg:w-6/12 xl:w-6/12", className)}
+      className={cn("h-auto w-11/12 md:w-8/12 lg:w-6/12 xl:w-6/12", className)}
     >
       {children}
     </div>
