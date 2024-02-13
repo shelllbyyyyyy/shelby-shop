@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseClient } from "@shelby/supabase";
 
@@ -11,10 +11,10 @@ type GuestProps = {
 const GuestRoutes = ({ children }: GuestProps) => {
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
       if (session) {
-        router.replace("/home");
+        router.push("/home");
       }
     });
 
