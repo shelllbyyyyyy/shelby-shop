@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 import { ApiClientProvider, QueryClientProvider } from "@shelby/api";
 import {
@@ -11,6 +11,7 @@ import {
 
 import { AxiosManager } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
+import { useRouter } from "next/navigation";
 
 type SessionProviderProps = {
   children: React.ReactNode;
@@ -20,8 +21,9 @@ const axiosManager = new AxiosManager();
 
 const SessionProvider = ({ children }: SessionProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const {
       data: { subscription },
     } = supabaseClient.auth.onAuthStateChange((event, session) => {
@@ -30,6 +32,7 @@ const SessionProvider = ({ children }: SessionProviderProps) => {
         setSession(session);
       } else if (event === "SIGNED_OUT") {
         localStorage.clear();
+        router.push("/");
         setSession(null);
       }
     });
