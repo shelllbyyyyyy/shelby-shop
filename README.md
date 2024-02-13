@@ -9,17 +9,12 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
-<h1 align="center">V6 App</h1>
+<h1 align="center">Shelby Shop</h1>
 
   <p align="center">
-    A fullstack, multi-app, monorepo dedicated to streamline your development process and satisfy all your needs ;)
+    A first fullstack app created by me :)
     <br />
-    <!-- <a href="https://github.com/entry-point-community/v6-app"><strong>Explore the docs »</strong></a>
-    <br /> -->
     <br />
-    <a href="https://github.com/entry-point-community/v6-app/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/entry-point-community/v6-app/issues">Request Feature</a>
   </p>
 </div>
 
@@ -43,7 +38,6 @@
   <li><a href="#roadmap">Roadmap</a></li>
   <li><a href="#contributing">Contributing</a></li>
   <li><a href="#license">License</a></li>
-  <li><a href="#contact">Contact</a></li>
   <li><a href="#acknowledgments">Acknowledgments</a></li>
 </ol>
 
@@ -53,13 +47,8 @@
 
 ### It's basically JUST A MONOREPO.
 
-This project was built based on my needs in my software development experience. Most often, real world software projects require multiple apps to be built. Say, if you're building a web application such as an e-commerce, chances are you would need to also build an admin/back office system, and these applications are likely to be connected to an API. So why not bundle them all up in a monorepo, while creating reusable packages to make development changes faster and easier?
-
-### I only made a template for you. Make any changes you want.
-
-The default template features a NextJS and NestJS app. The `package` folder will contain code that should be reusable across apps. My personal favorite is the `api` package which bundles and exports **react-query** queries and mutations to be used across multiple frontend apps (assuming you're using React). Write queries and mutations once, import, and use them in your frontend apps. No more broken API requests because you forgot to implement a few params changes.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This project is the first e-commerce created by me. So i'm sorry if the code is "Amburadul" 😂.
+Fyi i don't have an "IT Background", so this project was made just to proves that people like me can make a thing like this :)
 
 ### Built With
 
@@ -101,7 +90,7 @@ Several `.env.template` files have been created for you. Create your own `.env` 
 
 #### 3. Initialize supabase
 
-To develop using supabase locally, a supabase config is provided inside the `server` app. Navigate to the `server` folder and run
+To develop using supabase locally, a supabase config is provided inside the `api` app. Navigate to the `api` folder and run
 
 ```sh
 npx supabase start
@@ -113,44 +102,34 @@ to start your own local supabase instance through docker. Run
 npx supabase stop
 ```
 
-inside the `server` folder to shutdown the containers. For more guides and reference please refer to their [official docs](https://supabase.com/docs/guides/cli/local-development).
+inside the `api` folder to shutdown the containers. For more guides and reference please refer to their [official docs](https://supabase.com/docs/guides/cli/local-development).
 
 #### 4. Prisma Migrate
 
-Create a Prisma migration to sync changes in your `schema.prisma` to your database. Navigate to the `db` folder inside the `packages` folder and run this command.
+Create a Prisma migration to sync changes in your `schema.prisma` to your database. Navigate to the `db` package and run this command.
 
 ```sh
-#inside root level project directory
-
-# non-windows users
-cd ./packages && cd ./db && pnpm db:migration
-
-# windows users
-cd .\packages\
-cd .\db\
-pnpm db:migration
-```
-
-```sh
-# or simply just like this if u already inside the *db* folder 👇
-pnpm db:migration
+pnpm db:migrate
 ```
 
 #### 5. Supabase Auth
 
-If you're using supabase's auth service, chances are you also want to store your user's data inside your database's `public` schema. A minimal SQL function and trigger has been provided for you inside `apps/server/supabase/triggers` .
+If you're using supabase's auth service, chances are you also want to store your user's data inside your database's `public` schema. A minimal SQL function and trigger has been provided for you inside `packages/db/supabase/triggers` .
 
 ```sql
 -- handle_new_users.sql
--- inserts a row into public.Profile
+-- inserts a row into public."Profiles"
 create function public.handle_new_user()
 returns trigger
 language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public."Profile" ("userId")
-  values (new.id);
+  insert into public."Profiles" (id, email, name)
+  values (
+    new.id, 
+    new.email,
+    new.raw_user_meta_data->>'full_name');
   return new;
 end;
 $$;
@@ -179,13 +158,12 @@ _Please refer to our non-existent [Documentation](https://example.com)_. We're w
 ## Roadmap
 
 - [ ] Separate Supabase to a package
-- [ ] Add a reusable `ui` package
+- [ ] Separate Prisma Client to a package
+- [ ] Separate React Query to a package
 - [ ] Properly implement reusable configs
-  - [ ] eslint
-  - [ ] tsconfig
-- [ ] ✨ create-v6-app CLI ✨
-
-See the [open issues](https://github.com/entry-point-community/v6-app/issues) for a full list of proposed features (and known issues).
+  - [ ] typescript-config
+  - [ ] eslint-config
+  - [ ] dto
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -214,14 +192,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
-
-## Contact
-
-Project Link: [https://github.com/entry-point-community/v6-app](https://github.com/entry-point-community/v6-app)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments and references
@@ -230,36 +200,3 @@ Project Link: [https://github.com/entry-point-community/v6-app](https://github.c
 - [Bulletproof React](https://github.com/alan2207/bulletproof-react)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/entry-point-community/v6-app.svg?style=for-the-badge
-[contributors-url]: https://github.com/entry-point-community/v6-app/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/entry-point-community/v6-app.svg?style=for-the-badge
-[forks-url]: https://github.com/entry-point-community/v6-app/network/members
-[stars-shield]: https://img.shields.io/github/stars/entry-point-community/v6-app.svg?style=for-the-badge
-[stars-url]: https://github.com/entry-point-community/v6-app/stargazers
-[issues-shield]: https://img.shields.io/github/issues/entry-point-community/v6-app.svg?style=for-the-badge
-[issues-url]: https://github.com/entry-point-community/v6-app/issues
-[license-shield]: https://img.shields.io/github/license/entry-point-community/v6-app.svg?style=for-the-badge
-[license-url]: https://github.com/entry-point-community/v6-app/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
