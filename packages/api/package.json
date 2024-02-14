@@ -2,8 +2,8 @@
   "name": "@shelby/api",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "main": "dist/src/index.js",
+  "types": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w"
