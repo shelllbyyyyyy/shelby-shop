@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@shelby/db": "workspace:*",
+    "@shelby/dto": "workspace:*",
     "@tanstack/react-query": "^5.20.1",
     "axios": "^1.6.7",
     "react": "^18",

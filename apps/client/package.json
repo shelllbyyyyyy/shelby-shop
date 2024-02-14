@@ -19,6 +19,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@shelby/api": "workspace:*",
+    "@shelby/dto": "workspace:*",
+    "@shelby/db": "workspace:*",
     "@shelby/supabase": "workspace:*",
     "@tanstack/react-query": "^5.20.1",
     "@tanstack/react-query-devtools": "^5.20.1",
