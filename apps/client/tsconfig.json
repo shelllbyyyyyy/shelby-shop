@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
