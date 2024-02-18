@@ -3,16 +3,18 @@ import React from "react";
 import Container from "@/components/elements/Container";
 import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
-const ProductPage = () => {
+import { Product } from "@/features/product/components/Product";
+
+const ProductDetailPage = () => {
   return (
     <>
       <AuthenticatedRoute>
-        <Container className="flex h-screen justify-center items-center">
-          Product
+        <Container className="flex h-screen justify-center items-center my-10 mx-5">
+          <Product />
         </Container>
       </AuthenticatedRoute>
     </>
   );
 };
 
-export default ProductPage;
+export default ProductDetailPage;

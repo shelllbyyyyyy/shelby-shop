@@ -9,32 +9,20 @@ datasource db {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Cart {
-  id               String         @id
-  userId           String         @db.Uuid
+  id               String    @id
+  userId           String    @db.Uuid
   quantity         Int
   deletedAt        DateTime?
   checkoutAt       DateTime?
   productVariantId String
-  createdAt        DateTime       @default(now())
-  ProductVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
-  Profiles         Profiles       @relation(fields: [userId], references: [id])
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model CategoriesOnProducts {
-  productId  String
-  categoryId String
-  Category   Category @relation(fields: [categoryId], references: [id])
-  Product    Product  @relation(fields: [productId], references: [id])
-
-  @@id([productId, categoryId])
+  createdAt        DateTime  @default(now())
+  Profiles         Profiles  @relation(fields: [userId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Category {
-  id                   String                 @id
-  name                 String
-  CategoriesOnProducts CategoriesOnProducts[]
+  id   String @id
+  name String
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -43,39 +31,22 @@ model Inventory {
   productVariantId String
   quantity         Int
   status           InventoryStatus
-  ProductVariant   ProductVariant  @relation(fields: [productVariantId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Product {
-  id                   String                 @id
-  name                 String
-  price                Int
-  image                String?
-  slug                 String                 @unique
-  description          String                 @default("")
-  CategoriesOnProducts CategoriesOnProducts[]
-  ProductVariant       ProductVariant[]
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model ProductVariant {
-  id        String      @id
-  sku       String
-  name      String
-  price     Int
-  image     String
-  label     String
-  productId String
-  Cart      Cart[]
-  Inventory Inventory[]
-  Product   Product     @relation(fields: [productId], references: [id])
+  id          String  @id @default(dbgenerated("gen_random_uuid()"))
+  name        String
+  price       Int
+  imageUrl    String?
+  slug        String  @unique
+  description String  @default("")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Profiles {
   id                String    @id(map: "User_pkey") @default(dbgenerated("auth.uid()")) @db.Uuid
-  email             String?    @unique(map: "User_email_key") @db.VarChar
+  email             String?   @unique(map: "User_email_key") @db.VarChar
   name              String?
   profilePictureUrl String?
   phoneNumber       String?   @db.VarChar(50)

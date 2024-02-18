@@ -1,12 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { PassportModule } from "@nestjs/passport";
 
-import { LoggerMiddleware } from "@/core/logger/logger.middleware";
 import { SupabaseModule } from "@/core/auth/supabase/supabase.module";
+import { LoggerMiddleware } from "@/core/logger/logger.middleware";
+import { ProductModule } from "@/core/product/product.module";
 import { ProfileModule } from "@/core/profile/profile.module";
 
 @Module({
-  imports: [PassportModule, SupabaseModule, ProfileModule],
+  imports: [PassportModule, SupabaseModule, ProfileModule, ProductModule],
   controllers: [],
   providers: [],
 })

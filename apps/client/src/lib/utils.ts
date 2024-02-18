@@ -1,5 +1,7 @@
+import { cache } from "react";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { axios } from "./axios";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,3 +15,15 @@ export const sizeConst = () => {
   }
   return arr;
 };
+
+export const toRupiah = (price: number | undefined) => {
+  return "Rp. " + price?.toLocaleString("id-ID");
+};
+
+export const getItem = cache(async (slug: string) => {
+  const item = await axios.get(`/product/${slug}`);
+
+  const data = item.data;
+
+  return data;
+});
