@@ -35,12 +35,12 @@ model Inventory {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Product {
-  id          String  @id @default(dbgenerated("gen_random_uuid()"))
+  id          String @id @default(dbgenerated("gen_random_uuid()"))
   name        String
   price       Int
-  imageUrl    String?
-  slug        String  @unique
-  description String  @default("")
+  imageUrl    String
+  slug        String @unique
+  description String @default("")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

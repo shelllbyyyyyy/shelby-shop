@@ -1,14 +1,14 @@
 export type ProductCardProps = {
   onClick?: () => void;
   id?: string | undefined;
-  productName: string | undefined;
+  productName: string;
   desciprion: string | undefined;
   price: number | undefined;
   image: {
-    src: string | undefined | null;
-    alt: string | undefined;
-    height: number | undefined;
-    width: number | undefined;
+    src: string;
+    alt: string;
+    height: number;
+    width: number;
   };
   slug: string | undefined;
 };

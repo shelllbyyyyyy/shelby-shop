@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 
 import { toRupiah } from "@/lib/utils";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const Product = () => {
   const { data: result } = useGetProductQuery({});
@@ -26,38 +27,35 @@ export const Product = () => {
 
   useEffect(() => {
     setProduct(result?.data);
-  }, [result?.data]);
+  }, [setProduct, result?.data]);
 
   return (
     <>
       <Card className="flex flex-col w-full h-screen overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-        <CardHeader className="relative mx-3 mt-3 flex h-50 overflow-hidden rounded-xl object-cover object-center">
-          <Image
-            src={product?.imageUrl}
-            alt={product?.name}
-            width={900}
-            height={90}
-          />
-          <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-            39% OFF
-          </span>
+        <CardHeader className="relative mx-3 mt-3 flex w-[450px] h-50 overflow-hidden rounded-xl justify-center items-center mx-auto">
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src={product?.imageUrl}
+              alt={product?.name}
+              className="object-cover object-center h-full w-full "
+            />
+            <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+              39% OFF
+            </span>
+          </AspectRatio>
         </CardHeader>
 
         <CardContent className="m-4 px-5">
-          <CardTitle>
-            <h1 className="text-3xl tracking-tight text-slate-900 font-black">
-              {product?.name}
-            </h1>
+          <CardTitle className="text-3xl tracking-tight text-slate-900 font-black">
+            {product?.name}
           </CardTitle>
 
-          <CardDescription>
-            <h2 className="text-xl tracking-tight text-slate-900 mt-1">
-              {product?.description}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              vero laborum unde sed? Porro sit voluptatibus minus, eligendi,
-              animi tempore temporibus recusandae, magni molestiae architecto
-              iure ea vitae fugit deleniti!
-            </h2>
+          <CardDescription className="text-xl tracking-tight text-slate-900 mt-1">
+            {product?.description}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam vero
+            laborum unde sed? Porro sit voluptatibus minus, eligendi, animi
+            tempore temporibus recusandae, magni molestiae architecto iure ea
+            vitae fugit deleniti!
           </CardDescription>
 
           <div className="flex items-center justify-between mt-5">
