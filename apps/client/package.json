@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
@@ -19,8 +20,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@shelby/api": "workspace:*",
-    "@shelby/dto": "workspace:*",
     "@shelby/db": "workspace:*",
+    "@shelby/dto": "workspace:*",
     "@shelby/supabase": "workspace:*",
     "@tanstack/react-query": "^5.20.1",
     "@tanstack/react-query-devtools": "^5.20.1",

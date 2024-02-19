@@ -8,7 +8,7 @@ export class AddProductDTO {
   price: number;
 
   @IsString()
-  image?: string;
+  imageUrl: string;
 
   @IsString()
   slug: string;
