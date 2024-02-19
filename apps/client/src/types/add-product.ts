@@ -10,6 +10,7 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export const addProductFormSchema = z.object({
   name: z.string(),
+  imageUrl: z.string(),
   image: z.any(),
   description: z.string(),
   price: z.number(),

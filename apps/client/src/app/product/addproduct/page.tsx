@@ -20,7 +20,7 @@ const Add = () => {
   });
 
   const handleAddProductSubmit = async (
-    values: AddProductFormSchema & { imageUrl?: File }
+    values: AddProductFormSchema & { image: File | null }
   ) => {
     try {
       await addProductMutate(values);

@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input";
 import { AddProductFormSchema, addProductFormSchema } from "@/types";
 
 type AddProductFormInnerProps = {
-  onSubmit: (values: AddProductFormSchema & { imageUrl?: File }) => void;
+  onSubmit: (values: AddProductFormSchema & { image: File | null }) => void;
   onCancel?: () => void;
 };
 
@@ -36,16 +36,17 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
   onCancel,
 }) => {
   const [selectedProductImageFile, setSelectedProductImageFile] =
-    useState<File | null>(null);
+    useState<File | null>();
   const [preview, setPreview] = useState<string>("");
   const inputProductImageRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<AddProductFormSchema>({
     defaultValues: {
       name: "",
-      image: "",
+      imageUrl: "",
       description: "",
       price: 0,
+      image: null
     },
     resolver: zodResolver(addProductFormSchema),
     reValidateMode: "onChange",
@@ -82,7 +83,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                 onSubmit={form.handleSubmit((values) =>
                   onSubmit({
                     ...values,
-                    imageUrl: selectedProductImageFile || undefined,
+                    image: selectedProductImageFile || null,
                   })
                 )}
                 className="flex flex-col gap-1"
