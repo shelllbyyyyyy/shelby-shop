@@ -1,11 +1,7 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import * as Icon from "lucide-react";
-import Image from "next/image";
 
-import { useGetProductQuery } from "@shelby/api";
-import { Product as ProductModel } from "@shelby/db";
+import { useGetProductBySlugQuery } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,14 +16,8 @@ import {
 import { toRupiah } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-export const Product = () => {
-  const { data: result } = useGetProductQuery({});
-
-  const [product, setProduct] = useState<ProductModel | undefined>(undefined);
-
-  useEffect(() => {
-    setProduct(result?.data);
-  }, [setProduct, result?.data]);
+export const Product = ({ slug }: { slug: string }) => {
+  const { data: product } = useGetProductBySlugQuery(slug);
 
   return (
     <>

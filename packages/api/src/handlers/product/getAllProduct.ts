@@ -9,7 +9,7 @@ const product = Prisma.validator<Prisma.ProductDefaultArgs>()({});
 
 type Product = Prisma.ProductGetPayload<typeof product>;
 
-const getAllProduct: ApiFn<{}, AxiosPromise<Product>> = (
+const getAllProduct: ApiFn<{}, AxiosPromise<Product[]>> = (
   {},
   { axios = defaultAxios }
 ) => {
