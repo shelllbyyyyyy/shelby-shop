@@ -9,6 +9,7 @@ import { AddProductFormInner } from "@/features/product/form/AddProduct";
 import { queryClient } from "@/lib/react-query";
 import { AddProductFormSchema } from "@/types";
 import { AxiosError } from "axios";
+import Footer from "@/components/elements/Footer";
 
 const Add = () => {
   const { mutateAsync: addProductMutate } = useAddProductMutation({
@@ -35,9 +36,12 @@ const Add = () => {
   };
 
   return (
-    <Container className="flex h-screen justify-center items-center">
-      <AddProductFormInner onSubmit={handleAddProductSubmit} />
-    </Container>
+    <>
+      <Container className="flex h-screen justify-center items-center">
+        <AddProductFormInner onSubmit={handleAddProductSubmit} />
+      </Container>
+      <Footer />
+    </>
   );
 };
 

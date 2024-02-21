@@ -7,7 +7,7 @@ type ContainerProps = {
   children: React.ReactNode;
 };
 
-const Container = ({ children, className }: ContainerProps) => {
+const Container: React.FC<ContainerProps> = ({ children, className }) => {
   return <div className={cn("h-auto max-w-[1440]", className)}>{children}</div>;
 };
 

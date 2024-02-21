@@ -3,14 +3,16 @@ import React from "react";
 import Container from "@/components/elements/Container";
 import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 import { ProductList } from "@/features/product/components/ProductList";
+import Footer from "@/components/elements/Footer";
 
 const HomePage = async () => {
   return (
     <>
       <AuthenticatedRoute>
-        <Container className="flex h-screen justify-center items-center">
+        <Container className="flex flex-col">
           <ProductList />
         </Container>
+        <Footer />
       </AuthenticatedRoute>
     </>
   );

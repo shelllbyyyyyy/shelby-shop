@@ -4,6 +4,7 @@ import Container from "@/components/elements/Container";
 import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
 import { Product } from "@/features/product/components/Product";
+import Footer from "@/components/elements/Footer";
 
 const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -11,9 +12,10 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <AuthenticatedRoute>
-        <Container className="flex h-screen justify-center items-center my-10 mx-5">
+        <Container className="flex flex-col mb-16 mx-10">
           <Product slug={slug} />
         </Container>
+        <Footer />
       </AuthenticatedRoute>
     </>
   );

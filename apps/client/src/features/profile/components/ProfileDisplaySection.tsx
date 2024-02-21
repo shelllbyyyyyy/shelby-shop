@@ -1,8 +1,17 @@
 import { useGetProfileQuery } from "@shelby/api";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Wrapper from "@/components/elements/Wrapper";
+
 import { Button } from "@/components/ui/button";
-import { ProfileInfoItem } from ".";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ProfileDisplaySection {
   onEditProfile: () => void;
@@ -14,35 +23,53 @@ export const ProfileDisplaySection: React.FC<ProfileDisplaySection> = ({
   const { data: profile } = useGetProfileQuery({});
 
   return (
-    <div className="flex flex-col gap-4 lg:gap-8">
-      <div className="flex justify-between">
-        <div className="flex gap-4">
-          <Avatar className="h-16 w-16 sm:h-24 sm:w-24">
-            <AvatarFallback>{profile?.data.name?.charAt(0)}</AvatarFallback>
-            <AvatarImage src={profile?.data.profilePictureUrl || ""} />
-          </Avatar>
-          <div className="flex flex-col justify-center truncate">
-            <h3 className="truncate text-xl font-semibold sm:text-2xl">
-              {profile?.data.name}
-            </h3>
-          </div>
-        </div>
-        <Button
-          onClick={onEditProfile}
-          className="hidden self-center lg:inline-block"
-          variant="secondary"
-        >
-          Edit Profile
-        </Button>
+    <div className="flex flex-col h-screen w-full gap-4 lg:gap-8">
+      <div className="flex h-72 w-full justify-center items-center bg-accent/80">
+        <Avatar className="h-36 w-36 sm:h-48 sm:w-48">
+          <AvatarFallback>{profile?.data.name?.charAt(0)}</AvatarFallback>
+          <AvatarImage src={profile?.data.profilePictureUrl || ""} />
+        </Avatar>
       </div>
 
-      <Button
-        onClick={onEditProfile}
-        className="w-full lg:hidden"
-        variant="secondary"
-      >
-        Edit Profile
-      </Button>
+      <div className="flex flex-col h-auto w-full justify-center items-center">
+        <Wrapper>
+          <Card>
+            <CardHeader>
+              <CardTitle>Profile</CardTitle>
+              <CardDescription></CardDescription>
+            </CardHeader>
+            <CardContent className="flex">
+              <div className="flex justify-between items-center w-full space-x-4 rounded-md border p-4">
+                <p className="text-sm md:text-md">Name :</p>
+                <h3 className="text-md md:text-lg font-semibold sm:text-2xl">
+                  {profile?.data.name}
+                </h3>
+              </div>
+            </CardContent>
+            <CardContent className="flex">
+              <div className="flex justify-between items-center w-full space-x-4 rounded-md border p-4">
+                <p className="text-sm md:text-md">Phone Number :</p>
+                <h3 className="text-md md:text-lg font-semibold sm:text-2xl">
+                  {profile?.data.phoneNumber}
+                </h3>
+              </div>
+            </CardContent>
+            <CardContent className="flex">
+              <div className="flex justify-between items-center w-full space-x-4 rounded-md border p-4">
+                <p className="text-sm md:text-md">Address :</p>
+                <h3 className="text-md md:text-lg font-semibold sm:text-2xl">
+                  {profile?.data.address}
+                </h3>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={onEditProfile} variant="secondary">
+                Edit Profile
+              </Button>
+            </CardFooter>
+          </Card>
+        </Wrapper>
+      </div>
     </div>
   );
 };

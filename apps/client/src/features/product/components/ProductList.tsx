@@ -9,7 +9,7 @@ export const ProductList = () => {
 
   return (
     <>
-      <div className="w-full h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+      <div className="w-full h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-5">
         {product?.data.map((product) => {
           return (
             <ProductCard

@@ -1,17 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useEditProfileMutation } from "@shelby/api";
 import { AxiosError } from "axios";
+import { useEditProfileMutation } from "@shelby/api";
 
-import AuthenticatedRoute from "@/components/provider/authenticated-routes";
+import Container from "@/components/elements/Container";
 import { HeadMetaData } from "@/components/meta/HeadMetaData";
+import AuthenticatedRoute from "@/components/provider/authenticated-routes";
+
 import {
   EditProfileFormInner,
   ProfileDisplaySection,
 } from "@/features/profile/components";
-import { EditProfileFormSchema } from "@/types";
+
 import { queryClient } from "@/lib/react-query";
+import { EditProfileFormSchema } from "@/types";
 
 const ProfilePage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -43,7 +46,7 @@ const ProfilePage = () => {
   return (
     <AuthenticatedRoute>
       <HeadMetaData title="Profile" />
-      <main className="container flex min-h-screen max-w-screen-md flex-col gap-8 lg:gap-10">
+      <Container className="flex min-h-screen items-center justify-center flex-col gap-8 lg:gap-10">
         {isEditMode ? (
           <>
             <EditProfileFormInner
@@ -54,7 +57,7 @@ const ProfilePage = () => {
         ) : (
           <ProfileDisplaySection onEditProfile={() => setIsEditMode(true)} />
         )}
-      </main>
+      </Container>
     </AuthenticatedRoute>
   );
 };

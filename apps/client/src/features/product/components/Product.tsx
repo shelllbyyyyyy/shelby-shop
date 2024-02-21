@@ -22,17 +22,15 @@ export const Product = ({ slug }: { slug: string }) => {
   return (
     <>
       <Card className="flex flex-col w-full h-screen overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-        <CardHeader className="relative mx-3 mt-3 flex w-[450px] h-50 overflow-hidden rounded-xl justify-center items-center mx-auto">
-          <AspectRatio ratio={16 / 9}>
-            <img
-              src={product?.imageUrl}
-              alt={product?.name}
-              className="object-cover object-center h-full w-full "
-            />
-            <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-              39% OFF
-            </span>
-          </AspectRatio>
+        <CardHeader className="relative mx-3 my-3 flex h-50 overflow-hidden rounded-xl justify-center items-center p-0">
+          <img
+            src={product?.imageUrl}
+            alt={product?.name}
+            className="w-full h-full object-cover object-center "
+          />
+          <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+            39% OFF
+          </span>
         </CardHeader>
 
         <CardContent className="m-4 px-5">
