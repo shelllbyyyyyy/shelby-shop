@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "jknednnvxbnawmfltvfy.supabase.co",
+      },
+      {
+        hostname: "localhost",
+      },
+    ],
+  },
   transpilePackages: [
     "@shelby/db",
     "@shelby/supabase",
