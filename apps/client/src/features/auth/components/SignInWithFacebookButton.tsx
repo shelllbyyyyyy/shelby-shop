@@ -1,12 +1,17 @@
 import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
-import { supabaseClient } from "@shelby/supabase";
+import { supabaseClient } from "@/utils/supabase/client";
+
 import Facebook from "../../../assets/icon/facebook.svg";
 
 export const SignInWithFacebookButton = () => {
   const signInWithFacebook = async () => {
     await supabaseClient.auth.signInWithOAuth({
       provider: "facebook",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
     });
   };
 

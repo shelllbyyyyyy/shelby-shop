@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { useEditProfileMutation } from "@shelby/api";
 
 import Container from "@/components/elements/Container";
 import { HeadMetaData } from "@/components/meta/HeadMetaData";
-import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
 import {
   EditProfileFormInner,
@@ -15,8 +15,10 @@ import {
 
 import { queryClient } from "@/lib/react-query";
 import { EditProfileFormSchema } from "@/types";
+import { supabaseClient } from "@/utils/supabase/client";
 
 const ProfilePage = () => {
+  const router = useRouter();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const { mutateAsync: editProfileMutate } = useEditProfileMutation({
@@ -43,8 +45,16 @@ const ProfilePage = () => {
     }
   };
 
+  useEffect(() => {
+    supabaseClient.auth.getUser().then(({ data: { user } }) => {
+      if (!user) {
+        router.push("/auth");
+      }
+    });
+  }, []);
+
   return (
-    <AuthenticatedRoute>
+    <>
       <HeadMetaData title="Profile" />
       <Container className="flex min-h-screen items-center justify-center flex-col gap-8 lg:gap-10">
         {isEditMode ? (
@@ -58,7 +68,7 @@ const ProfilePage = () => {
           <ProfileDisplaySection onEditProfile={() => setIsEditMode(true)} />
         )}
       </Container>
-    </AuthenticatedRoute>
+    </>
   );
 };
 

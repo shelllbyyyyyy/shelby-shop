@@ -1,25 +1,21 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import React, { useLayoutEffect } from "react";
-import { useRouter } from "next/navigation";
-import { supabaseClient } from "@shelby/supabase";
+import { createClient } from "@/utils/supabase/server";
 
 type AuthenticatedProps = {
   children: React.ReactNode;
 };
 
-const AuthenticatedRoutes = ({ children }: AuthenticatedProps) => {
-  const router = useRouter();
+const AuthenticatedRoutes = async ({ children }: AuthenticatedProps) => {
+  const supabase = createClient();
 
-  useLayoutEffect(() => {
-    supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      if (session === null) {
-        router.push("/auth");
-      }
-    });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (!user) {
+    redirect("/auth");
+  }
 
   return <>{children}</>;
 };

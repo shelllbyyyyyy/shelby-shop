@@ -1,7 +1,6 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { supabaseClient } from "@shelby/supabase";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { supabaseClient } from "@/utils/supabase/client";
 import { LoginFormSchema, loginFormSchema } from "@/types";
 
 const Login = () => {

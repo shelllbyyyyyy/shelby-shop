@@ -2,16 +2,16 @@
 
 import React, { useLayoutEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+import { Session } from "@supabase/supabase-js";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+
 import { ApiClientProvider, QueryClientProvider } from "@shelby/api";
-import {
-  Session,
-  SessionContextProvider,
-  supabaseClient,
-} from "@shelby/supabase";
 
 import { AxiosManager } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
-import { useRouter } from "next/navigation";
+
+import { supabaseClient } from "@/utils/supabase/client";
 
 type SessionProviderProps = {
   children: React.ReactNode;
