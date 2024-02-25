@@ -5,7 +5,7 @@ import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 import { ProductList } from "@/features/product/components/ProductList";
 import Footer from "@/components/elements/Footer";
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
     <>
       <AuthenticatedRoute>

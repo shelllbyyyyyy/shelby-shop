@@ -1,12 +1,17 @@
 import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
-import { supabaseClient } from "@shelby/supabase";
+import { supabaseClient } from "@/utils/supabase/client";
+
 import Google from "../../../assets/icon/google.svg";
 
 export const SignInWithGoogleButton = () => {
   const signInWithGoogle = async () => {
     await supabaseClient.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
     });
   };
 

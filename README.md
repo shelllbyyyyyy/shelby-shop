@@ -127,7 +127,7 @@ as $$
 begin
   insert into public."Profiles" (id, email, name)
   values (
-    new.id, 
+    new.id,
     new.email,
     new.raw_user_meta_data->>'full_name');
   return new;
@@ -157,7 +157,6 @@ _Please refer to our non-existent [Documentation](https://example.com)_. We're w
 
 ## Roadmap
 
-- [ ] Separate Supabase to a package
 - [ ] Separate Prisma Client to a package
 - [ ] Separate React Query to a package
 - [ ] Properly implement reusable configs

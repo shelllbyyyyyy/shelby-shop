@@ -12,7 +12,6 @@
     "@shelby/eslint-config": "workspace:*",
     "@shelby/typescript-config": "workspace:*",
     "@shelby/db": "workspace:*",
-    "@shelby/supabase": "workspace:*",
     "@shelby/api": "workspace:*",
     "@shelby/dto": "workspace:*",
     "prettier": "^3.1.1",

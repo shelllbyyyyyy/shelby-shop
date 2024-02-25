@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { supabaseClient } from "@shelby/supabase";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { supabaseClient } from "@/utils/supabase/client";
 
 export const AvatarDropdown = () => {
   const logout = () => {
