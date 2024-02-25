@@ -46,7 +46,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
       imageUrl: "",
       description: "",
       price: 0,
-      image: null
+      image: undefined,
     },
     resolver: zodResolver(addProductFormSchema),
     reValidateMode: "onChange",
