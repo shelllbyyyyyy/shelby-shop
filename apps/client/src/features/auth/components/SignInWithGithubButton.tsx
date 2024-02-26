@@ -1,12 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { supabaseClient } from "@shelby/supabase";
 import Image from "next/image";
+
+import { Button } from "@/components/ui/button";
+import { supabaseClient } from "@/utils/supabase/client";
+
 import Github from "../../../assets/icon/github.svg";
 
 export const SignInWithGithubButton = () => {
   const signInWithGithub = async () => {
     await supabaseClient.auth.signInWithOAuth({
       provider: "github",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
     });
   };
 

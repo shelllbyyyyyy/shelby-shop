@@ -1,5 +1,5 @@
-import { User } from '@shelby/supabase';
+import { User } from "@supabase/supabase-js";
 
-export interface AuthUser extends Omit<User, 'id'> {
+export interface AuthUser extends Omit<User, "id"> {
   sub: string;
 }

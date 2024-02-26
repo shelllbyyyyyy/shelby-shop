@@ -1,7 +1,4 @@
-"use client";
 import * as Icon from "lucide-react";
-
-import { useGetProductBySlugQuery } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +11,27 @@ import {
 } from "@/components/ui/card";
 
 import { toRupiah } from "@/lib/utils";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { createClient } from "@/utils/supabase/server";
 
-export const Product = ({ slug }: { slug: string }) => {
-  const { data: product } = useGetProductBySlugQuery(slug);
+async function getData({ slug }: { slug: string }) {
+  const { data } = await createClient().auth.getSession();
+
+  const token = data.session?.access_token;
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.json();
+}
+
+export const Product = async ({ slug }: { slug: string }) => {
+  const product = await getData({ slug });
 
   return (
     <>
