@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (session?.access_token) {
+  if (session) {
     return res;
   }
 
@@ -17,7 +17,3 @@ export async function middleware(req: NextRequest) {
   redirectUrl.pathname = "/";
   return NextResponse.redirect(redirectUrl);
 }
-
-export const config = {
-  matcher: ["/cart", "/profile/:path*"],
-};
