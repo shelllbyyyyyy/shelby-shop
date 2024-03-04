@@ -1,17 +1,12 @@
 import { redirect } from "next/navigation";
-
-import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 type AuthenticatedProps = {
   children: React.ReactNode;
 };
 
 const AuthenticatedRoutes = async ({ children }: AuthenticatedProps) => {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = cookies().get("sb-jknednnvxbnawmfltvfy-auth-token.0");
 
   if (!user) {
     redirect("/auth");

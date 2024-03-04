@@ -1,17 +1,12 @@
 import { redirect } from "next/navigation";
-
-import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 type GuestProps = {
   children: React.ReactNode;
 };
 
 const GuestRoutes = async ({ children }: GuestProps) => {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = cookies().get("sb-jknednnvxbnawmfltvfy-auth-token.0");
 
   if (user) {
     redirect("/home");
