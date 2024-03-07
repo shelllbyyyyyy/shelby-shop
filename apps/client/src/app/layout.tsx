@@ -3,6 +3,7 @@ import { Rajdhani } from "next/font/google";
 import "./globals.css";
 
 import MyProvider from "@/components/provider/my-provider";
+import ReduxProvider from "@/components/provider/redux-provider";
 
 const rajdhani = Rajdhani({
   subsets: ["latin"],
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={rajdhani.className}>
-        <MyProvider>{children}</MyProvider>
+        <ReduxProvider>
+          <MyProvider>{children}</MyProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
