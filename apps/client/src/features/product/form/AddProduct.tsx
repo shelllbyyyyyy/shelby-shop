@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input";
 import { AddProductFormSchema, addProductFormSchema } from "@/types";
 
 type AddProductFormInnerProps = {
-  onSubmit: (values: AddProductFormSchema & { image: File | null }) => void;
+  onSubmit: (values: AddProductFormSchema & { imageFile: File | null }) => void;
   onCancel?: () => void;
 };
 
@@ -43,10 +43,11 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
   const form = useForm<AddProductFormSchema>({
     defaultValues: {
       name: "",
-      imageUrl: "",
       description: "",
       price: 0,
-      image: undefined,
+      slug: "",
+      imageFile: undefined,
+      imageUrl: "",
     },
     resolver: zodResolver(addProductFormSchema),
     reValidateMode: "onChange",
@@ -83,7 +84,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                 onSubmit={form.handleSubmit((values) =>
                   onSubmit({
                     ...values,
-                    image: selectedProductImageFile || null,
+                    imageFile: selectedProductImageFile || null,
                   })
                 )}
                 className="flex flex-col gap-1"
@@ -103,6 +104,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                     )}
                   />
                 </CardContent>
+
                 <CardContent>
                   <FormField
                     control={form.control}
@@ -138,16 +140,18 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                 <CardContent>
                   <FormField
                     control={form.control}
-                    name="image"
-                    render={({ field }) => (
+                    name="imageFile"
+                    rules={{ required: "Product image is required" }}
+                    render={({ field: { value, onChange, ...field } }) => (
                       <FormItem>
                         <FormLabel>Image</FormLabel>
                         <FormControl>
                           <Input
-                            accept="image/jpg, image/jpeg, image/svg"
-                            type="file"
                             {...field}
+                            value={value?.fileName}
+                            accept="image/jpg, image/jpeg, image/svg"
                             onChange={handleInputProductImage}
+                            type="file"
                           />
                         </FormControl>
                         <FormMessage />

@@ -25,7 +25,7 @@ export class ProductContoller {
 
   @Post()
   @UseGuards(SupabaseGuard)
-  @UseInterceptors(FileInterceptor("product-image"))
+  @UseInterceptors(FileInterceptor("imageFile"))
   public async addProduct(
     @Body() addProductDTO: AddProductDTO,
     @UploadedFile(
@@ -34,9 +34,10 @@ export class ProductContoller {
         fileIsRequired: false,
       }),
     )
-    imageUrl?: Express.Multer.File,
+    imageFile: Express.Multer.File,
   ) {
-    const product = await this.productService.addProduct(addProductDTO, imageUrl);
+    console.log(imageFile);
+    const product = await this.productService.addProduct(addProductDTO, imageFile);
 
     return product;
   }
@@ -44,7 +45,7 @@ export class ProductContoller {
   @Patch("/:slug")
   @UseGuards(SupabaseGuard)
   public async updateProduct(
-    @Param("id") id: string,
+    @Param("slug") slug: string,
     @Body() updateProductDTO: UpdateProductDTO,
     @UploadedFile(
       new ParseFilePipe({
@@ -54,13 +55,13 @@ export class ProductContoller {
     )
     imageUrl?: Express.Multer.File,
   ) {
-    const updateProduct = await this.productService.updateProduct(id, updateProductDTO, imageUrl);
+    const updateProduct = await this.productService.updateProduct(slug, updateProductDTO, imageUrl);
     return updateProduct;
   }
 
   @Delete("/:slug")
   @UseGuards(SupabaseGuard)
-  public async deleteProduct(@Param("id") id: string) {
-    await this.productService.deleteProduct(id);
+  public async deleteProduct(@Param("slug") slug: string) {
+    await this.productService.deleteProduct(slug);
   }
 }

@@ -25,16 +25,14 @@ export class ProductService {
     });
   }
 
-  public async addProduct(addProductDTO: AddProductDTO, imageUrl?: Express.Multer.File): Promise<ProductModel> {
+  public async addProduct(addProductDTO: AddProductDTO, imageFile: Express.Multer.File): Promise<ProductModel> {
     const addProductPayload: Prisma.ProductCreateInput = {
       ...addProductDTO,
     };
 
-    if (imageUrl) {
-      const fileUrl = await this.supabaseService.uploadToPublicStorage(SupabaseBucket.PRODUCT_IMAGES, imageUrl);
+    const fileUrl = await this.supabaseService.uploadToPublicStorage(SupabaseBucket.PRODUCT_IMAGES, imageFile);
 
-      addProductPayload.imageUrl = fileUrl;
-    }
+    addProductPayload.imageUrl = fileUrl;
 
     const titleToSlug = (title: string) => {
       let Slug: string;

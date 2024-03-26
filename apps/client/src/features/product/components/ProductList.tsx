@@ -15,7 +15,7 @@ export const ProductList = () => {
             <ProductCard
               key={product.id}
               image={{
-                src: product?.imageUrl,
+                src: product.imageUrl,
                 alt: product.name,
                 height: 100,
                 width: 100,

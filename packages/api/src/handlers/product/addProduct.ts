@@ -6,13 +6,13 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiFn, MutationConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-type AddProductDTOWithFile = AddProductDTO & { image: File | null };
+type AddProductDTOWithFile = AddProductDTO & { imageFile: File | null };
 
 const addProduct: ApiFn<AddProductDTOWithFile, AxiosPromise<Product>> = (
   addProductDTO,
   { axios = defaultAxios }
 ) => {
-  const { name, price, description, slug, imageUrl, image } = addProductDTO;
+  const { name, price, description, imageFile, slug } = addProductDTO;
 
   const addProductFormData = new FormData();
 
@@ -29,14 +29,11 @@ const addProduct: ApiFn<AddProductDTOWithFile, AxiosPromise<Product>> = (
   }
 
   if (slug) {
-    addProductFormData.append("slug", name);
+    addProductFormData.append("slug", slug);
   }
 
-  if (imageUrl) {
-    addProductFormData.append("imageUrl", imageUrl);
-  }
-  if (image) {
-    addProductFormData.append("product-image", image);
+  if (imageFile) {
+    addProductFormData.append("product-image", imageFile);
   }
 
   return axios.post("/products", addProductDTO, {
