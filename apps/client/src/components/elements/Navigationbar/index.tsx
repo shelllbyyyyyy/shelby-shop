@@ -13,7 +13,11 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
+import { useAppSelector } from "@/lib/redux/store";
+
 const NavigationBar = () => {
+  const isLogin = useAppSelector((state) => state.authslice.isLoggin);
+
   return (
     <>
       <Container>
@@ -35,7 +39,7 @@ const NavigationBar = () => {
                   <h2 className="hover:text-accent">Our Product</h2>
                 </NavigationMenuLink>
                 <Icon.ShoppingBag size={18} />
-                <AvatarDropdown />
+                {isLogin ? <AvatarDropdown /> : null}
               </div>
             </NavigationMenuItem>
           </NavigationMenuList>
