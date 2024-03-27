@@ -17,8 +17,6 @@ export class UpdateProductDTO {
   name?: string;
 
   @IsNumber()
-  @Min(3)
-  @Max(100)
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
   price?: number;
@@ -34,4 +32,10 @@ export class UpdateProductDTO {
   @MaxLength(100)
   @IsOptional()
   image?: string;
+
+  @IsString()
+  @MinLength(3)
+  @MaxLength(100)
+  @IsOptional()
+  slug?: string;
 }

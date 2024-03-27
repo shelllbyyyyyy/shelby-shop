@@ -6,13 +6,13 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiFn, MutationConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-type UpdateProductDTOWithFile = UpdateProductDTO & { imageUrl?: File };
+type UpdateProductDTOWithFile = UpdateProductDTO & { imageFile?: File };
 
-const UpdateProduct: ApiFn<UpdateProductDTOWithFile, AxiosPromise<Product>> = (
-  updateProductDTO,
-  { axios = defaultAxios }
-) => {
-  const { name, price, description, imageUrl } = updateProductDTO;
+const UpdateProduct: ApiFn<
+  UpdateProductDTOWithFile & { slug: string },
+  AxiosPromise<Product>
+> = (updateProductDTO, { axios = defaultAxios }) => {
+  const { name, price, description, imageFile, slug } = updateProductDTO;
 
   const updateProductFormData = new FormData();
 
@@ -23,15 +23,20 @@ const UpdateProduct: ApiFn<UpdateProductDTOWithFile, AxiosPromise<Product>> = (
   if (price) {
     updateProductFormData.append("price", price.toString());
   }
+
   if (description) {
     updateProductFormData.append("description", description);
   }
 
-  if (imageUrl) {
-    updateProductFormData.append("product-image", imageUrl);
+  if (slug) {
+    updateProductFormData.append("slug", slug);
   }
 
-  return axios.patch(`/products`, updateProductFormData, {
+  if (imageFile) {
+    updateProductFormData.append("product-image", imageFile);
+  }
+
+  return axios.patch(`/products/${slug}`, updateProductFormData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

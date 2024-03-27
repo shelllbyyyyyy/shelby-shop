@@ -84,6 +84,24 @@ export class ProductService {
 
     if (!product) throw new NotFoundException("product not found");
 
+    if (editProductPayload.name) {
+      const titleToSlug = (title: string) => {
+        let Slug: string;
+        Slug = title.toLowerCase();
+        Slug = Slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, "");
+        Slug = Slug.replace(/ /gi, "-");
+        Slug = Slug.replace(/\-\-\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-/gi, "-");
+        Slug = "@" + Slug + "@";
+        Slug = Slug.replace(/\@\-|\-\@|\@/gi, "");
+        return Slug;
+      };
+
+      editProductPayload.slug = titleToSlug(editProductPayload.name as string);
+    }
+
     const updatedProduct = await this.prismaService.product.update({
       where: {
         slug,

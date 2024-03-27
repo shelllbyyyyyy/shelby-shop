@@ -44,6 +44,7 @@ export class ProductContoller {
 
   @Patch("/:slug")
   @UseGuards(SupabaseGuard)
+  @UseInterceptors(FileInterceptor("imageFile"))
   public async updateProduct(
     @Param("slug") slug: string,
     @Body() updateProductDTO: UpdateProductDTO,
@@ -53,9 +54,9 @@ export class ProductContoller {
         fileIsRequired: false,
       }),
     )
-    imageUrl?: Express.Multer.File,
+    imageFile: Express.Multer.File,
   ) {
-    const updateProduct = await this.productService.updateProduct(slug, updateProductDTO, imageUrl);
+    const updateProduct = await this.productService.updateProduct(slug, updateProductDTO, imageFile);
     return updateProduct;
   }
 
