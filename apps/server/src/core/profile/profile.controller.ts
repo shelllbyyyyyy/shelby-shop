@@ -1,24 +1,13 @@
-import {
-  Body,
-  Controller,
-  Get,
-  MaxFileSizeValidator,
-  NotFoundException,
-  ParseFilePipe,
-  Patch,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { EditProfileDTO } from '@shelby/dto';
+import { Body, Controller, Get, MaxFileSizeValidator, NotFoundException, ParseFilePipe, Patch, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { EditProfileDTO } from "./dto";
 
-import { SupabaseGuard } from '@/core/auth/supabase/supabase.guard';
-import { AuthUser } from '@/core/auth/types';
-import { User } from '@/core/auth/user.decorator';
-import { ProfileService } from './profile.service';
+import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
+import { AuthUser } from "@/core/auth/types";
+import { User } from "@/core/auth/user.decorator";
+import { ProfileService } from "./profile.service";
 
-@Controller('profiles')
+@Controller("profiles")
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
@@ -28,7 +17,7 @@ export class ProfileController {
     const profile = await this.profileService.getProfile(user.sub);
 
     if (!profile) {
-      throw new NotFoundException('profile not found');
+      throw new NotFoundException("profile not found");
     }
 
     return profile;
@@ -36,7 +25,7 @@ export class ProfileController {
 
   @Patch()
   @UseGuards(SupabaseGuard)
-  @UseInterceptors(FileInterceptor('profile-picture'))
+  @UseInterceptors(FileInterceptor("profile-picture"))
   public async editProfile(
     @User() user: AuthUser,
     @Body() editProfileDTO: EditProfileDTO,
@@ -48,11 +37,7 @@ export class ProfileController {
     )
     profilePictureFile?: Express.Multer.File,
   ) {
-    const profile = await this.profileService.editProfile(
-      user.sub,
-      editProfileDTO,
-      profilePictureFile,
-    );
+    const profile = await this.profileService.editProfile(user.sub, editProfileDTO, profilePictureFile);
 
     return profile;
   }

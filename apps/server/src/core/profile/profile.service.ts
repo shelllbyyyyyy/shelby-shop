@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@shelby/db';
-import { EditProfileDTO } from '@shelby/dto';
+import { Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
+import { EditProfileDTO } from "./dto";
 
-import { PrismaService } from '@/lib/prisma.service';
-import { SupabaseService } from '@/lib/supabase.service';
-import { SupabaseBucket } from '@/types/supabase-bucket.enum';
+import { PrismaService } from "@/lib/prisma.service";
+import { SupabaseService } from "@/lib/supabase.service";
+import { SupabaseBucket } from "@/types/supabase-bucket.enum";
 
 @Injectable()
 export class ProfileService {
@@ -23,21 +23,13 @@ export class ProfileService {
     return profile;
   }
 
-  public async editProfile(
-    id: string,
-    editProfileDTO: EditProfileDTO,
-    profilePictureFile?: Express.Multer.File,
-  ) {
+  public async editProfile(id: string, editProfileDTO: EditProfileDTO, profilePictureFile?: Express.Multer.File) {
     const editProfilePayload: Prisma.ProfilesUpdateInput = {
       ...editProfileDTO,
     };
 
     if (profilePictureFile) {
-      const fileUrl = await this.supabaseService.uploadToPublicStorage(
-        SupabaseBucket.PROFILE_PICTURES,
-        profilePictureFile,
-        id,
-      );
+      const fileUrl = await this.supabaseService.uploadToPublicStorage(SupabaseBucket.PROFILE_PICTURES, profilePictureFile, id);
 
       editProfilePayload.profilePictureUrl = fileUrl;
     }

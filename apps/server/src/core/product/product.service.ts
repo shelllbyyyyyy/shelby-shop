@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { AddProductDTO, UpdateProductDTO } from "@shelby/dto";
-import { Prisma, Product as ProductModel } from "@shelby/db";
+import { AddProductDTO, UpdateProductDTO } from "./dto";
+import { Prisma, Product as ProductModel } from "@prisma/client";
 
 import { PrismaService } from "@/lib/prisma.service";
 import { SupabaseService } from "@/lib/supabase.service";
