@@ -3,6 +3,10 @@
   "private": true,
   "author": "Shelllbyyyyy",
   "scripts": {
+    "build:server": "pnpm --filter server build",
+    "build:client": "pnpm --filter client build",
+    "start:server": "pnpm --filter server start:prod",
+    "start:client": "pnpm --filter client start",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
