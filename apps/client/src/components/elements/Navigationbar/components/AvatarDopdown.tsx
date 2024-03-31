@@ -29,7 +29,7 @@ export const AvatarDropdown = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard Creator</Link>
+          <Link href="/admin/dashboard">Admin</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>

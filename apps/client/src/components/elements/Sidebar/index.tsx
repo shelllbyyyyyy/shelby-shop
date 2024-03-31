@@ -85,100 +85,50 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6 text-white">
+        <nav className="mt-5 px-2 py-4 lg:mt-9 text-white">
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold ">MENU</h3>
-
             <ul className="mb-6 flex flex-col gap-1.5">
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/" || pathname.includes("dashboard")
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <Link
-                        href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/" ||
-                            pathname.includes("dashboard")) &&
-                          "bg-graydark dark:bg-meta-4"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <Icon.LayoutDashboardIcon />
-                        Dashboard
-                      </Link>
-
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/" && "text-white"
-                              }`}
-                            >
-                              eCommerce
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
-
-              <h3 className="my-4 ml-4 text-sm font-semibold ">PRODUCT</h3>
+              <li>
+                <Link
+                  href="/admin/dashboard"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("dashboard") && "bg-accent dark:bg-meta-4"
+                  }`}
+                >
+                  <Icon.LayoutDashboardIcon />
+                  Dashboard
+                </Link>
+              </li>
 
               <li>
                 <Link
-                  href="/dashboard/product"
+                  href="/admin/product"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("product") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("product") && "bg-accent dark:bg-meta-4"
                   }`}
                 >
                   <Icon.Table />
-                  Tables
+                  Product
                 </Link>
               </li>
 
               <li>
                 <Link
-                  href="/settings"
+                  href="/admin/customer"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("settings") &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname.includes("customer") && "bg-accent dark:bg-meta-4"
                   }`}
                 >
-                  <Icon.Settings />
-                  Settings
+                  <Icon.User />
+                  Customer
                 </Link>
               </li>
-            </ul>
-          </div>
 
-          <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              OTHERS
-            </h3>
-
-            <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <Link
-                  href="/chart"
+                  href="/admin/chart"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("chart") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("chart") && "bg-accent dark:bg-meta-4"
                   }`}
                 >
                   <Icon.BarChart />
@@ -186,127 +136,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
 
-              <SidebarLinkGroup
-                activeCondition={pathname === "/ui" || pathname.includes("ui")}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <Link
-                        href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/ui" || pathname.includes("ui")) &&
-                          "bg-graydark dark:bg-meta-4"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <Icon.LucideApple />
-                        UI Elements
-                        <Icon.ChevronDown
-                          size={18}
-                          className="absolute right-2"
-                        />
-                      </Link>
-
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/ui/alerts"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/ui/alerts" && "text-white"
-                              }`}
-                            >
-                              Alerts
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/ui/buttons"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/ui/buttons" && "text-white"
-                              }`}
-                            >
-                              Buttons
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
-
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/auth" || pathname.includes("auth")
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <Link
-                        href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/auth" || pathname.includes("auth")) &&
-                          "bg-graydark dark:bg-meta-4"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <Icon.LogIn />
-                        Authentication
-                        <Icon.ChevronDown
-                          size={18}
-                          className="absolute right-2"
-                        />
-                      </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/auth/signin"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/auth/signin" && "text-white"
-                              }`}
-                            >
-                              Sign In
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/auth/signup"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/auth/signup" && "text-white"
-                              }`}
-                            >
-                              Sign Up
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
+              <li>
+                <Link
+                  href="/admin/setting"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("setting") && "bg-accent dark:bg-meta-4"
+                  }`}
+                >
+                  <Icon.Settings />
+                  Settings
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
