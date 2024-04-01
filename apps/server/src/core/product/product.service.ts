@@ -34,6 +34,10 @@ export class ProductService {
 
     addProductPayload.imageUrl = fileUrl;
 
+    const convertPrice = Number(addProductPayload.price);
+
+    addProductPayload.price = convertPrice;
+
     const titleToSlug = (title: string) => {
       let Slug: string;
       Slug = title.toLowerCase();
@@ -75,6 +79,10 @@ export class ProductService {
 
       editProductPayload.imageUrl = fileUrl;
     }
+
+    const convertPrice = Number(editProductPayload.price);
+
+    editProductPayload.price = convertPrice;
 
     const product = await this.prismaService.product.findUnique({
       where: {
