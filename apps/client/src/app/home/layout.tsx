@@ -1,3 +1,4 @@
+import Footer from "@/components/elements/Footer";
 import NavigationBar from "@/components/elements/Navigationbar";
 
 export default function HomeLayout({
@@ -8,7 +9,8 @@ export default function HomeLayout({
   return (
     <>
       <NavigationBar />
-      <main className="mt-20 md:mt-32">{children}</main>
+      <main className="mt-20 md:mt-32 h-screen">{children}</main>
+      <Footer />
     </>
   );
 }

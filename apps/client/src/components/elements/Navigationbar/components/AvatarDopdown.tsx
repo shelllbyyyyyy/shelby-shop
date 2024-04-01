@@ -11,8 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { supabaseClient } from "@/utils/supabase/client";
+import { useGetProfileQuery } from "@shelby/api";
 
 export const AvatarDropdown = () => {
+  const { data: profile } = useGetProfileQuery({});
+
   const logout = () => {
     supabaseClient.auth.signOut();
   };
@@ -22,7 +25,7 @@ export const AvatarDropdown = () => {
       <DropdownMenuTrigger className="self-start">
         <Avatar className="h-7 w-7 md:h-9 md:w-9">
           <AvatarFallback></AvatarFallback>
-          <AvatarImage src={""} />
+          <AvatarImage src={profile?.data.profilePictureUrl!} />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={8}>

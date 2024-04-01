@@ -12,7 +12,6 @@ const HomePage = () => {
         <Container className="flex flex-col">
           <ProductList />
         </Container>
-        <Footer />
       </AuthenticatedRoute>
     </>
   );
