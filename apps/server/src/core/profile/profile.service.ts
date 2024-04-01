@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
-import { EditProfileDTO } from "@shelby/dto";
+import { EditProfileDTO } from "./dto";
 
 import { PrismaService } from "@/lib/prisma.service";
 import { SupabaseService } from "@/lib/supabase.service";

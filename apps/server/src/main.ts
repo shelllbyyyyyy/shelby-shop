@@ -6,13 +6,13 @@ import { HttpExceptionFilter } from "@/http-exception.filter";
 
 import helmet from "helmet";
 
-const PORT = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.enableCors({
-    origin: ["http://localhost:3000", "https://shelby-shop.vercel.app"],
+    origin: ["http://localhost:3000", "https://shelby-shop.vercel.app/"],
   });
 
   const httpAdapterHost = app.get(HttpAdapterHost);
@@ -21,6 +21,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  await app.listen(PORT, "0.0.0.0");
+  await app.listen(port);
 }
 bootstrap();

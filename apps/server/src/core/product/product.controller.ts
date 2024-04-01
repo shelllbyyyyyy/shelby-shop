@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
-import { AddProductDTO, UpdateProductDTO } from "@shelby/dto";
+import { AddProductDTO, UpdateProductDTO } from "./dto";
 
 import { ProductService } from "./product.service";
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
