@@ -1,9 +1,27 @@
-import { Body, Controller, Delete, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  MaxFileSizeValidator,
+  Param,
+  ParseFilePipe,
+  Patch,
+  Post,
+  Query,
+  Req,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from "@nestjs/common";
 import { AddProductDTO, UpdateProductDTO } from "./dto";
 
 import { ProductService } from "./product.service";
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Product } from "@prisma/client";
 
 @Controller("products")
 export class ProductContoller {

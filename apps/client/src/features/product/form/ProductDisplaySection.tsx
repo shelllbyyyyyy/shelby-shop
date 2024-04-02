@@ -63,7 +63,7 @@ export const ProductDisplaySection: React.FC<ProductDisplaySection> = ({
             </CardContent>
             <CardFooter>
               <Button onClick={onEditProduct} variant="secondary">
-                Edit Profile
+                Edit Product
               </Button>
             </CardFooter>
           </Card>

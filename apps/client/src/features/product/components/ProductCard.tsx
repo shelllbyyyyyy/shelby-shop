@@ -26,19 +26,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <>
       <Link href={`/product/${slug}`}>
-        <Card className="flex flex-col w-full max-w-lg  overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-xl hover:scale-105 transition duration-300">
-          <CardHeader className="relative mx-3 my-3 flex h-50 overflow-hidden rounded-xl object-cover object-center p-0 pt-0">
+        <Card className="flex flex-col w-full max-w-lg h-full overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-xl hover:scale-105 transition duration-300">
+          <CardHeader className="relative mx-3 my-3 h-full overflow-hidden rounded-xl p-0 pt-0">
             <Image
-              src={image}
+              src={image.src}
               alt={productName}
               height={300}
               width={600}
-              className="hover:scale-105 transition duration-500 cursor-pointer"
+              className="hover:scale-105 transition duration-500 cursor-pointer object-contain"
             />
             <span className="absolute top-0 left-0 m-2 rounded-md bg-black px-2 text-center text-sm font-medium text-white"></span>
           </CardHeader>
           <CardContent className="p-6 pt-0">
-            <CardTitle className="text-2xl md:text-3xl font-bold text-slate-900">
+            <CardTitle className="text-2xl md:text-3xl font-bold text-slate-900 line-clamp-1">
               {productName}
             </CardTitle>
 

@@ -9,9 +9,10 @@ const HomePage = () => {
   return (
     <>
       <AuthenticatedRoute>
-        <Container className="flex flex-col">
+        <Container>
           <ProductList />
         </Container>
+        <Footer />
       </AuthenticatedRoute>
     </>
   );

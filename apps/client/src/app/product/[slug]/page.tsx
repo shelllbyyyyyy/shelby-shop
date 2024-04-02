@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import Container from "@/components/elements/Container";
 import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
 import { Product } from "@/features/product/components/Product";
 import Footer from "@/components/elements/Footer";
+import { Loading } from "@/features/loading";
 
 const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -13,7 +14,9 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
     <>
       <AuthenticatedRoute>
         <Container className="flex flex-col mb-16 mx-10">
-          <Product slug={slug} />
+          <Suspense fallback={<Loading />}>
+            <Product slug={slug} />
+          </Suspense>
         </Container>
         <Footer />
       </AuthenticatedRoute>

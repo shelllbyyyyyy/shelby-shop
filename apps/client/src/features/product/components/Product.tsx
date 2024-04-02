@@ -1,4 +1,5 @@
 import * as Icon from "lucide-react";
+import { Product as TProduct } from "@shelby/db";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +28,9 @@ async function getData({ slug }: { slug: string }) {
     }
   );
 
-  return res.json();
+  const product: Promise<TProduct> = res.json();
+
+  return product;
 }
 
 export const Product = async ({ slug }: { slug: string }) => {
@@ -36,15 +39,13 @@ export const Product = async ({ slug }: { slug: string }) => {
   return (
     <>
       <Card className="flex flex-col w-full h-screen overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-        <CardHeader className="relative mx-3 my-3 flex h-50 overflow-hidden rounded-xl justify-center items-center p-0">
+        <CardHeader className="relative mx-3 my-3 flex h-full overflow-hidden rounded-xl justify-center items-center p-0">
           <img
             src={product?.imageUrl}
             alt={product?.name}
-            className="w-full h-full object-cover object-center "
+            className="w-full h-full object-contain hover:scale-105 transition duration-500"
           />
-          <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-            39% OFF
-          </span>
+          <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white"></span>
         </CardHeader>
 
         <CardContent className="m-4 px-5">

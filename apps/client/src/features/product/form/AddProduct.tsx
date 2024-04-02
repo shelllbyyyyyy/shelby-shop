@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { AddProductFormSchema, addProductFormSchema } from "@/types";
+import { Textarea } from "@/components/ui/textarea";
 
 type AddProductFormInnerProps = {
   onSubmit: (values: AddProductFormSchema & { imageFile: File | null }) => void;
@@ -113,7 +114,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Textarea {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
