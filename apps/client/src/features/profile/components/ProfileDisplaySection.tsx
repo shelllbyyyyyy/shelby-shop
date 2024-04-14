@@ -27,7 +27,7 @@ export const ProfileDisplaySection: React.FC<ProfileDisplaySection> = ({
       <div className="flex h-72 w-full justify-center items-center bg-accent/80">
         <Avatar className="h-36 w-36 sm:h-48 sm:w-48">
           <AvatarFallback>{profile?.data.name?.charAt(0)}</AvatarFallback>
-          <AvatarImage src={profile?.data.profilePictureUrl || ""} />
+          <AvatarImage src={profile?.data.profilePictureUrl!} />
         </Avatar>
       </div>
 

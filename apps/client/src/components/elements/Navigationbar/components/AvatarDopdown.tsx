@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { useGetProfileQuery } from "@shelby/api";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,11 +13,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { clearCart } from "@/features/cart";
+
 import { supabaseClient } from "@/utils/supabase/client";
+import { AppDispatch } from "@/lib/redux/store";
 
 export const AvatarDropdown = () => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { data: profile } = useGetProfileQuery({});
+
   const logout = () => {
     supabaseClient.auth.signOut();
+
+    dispatch(clearCart());
+    router.push("/");
   };
 
   return (
@@ -22,14 +36,14 @@ export const AvatarDropdown = () => {
       <DropdownMenuTrigger className="self-start">
         <Avatar className="h-7 w-7 md:h-9 md:w-9">
           <AvatarFallback></AvatarFallback>
-          <AvatarImage src={""} />
+          <AvatarImage src={profile?.data.profilePictureUrl!} />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={8}>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard Creator</Link>
+          <Link href="/admin/dashboard">Admin</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>

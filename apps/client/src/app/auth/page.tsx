@@ -13,7 +13,6 @@ const AuthPage = () => {
         <Container className="flex h-screen justify-center items-center py-10">
           <Form />
         </Container>
-        <Footer />
       </GuestRoute>
     </>
   );

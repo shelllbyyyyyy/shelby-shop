@@ -15,6 +15,7 @@
     "prisma:dev": "prisma migrate dev --name",
     "prisma:deploy": "prisma migrate deploy",
     "start:debug": "nest start --debug --watch",
+    "start:migrate:prod": "pnpm prisma:deploy && pnpm start:prod",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",

@@ -25,16 +25,18 @@ export class ProductService {
     });
   }
 
-  public async addProduct(addProductDTO: AddProductDTO, imageUrl?: Express.Multer.File): Promise<ProductModel> {
+  public async addProduct(addProductDTO: AddProductDTO, imageFile: Express.Multer.File): Promise<ProductModel> {
     const addProductPayload: Prisma.ProductCreateInput = {
       ...addProductDTO,
     };
 
-    if (imageUrl) {
-      const fileUrl = await this.supabaseService.uploadToPublicStorage(SupabaseBucket.PRODUCT_IMAGES, imageUrl);
+    const fileUrl = await this.supabaseService.uploadToPublicStorage(SupabaseBucket.PRODUCT_IMAGES, imageFile);
 
-      addProductPayload.imageUrl = fileUrl;
-    }
+    addProductPayload.imageUrl = fileUrl;
+
+    const convertPrice = Number(addProductPayload.price);
+
+    addProductPayload.price = convertPrice;
 
     const titleToSlug = (title: string) => {
       let Slug: string;
@@ -78,6 +80,10 @@ export class ProductService {
       editProductPayload.imageUrl = fileUrl;
     }
 
+    const convertPrice = Number(editProductPayload.price);
+
+    editProductPayload.price = convertPrice;
+
     const product = await this.prismaService.product.findUnique({
       where: {
         slug,
@@ -85,6 +91,24 @@ export class ProductService {
     });
 
     if (!product) throw new NotFoundException("product not found");
+
+    if (editProductPayload.name) {
+      const titleToSlug = (title: string) => {
+        let Slug: string;
+        Slug = title.toLowerCase();
+        Slug = Slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, "");
+        Slug = Slug.replace(/ /gi, "-");
+        Slug = Slug.replace(/\-\-\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-\-/gi, "-");
+        Slug = Slug.replace(/\-\-/gi, "-");
+        Slug = "@" + Slug + "@";
+        Slug = Slug.replace(/\@\-|\-\@|\@/gi, "");
+        return Slug;
+      };
+
+      editProductPayload.slug = titleToSlug(editProductPayload.name as string);
+    }
 
     const updatedProduct = await this.prismaService.product.update({
       where: {

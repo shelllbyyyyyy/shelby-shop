@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useAddProductMutation } from "@shelby/api";
 
 import Container from "@/components/elements/Container";
-import Footer from "@/components/elements/Footer";
 
 import { AddProductFormInner } from "@/features/product/form/AddProduct";
 
@@ -25,7 +24,7 @@ const Add = () => {
   });
 
   const handleAddProductSubmit = async (
-    values: AddProductFormSchema & { image: File | null }
+    values: AddProductFormSchema & { imageFile: File | null }
   ) => {
     try {
       await addProductMutate(values);
@@ -52,7 +51,6 @@ const Add = () => {
       <Container className="flex h-screen justify-center items-center">
         <AddProductFormInner onSubmit={handleAddProductSubmit} />
       </Container>
-      <Footer />
     </>
   );
 };

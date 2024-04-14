@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 
 import { useRouter } from "next/navigation";
-import { Session } from "@supabase/supabase-js";
+import { useDispatch } from "react-redux";
 
 import { ApiClientProvider, QueryClientProvider } from "@shelby/api";
 
+import { onAuthSuccess, onLogout } from "@/features/auth/modules/authSlice";
+
 import { AxiosManager } from "@/lib/axios";
 import { queryClient } from "@/lib/react-query";
+import { AppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import { supabaseClient } from "@/utils/supabase/client";
 
@@ -21,18 +24,26 @@ const axiosManager = new AxiosManager();
 const MyProvider = ({ children }: MyProviderProps) => {
   const router = useRouter();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const isLogin = useAppSelector(
+    (state) => state.persistedReducer.authSlice.isLoggin
+  );
+
   useLayoutEffect(() => {
     const {
       data: { subscription },
     } = supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT") {
+      if (session) {
+        localStorage.setItem("access_token", session?.access_token);
+        dispatch(onAuthSuccess(isLogin));
+      } else if (event === "SIGNED_OUT") {
+        localStorage.clear();
+        dispatch(onLogout());
         router.push("/");
       }
     });
 
     return () => subscription.unsubscribe();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

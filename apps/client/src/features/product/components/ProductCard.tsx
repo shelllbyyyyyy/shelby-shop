@@ -1,16 +1,6 @@
-import * as Icon from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 import { toRupiah } from "@/lib/utils";
 
@@ -26,38 +16,28 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <>
       <Link href={`/product/${slug}`}>
-        <Card className="flex flex-col w-full max-w-lg  overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-xl  transition duration-300">
-          <CardHeader className="relative mx-3 my-3 flex h-50 overflow-hidden rounded-xl object-cover object-center p-0 pt-0">
-            <Image src={image} alt={productName} height={300} width={600} />
-            <span className="absolute top-0 left-0 m-2 rounded-md bg-black px-2 text-center text-sm font-medium text-white">
-              39% OFF
-            </span>
-          </CardHeader>
-          <CardContent className="p-6 pt-0">
-            <CardTitle className="text-2xl md:text-3xl font-bold text-slate-900">
+        <div className="flex flex-col hover:scale-105 transition duration-300 space-y-2">
+          <div className="rounded-lg border border-gray-100 bg-white shadow-md p-5">
+            <Image
+              src={image.src}
+              alt={productName}
+              height={600}
+              width={600}
+              className="hover:scale-105 transition duration-500 cursor-pointer object-contain"
+            />
+          </div>
+          <div>
+            <p className="text-md sm:text-2xl font-semibold text-slate-900 line-clamp-1">
               {productName}
-            </CardTitle>
+            </p>
 
             <p>
-              <span className="text-xl font-semibold text-slate-900">
+              <span className="text-md sm:text-xl font-semibold text-accent">
                 {toRupiah(price)}
               </span>
             </p>
-          </CardContent>
-          <CardFooter className="p-4 flex justify-between bg-gray-100 gap-3">
-            <div>
-              <Button>Buy now</Button>
-            </div>
-            <div className="flex gap-0.5 md:gap-2">
-              <Button size="circle">
-                <Icon.ShoppingBag size={15} />
-              </Button>
-              <Button size="circle">
-                <Icon.Heart size={15} />
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </Link>
     </>
   );

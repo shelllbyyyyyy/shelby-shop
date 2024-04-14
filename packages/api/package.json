@@ -13,16 +13,16 @@
   "license": "ISC",
   "devDependencies": {
     "@shelby/typescript-config": "workspace:*",
-    "@types/react": "^18",
-    "typescript": "^5.3.3"
+    "@types/react": "^18.2.78",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@shelby/db": "workspace:*",
     "@shelby/dto": "workspace:*",
-    "@tanstack/react-query": "^5.20.1",
-    "axios": "^1.6.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "type-fest": "^4.10.2"
+    "@tanstack/react-query": "^5.29.2",
+    "axios": "^1.6.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "type-fest": "^4.15.0"
   }
 }
