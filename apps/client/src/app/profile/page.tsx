@@ -56,7 +56,7 @@ const ProfilePage = () => {
   return (
     <>
       <HeadMetaData title="Profile" />
-      <Container className="flex min-h-screen items-center justify-center flex-col gap-8 lg:gap-10">
+      <Container className="px-0">
         {isEditMode ? (
           <>
             <EditProfileFormInner

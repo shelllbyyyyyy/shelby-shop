@@ -1,11 +1,10 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import Container from "@/components/elements/Container";
 import AuthenticatedRoute from "@/components/provider/authenticated-routes";
 
 import { Product } from "@/features/product/components/Product";
-import Footer from "@/components/elements/Footer";
-import { Loading } from "@/features/loading";
+import ProductRecomended from "@/features/product/components/ProductRecomended";
 
 const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -13,12 +12,10 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <AuthenticatedRoute>
-        <Container className="flex flex-col mb-16 mx-10">
-          <Suspense fallback={<Loading />}>
-            <Product slug={slug} />
-          </Suspense>
+        <Container className="px-0">
+          <Product slug={slug} />
+          <ProductRecomended />
         </Container>
-        <Footer />
       </AuthenticatedRoute>
     </>
   );

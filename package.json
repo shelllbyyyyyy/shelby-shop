@@ -13,12 +13,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@shelby/api": "workspace:*",
+    "@shelby/db": "workspace:*",
+    "@shelby/dto": "workspace:*",
     "@shelby/eslint-config": "workspace:*",
     "@shelby/typescript-config": "workspace:*",
-    "@shelby/db": "workspace:*",
-    "@shelby/api": "workspace:*",
-    "@shelby/dto": "workspace:*",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",

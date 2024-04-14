@@ -66,21 +66,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <Link href="/">
-          <h1 className="text-lg md:text-2xl font-bold uppercase text-white mt-8">
-            <span className="text-red-500">S</span>helby.Shop
-          </h1>
-        </Link>
-
+      <div className="flex items-center justify-between gap-2 px-6 mt-6 lg:mt-6.5 lg:hidden">
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden mt-8 ml-2"
         >
-          <Icon.LucideArrowLeft color="white" size={18} />
+          <Icon.LucideX color="white" size={18} />
         </button>
       </div>
 

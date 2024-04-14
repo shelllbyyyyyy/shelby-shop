@@ -25,7 +25,9 @@ const MyProvider = ({ children }: MyProviderProps) => {
   const router = useRouter();
 
   const dispatch = useDispatch<AppDispatch>();
-  const isLogin = useAppSelector((state) => state.authslice.isLoggin);
+  const isLogin = useAppSelector(
+    (state) => state.persistedReducer.authSlice.isLoggin
+  );
 
   useLayoutEffect(() => {
     const {

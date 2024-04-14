@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { useGetProfileQuery } from "@shelby/api";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,14 +13,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { clearCart } from "@/features/cart";
+
 import { supabaseClient } from "@/utils/supabase/client";
-import { useGetProfileQuery } from "@shelby/api";
+import { AppDispatch } from "@/lib/redux/store";
 
 export const AvatarDropdown = () => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
   const { data: profile } = useGetProfileQuery({});
 
   const logout = () => {
     supabaseClient.auth.signOut();
+
+    dispatch(clearCart());
+    router.push("/");
   };
 
   return (

@@ -1,14 +1,13 @@
-import NavigationBar from "@/components/elements/Navigationbar";
+import React from "react";
 
-export default function ProductLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
-      <NavigationBar />
-      <main className="mt-16 md:mt-32">{children}</main>
+      <main className="mb-8">{children}</main>
     </>
   );
 }

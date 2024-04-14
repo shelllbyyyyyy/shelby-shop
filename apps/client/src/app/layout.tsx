@@ -4,6 +4,10 @@ import "./globals.css";
 
 import MyProvider from "@/components/provider/my-provider";
 import ReduxProvider from "@/components/provider/redux-provider";
+import Footer from "@/components/elements/Footer";
+import NavigationBar from "@/components/elements/Navigationbar";
+
+import { cn } from "@/lib/utils";
 
 const rajdhani = Rajdhani({
   subsets: ["latin"],
@@ -22,9 +26,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={rajdhani.className}>
+      <body
+        className={cn(
+          "relative h-full font-sans antialiased",
+          rajdhani.className
+        )}
+      >
         <ReduxProvider>
-          <MyProvider>{children}</MyProvider>
+          <MyProvider>
+            <NavigationBar />
+            <main className="relative flex flex-col min-h-screen max-sm:mb-16 mt-16 sm:mt-28 ">
+              <div className="flex-grow flex-1">{children}</div>
+            </main>
+            <Footer />
+          </MyProvider>
         </ReduxProvider>
       </body>
     </html>
