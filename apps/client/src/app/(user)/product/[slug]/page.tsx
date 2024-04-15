@@ -1,9 +1,7 @@
 import React from "react";
 
 import Container from "@/components/elements/Container";
-
-import { Product } from "@/features/product/components/Product";
-import ProductRecomended from "@/features/product/components/ProductRecomended";
+import { Product, ProductRecomended } from "@/features/product";
 
 const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;

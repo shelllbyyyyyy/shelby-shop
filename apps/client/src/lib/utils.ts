@@ -27,3 +27,7 @@ export const getItem = cache(async (slug: string) => {
 
   return data;
 });
+
+export const wait = (duration: number) => {
+  return new Promise((resolve) => setTimeout(resolve, duration));
+};

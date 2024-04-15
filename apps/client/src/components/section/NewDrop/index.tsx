@@ -1,16 +1,15 @@
 import React from "react";
-import { PrismaClient } from "@shelby/db";
 
-import { ProductCard } from "@/features/product/components/ProductCard";
 import Container from "@/components/elements/Container";
+import db from "@/db";
+import { ProductGridSection } from "@/features/product/components/ProductCard";
+import { cache } from "@/lib/chace";
+
+const getNewProducts = cache(() => {
+  return db.product.findMany({ orderBy: { name: "desc" }, take: 4 });
+}, ["/", "getNewProducts"]);
 
 export const NewDrop = async () => {
-  const db = new PrismaClient();
-  const products = await db.product.findMany({
-    take: 4,
-    orderBy: { name: "desc" },
-  });
-
   return (
     <Container>
       <section>
@@ -25,21 +24,7 @@ export const NewDrop = async () => {
         </div>
 
         <div className="mt-10 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 md:gap-4 gap-2">
-          {products?.map((product, index: number) => (
-            <div key={index}>
-              <ProductCard
-                id={product.id}
-                productName={product.name}
-                slug={product.slug}
-                price={product.price}
-                desciprion=""
-                image={{
-                  src: product.imageUrl,
-                  alt: product.name,
-                }}
-              />
-            </div>
-          ))}
+          <ProductGridSection productsFetcher={getNewProducts} />
         </div>
       </section>
     </Container>

@@ -1,13 +1,19 @@
 import React from "react";
-import { PrismaClient } from "@shelby/db";
 
-import { ProductCard } from "@/features/product/components/ProductCard";
 import Container from "@/components/elements/Container";
+import db from "@/db";
+import { ProductGridSection } from "@/features/product/components/ProductCard";
+import { cache } from "@/lib/chace";
+
+const getPopularProducts = cache(
+  () => {
+    return db.product.findMany({ orderBy: { name: "asc" }, take: 4 });
+  },
+  ["/", "getPopularProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
 
 export const PopularProduct = async () => {
-  const db = new PrismaClient();
-  const products = await db.product.findMany({ take: 4 });
-
   return (
     <Container>
       <section>
@@ -22,21 +28,7 @@ export const PopularProduct = async () => {
         </div>
 
         <div className="mt-10 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 md:gap-4 gap-2">
-          {products?.map((product, index: number) => (
-            <div key={index}>
-              <ProductCard
-                id={product.id}
-                productName={product.name}
-                slug={product.slug}
-                price={product.price}
-                desciprion=""
-                image={{
-                  src: product.imageUrl,
-                  alt: product.name,
-                }}
-              />
-            </div>
-          ))}
+          <ProductGridSection productsFetcher={getPopularProducts} />
         </div>
       </section>
     </Container>

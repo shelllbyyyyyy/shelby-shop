@@ -1,30 +1,16 @@
-"use client";
+import { cache } from "@/lib/chace";
+import { ProductGridSection } from "./ProductCard";
+import db from "@/db";
 
-import { useFetchProductQuery } from "@shelby/api";
+const getAllProduct = cache(() => {
+  return db.product.findMany({});
+}, ["/home", "getAllProducts"]);
 
-import { ProductCard } from "./ProductCard";
-
-export const ProductList = () => {
-  const { data: product } = useFetchProductQuery({});
-
+export const ProductList = async () => {
   return (
     <>
       <div className="w-full h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-5">
-        {product?.data.map((product) => {
-          return (
-            <ProductCard
-              key={product.id}
-              image={{
-                src: product.imageUrl,
-                alt: product.name,
-              }}
-              productName={product.name}
-              desciprion={product.description}
-              price={product.price}
-              slug={product.slug}
-            />
-          );
-        })}
+        <ProductGridSection productsFetcher={getAllProduct} />
       </div>
     </>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useGetProfileQuery } from "@shelby/api";
 import { useRouter } from "next/navigation";

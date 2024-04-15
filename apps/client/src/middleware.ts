@@ -1,12 +1,10 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 
 export async function middleware(req: NextRequest) {
   const supabase = createClient();
 
-  const redirectUrl = req.nextUrl.clone();
   const adminPath = "/admin";
-  const authPath = "/auth";
 
   const {
     data: { user },
@@ -25,13 +23,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!user) {
-    redirectUrl.pathname = "/auth";
-    return NextResponse.redirect(redirectUrl);
-  } else {
-    if (req.nextUrl.pathname.startsWith(authPath)) {
-      redirectUrl.pathname = "/home";
-      return NextResponse.redirect(redirectUrl);
-    }
+    return NextResponse.redirect(new URL("/auth", req.url));
   }
 }
 
@@ -41,6 +33,5 @@ export const config = {
     "/home/:path*",
     "/product/:path*",
     "/profile/:path*",
-    "/auth/:path*",
   ],
 };

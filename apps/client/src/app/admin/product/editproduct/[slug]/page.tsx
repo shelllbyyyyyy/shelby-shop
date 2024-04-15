@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useUpdateProductMutation } from "@shelby/api";
@@ -46,14 +46,6 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
       }
     }
   };
-
-  useEffect(() => {
-    supabaseClient.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        router.push("/auth");
-      }
-    });
-  }, []);
 
   return (
     <>

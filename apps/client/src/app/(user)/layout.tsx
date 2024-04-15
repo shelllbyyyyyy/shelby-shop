@@ -1,6 +1,8 @@
 import Footer from "@/components/elements/Footer";
 import NavigationBar from "@/components/elements/Navigationbar";
 
+export const dynamic = "force-dynamic";
+
 export default function Layout({
   children,
 }: Readonly<{
