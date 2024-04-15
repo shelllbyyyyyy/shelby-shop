@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useAddProductMutation } from "@shelby/api";
 
 import Container from "@/components/elements/Container";
@@ -11,10 +9,8 @@ import { AddProductFormInner } from "@/features/product/form/AddProduct";
 
 import { queryClient } from "@/lib/react-query";
 import { AddProductFormSchema } from "@/types";
-import { supabaseClient } from "@/utils/supabase/client";
 
 const Add = () => {
-  const router = useRouter();
   const { mutateAsync: addProductMutate } = useAddProductMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -37,14 +33,6 @@ const Add = () => {
       }
     }
   };
-
-  useEffect(() => {
-    supabaseClient.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        router.push("/auth");
-      }
-    });
-  }, []);
 
   return (
     <>

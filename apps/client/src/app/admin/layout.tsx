@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 import Header from "@/components/elements/Header";
 import Sidebar from "@/components/elements/Sidebar";
 
-import { supabaseClient } from "@/utils/supabase/client";
+export const dynamic = "force-dynamic";
 
 export default function DefaultLayout({
   children,
@@ -14,20 +13,6 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        router.push("/auth");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   return (
     <>

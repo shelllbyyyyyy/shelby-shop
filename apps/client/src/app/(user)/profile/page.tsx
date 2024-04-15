@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useEditProfileMutation } from "@shelby/api";
 
 import Container from "@/components/elements/Container";
@@ -15,10 +14,8 @@ import {
 
 import { queryClient } from "@/lib/react-query";
 import { EditProfileFormSchema } from "@/types";
-import { supabaseClient } from "@/utils/supabase/client";
 
 const ProfilePage = () => {
-  const router = useRouter();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const { mutateAsync: editProfileMutate } = useEditProfileMutation({
@@ -44,14 +41,6 @@ const ProfilePage = () => {
       }
     }
   };
-
-  useEffect(() => {
-    supabaseClient.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        router.push("/auth");
-      }
-    });
-  }, []);
 
   return (
     <>

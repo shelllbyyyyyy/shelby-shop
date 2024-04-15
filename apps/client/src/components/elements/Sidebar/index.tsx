@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as Icon from "lucide-react";
 
-import SidebarLinkGroup from "./SidebarLinkGroup";
-
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -38,7 +36,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
-  });
+  }, []);
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -48,7 +46,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
-  });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
@@ -75,6 +73,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         >
           <Icon.LucideX color="white" size={18} />
         </button>
+      </div>
+
+      <div className="hidden lg:flex items-center justify-between gap-2 px-6 mt-6 lg:mt-6.5 ">
+        <Link href="/">
+          <h1 className="text-lg md:text-2xl font-bold uppercase text-white">
+            <span className="text-red-500">S</span>helby.Shop
+          </h1>
+        </Link>
       </div>
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">

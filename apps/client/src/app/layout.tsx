@@ -4,8 +4,6 @@ import "./globals.css";
 
 import MyProvider from "@/components/provider/my-provider";
 import ReduxProvider from "@/components/provider/redux-provider";
-import Footer from "@/components/elements/Footer";
-import NavigationBar from "@/components/elements/Navigationbar";
 
 import { cn } from "@/lib/utils";
 
@@ -33,13 +31,7 @@ export default function RootLayout({
         )}
       >
         <ReduxProvider>
-          <MyProvider>
-            <NavigationBar />
-            <main className="relative flex flex-col min-h-screen max-sm:mb-16 mt-16 sm:mt-28 ">
-              <div className="flex-grow flex-1">{children}</div>
-            </main>
-            <Footer />
-          </MyProvider>
+          <MyProvider>{children}</MyProvider>
         </ReduxProvider>
       </body>
     </html>

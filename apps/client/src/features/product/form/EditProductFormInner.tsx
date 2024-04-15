@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangeEventHandler, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,7 +7,6 @@ import { useGetProductQuery } from "@shelby/api";
 
 import Wrapper from "@/components/elements/Wrapper";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,

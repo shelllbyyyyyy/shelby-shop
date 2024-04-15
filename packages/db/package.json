@@ -17,12 +17,12 @@
   "author": "Shelllbyyyyy",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.11.16",
-    "prisma": "^5.9.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "@types/node": "^20.12.7",
+    "prisma": "^5.12.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@prisma/client": "^5.9.1"
+    "@prisma/client": "^5.12.1"
   }
 }

@@ -1,11 +1,19 @@
 import React from "react";
-import { PrismaClient } from "@shelby/db";
 
-import { ProductCard } from "./ProductCard";
+import { ProductGridSection } from "./ProductCard";
 
-const ProductRecomended = async () => {
-  const db = new PrismaClient();
-  const products = await db.product.findMany({ take: 4 });
+import db from "@/db";
+import { cache } from "@/lib/chace";
+
+const getRecommendedProduct = cache(
+  () => {
+    return db.product.findMany({ take: 4, orderBy: { name: "desc" } });
+  },
+  ["/products", "getProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
+
+export const ProductRecomended = async () => {
   return (
     <>
       <div className="px-5 sm:px-20">
@@ -14,28 +22,10 @@ const ProductRecomended = async () => {
             You may also like
           </h2>
           <div className="grid grid-cols-4 grid-cols-1 sm:gap-4 gap-2">
-            {products?.map((product, index: number) => (
-              <div key={index}>
-                <ProductCard
-                  id={product.id}
-                  productName={product.name}
-                  slug={product.slug}
-                  price={product.price}
-                  desciprion=""
-                  image={{
-                    src: product.imageUrl,
-                    alt: product.name,
-                    width: 100,
-                    height: 100,
-                  }}
-                />
-              </div>
-            ))}
+            <ProductGridSection productsFetcher={getRecommendedProduct} />
           </div>
         </div>
       </div>
     </>
   );
 };
-
-export default ProductRecomended;

@@ -1,4 +1,6 @@
-import { ChangeEventHandler, useMemo, useRef, useState } from "react";
+"use client";
+
+import { ChangeEventHandler, useState } from "react";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -39,7 +41,6 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
   const [selectedProductImageFile, setSelectedProductImageFile] =
     useState<File | null>();
   const [preview, setPreview] = useState<string>("");
-  const inputProductImageRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<AddProductFormSchema>({
     defaultValues: {

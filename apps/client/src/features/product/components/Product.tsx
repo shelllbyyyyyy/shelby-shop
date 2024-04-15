@@ -1,5 +1,3 @@
-"use server";
-
 import * as Icon from "lucide-react";
 import Image from "next/image";
 import { Product as TProduct } from "@shelby/db";
@@ -8,6 +6,18 @@ import { toRupiah } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/server";
 
 import { AddToCart, BuyNow } from "@/features/cart";
+import { cache } from "@/lib/chace";
+import db from "@/db";
+
+const getProducts = cache(
+  ({ slug }: { slug: string }) => {
+    const data = db.product.findUnique({
+      where: { slug: slug },
+    });
+    return data;
+  },
+  ["/product/:slug", "getProducts"]
+);
 
 async function getData({ slug }: { slug: string }) {
   const token = (await createClient().auth.getSession()).data.session
@@ -28,25 +38,24 @@ async function getData({ slug }: { slug: string }) {
 }
 
 export const Product = async ({ slug }: { slug: string }) => {
-  const product = await getData({ slug });
+  const product = await getProducts({ slug });
 
   return (
-    <div className="flex flex-col py-5 sm:px-20 sm:py-10 sm:gap-20 gap-10">
-      <div className="flex flex-col w-full sm:flex-row max-sm:space-y-5">
-        <div className="flex flex-col gap-3">
-          <div className="max-sm:flex max-sm:justify-center max-sm:items-center max-sm:px-2 bg-white shadow-md rounded-xl hover:shadow-xl hover:scale-105 transition duration-500">
-            <Image
-              src={product?.imageUrl}
-              alt={product?.name}
-              width={300}
-              height={300}
-              className="max-sm:size-96 size-[400px] object-contain"
-            />
-          </div>
+    <div className="flex flex-col px-5 sm:px-20 sm:py-10 sm:gap-20 gap-10">
+      <div className="flex flex-col w-full sm:grid sm:grid-cols-2 max-sm:space-y-5">
+        <div className="relative h-auto w-full aspect-square bg-white shadow-md rounded-xl hover:shadow-xl hover:scale-105 transition duration-300 overflow-hidden">
+          <Image
+            src={product!.imageUrl}
+            alt={product!.name}
+            fill
+            className="object-contain p-5"
+          />
         </div>
 
-        <div className="flex flex-col gap-2 mx-5 sm:mx-20">
-          <h1 className="text-2xl font-semibold">{product?.name}</h1>
+        <div className="flex flex-col gap-2 sm:ml-10">
+          <h1 className="text-2xl lg:text-4xl font-semibold">
+            {product?.name}
+          </h1>
           <div className="flex">
             <div className="flex">
               <Icon.Star size={20} fill="orange" />
@@ -57,23 +66,23 @@ export const Product = async ({ slug }: { slug: string }) => {
             </div>
             <p>(4)</p>
           </div>
-          <h4 className="text-md font-semibold">Details: </h4>
-          <p>{product?.description}</p>
-          <p className="text-accent font-semibold text-xl">
-            {toRupiah(product.price)}
+          <h4 className="text-md lg:text-xl font-semibold">Details: </h4>
+          <p className="text-md lg:text-xl">{product?.description}</p>
+          <p className="text-accent font-semibold text-xl lg:text-2xl">
+            {toRupiah(product?.price)}
           </p>
 
-          <div className="flex max-sm:flex-col gap-5 mt-2 sm:mt-36">
+          <div className="flex max-sm:flex-col gap-5 mt-2">
             <AddToCart
-              id={product.id}
-              name={product.name}
-              imageUrl={product.imageUrl}
-              price={product.price}
+              id={product!.id}
+              name={product!.name}
+              imageUrl={product!.imageUrl}
+              price={product!.price}
             />
             <BuyNow
-              name={product.name}
-              imageUrl={product.imageUrl}
-              price={product.price}
+              name={product!.name}
+              imageUrl={product!.imageUrl}
+              price={product!.price}
             />
           </div>
         </div>
