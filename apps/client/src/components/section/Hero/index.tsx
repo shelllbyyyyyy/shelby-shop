@@ -6,7 +6,7 @@ import Container from "@/components/elements/Container";
 export const Hero = () => {
   return (
     <div className="bg-slate-200">
-      <Container className="py-20 h-[400px]">
+      <Container className="flex justify-center items-center h-[400px] sm:h-[600px]">
         <div className="mx-auto text-center flex flex-col items-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
             Your marketplace for high-quality

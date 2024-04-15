@@ -25,8 +25,6 @@ const ProductRecomended = async () => {
                   image={{
                     src: product.imageUrl,
                     alt: product.name,
-                    width: 100,
-                    height: 100,
                   }}
                 />
               </div>

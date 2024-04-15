@@ -16,14 +16,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <>
       <Link href={`/product/${slug}`}>
-        <div className="flex flex-col hover:scale-105 transition duration-300 space-y-2">
-          <div className="rounded-lg border border-gray-100 bg-white shadow-md p-5">
+        <div className="flex flex-col hover:scale-105 transition duration-300 space-y-2 overflow-hidden">
+          <div className="relative rounded-lg w-full h-auto bg-white shadow-md aspect-square border border-black-100 hover:shadow-lg">
             <Image
               src={image.src}
               alt={productName}
-              height={600}
-              width={600}
-              className="hover:scale-105 transition duration-500 cursor-pointer object-contain"
+              fill
+              className="object-contain p-5"
             />
           </div>
           <div>

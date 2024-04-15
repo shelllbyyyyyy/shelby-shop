@@ -17,8 +17,6 @@ export const ProductList = () => {
               image={{
                 src: product.imageUrl,
                 alt: product.name,
-                height: 100,
-                width: 100,
               }}
               productName={product.name}
               desciprion={product.description}

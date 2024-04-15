@@ -1,12 +1,13 @@
 import * as Icon from "lucide-react";
+import Link from "next/link";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   return (
-    <header className="sticky top-0 z-11 flex items-center h-16 w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none lg:hidden">
-      <div className="flex items-center gap-2 sm:gap-4 lg:hidden ml-6">
+    <header className="flex justify-between items-center h-16 sm:h-24 w-full bg-white shadow lg:hidden lg:mt-6">
+      <div className="flex items-center gap-2 sm:gap-4 ml-6">
         <button
           aria-controls="sidebar"
           onClick={(e) => {
@@ -17,6 +18,13 @@ const Header = (props: {
         >
           <Icon.AlignJustifyIcon size={18} />
         </button>
+      </div>
+      <div className="flex gap-2 mr-6 items-end">
+        <Link href="/">
+          <h1 className="text-lg sm:text-2xl font-bold uppercase">
+            <span className="text-red-500">S</span>helby.Shop
+          </h1>
+        </Link>
       </div>
     </header>
   );

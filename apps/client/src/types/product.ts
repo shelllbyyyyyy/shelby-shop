@@ -7,8 +7,6 @@ export type ProductCardProps = {
   image: {
     src: string;
     alt: string;
-    height: number;
-    width: number;
   };
   slug: string | undefined;
 };

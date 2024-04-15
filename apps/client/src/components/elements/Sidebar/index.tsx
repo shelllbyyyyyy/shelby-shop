@@ -77,6 +77,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </button>
       </div>
 
+      <div className="hidden lg:flex items-center justify-between gap-2 px-6 mt-6 lg:mt-6.5 ">
+        <Link href="/">
+          <h1 className="text-lg md:text-2xl font-bold uppercase text-white">
+            <span className="text-red-500">S</span>helby.Shop
+          </h1>
+        </Link>
+      </div>
+
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 px-2 py-4 lg:mt-9 text-white">
           <div>
