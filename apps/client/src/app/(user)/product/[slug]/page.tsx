@@ -11,12 +11,12 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <AuthenticatedRoute>
-        <Container className="px-0">
-          <Product slug={slug} />
-          <ProductRecomended />
-        </Container>
-      </AuthenticatedRoute>
+      {/* <AuthenticatedRoute> */}
+      <Container className="px-0">
+        <Product slug={slug} />
+        <ProductRecomended />
+      </Container>
+      {/* </AuthenticatedRoute> */}
     </>
   );
 };

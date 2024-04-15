@@ -45,13 +45,13 @@ const ProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    supabaseClient.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        router.push("/auth");
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   supabaseClient.auth.getUser().then(({ data: { user } }) => {
+  //     if (!user) {
+  //       router.push("/auth");
+  //     }
+  //   });
+  // }, []);
 
   return (
     <>

@@ -7,11 +7,11 @@ import { ProductList } from "@/features/product/components/ProductList";
 const HomePage = () => {
   return (
     <>
-      <AuthenticatedRoute>
-        <Container>
-          <ProductList />
-        </Container>
-      </AuthenticatedRoute>
+      {/* <AuthenticatedRoute> */}
+      <Container>
+        <ProductList />
+      </Container>
+      {/* </AuthenticatedRoute> */}
     </>
   );
 };

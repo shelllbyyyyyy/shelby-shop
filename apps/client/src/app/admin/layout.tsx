@@ -17,17 +17,17 @@ export default function DefaultLayout({
 
   const router = useRouter();
 
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabaseClient.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        router.push("/auth");
-      }
-    });
+  // useEffect(() => {
+  //   const {
+  //     data: { subscription },
+  //   } = supabaseClient.auth.onAuthStateChange((event, session) => {
+  //     if (!session) {
+  //       router.push("/auth");
+  //     }
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, []);
+  //   return () => subscription.unsubscribe();
+  // }, []);
 
   return (
     <>
