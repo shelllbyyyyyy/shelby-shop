@@ -5,7 +5,7 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import Wrapper from "@/components/elements/Wrapper";
+import Wrapper from "@/app/admin/_components/Wrapper";
 
 import {
   Card,
@@ -50,6 +50,9 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
       slug: "",
       imageFile: undefined,
       imageUrl: "",
+      sku: "",
+      label: "",
+      category: "",
     },
     resolver: zodResolver(addProductFormSchema),
     reValidateMode: "onChange",
@@ -74,7 +77,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
 
   return (
     <>
-      <div className="flex flex-col h-screen w-full justify-center items-center">
+      <div className="flex flex-col h-screen w-full justify-center items-center py-20">
         <Wrapper>
           <Card>
             <CardHeader>
@@ -139,6 +142,39 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                     )}
                   />
                 </CardContent>
+
+                <CardContent>
+                  <FormField
+                    control={form.control}
+                    name="sku"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>SKU</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </CardContent>
+
+                <CardContent>
+                  <FormField
+                    control={form.control}
+                    name="label"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>label</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </CardContent>
+
                 <CardContent>
                   <FormField
                     control={form.control}
@@ -172,6 +208,22 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                       />
                     </div>
                   )}
+                </CardContent>
+
+                <CardContent>
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </CardContent>
 
                 <CardFooter>

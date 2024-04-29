@@ -14,7 +14,7 @@ export class ProfileService {
   ) {}
 
   public async getProfile(id: string) {
-    const profile = await this.prismaService.profiles.findUnique({
+    const profile = await this.prismaService.user.findUnique({
       where: {
         id,
       },
@@ -24,7 +24,7 @@ export class ProfileService {
   }
 
   public async editProfile(id: string, editProfileDTO: EditProfileDTO, profilePictureFile?: Express.Multer.File) {
-    const editProfilePayload: Prisma.ProfilesUpdateInput = {
+    const editProfilePayload: Prisma.UserUpdateInput = {
       ...editProfileDTO,
     };
 
@@ -34,7 +34,7 @@ export class ProfileService {
       editProfilePayload.profilePictureUrl = fileUrl;
     }
 
-    const updatedProfile = await this.prismaService.profiles.update({
+    const updatedProfile = await this.prismaService.user.update({
       where: {
         id,
       },

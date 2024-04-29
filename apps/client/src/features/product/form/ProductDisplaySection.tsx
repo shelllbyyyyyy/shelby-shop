@@ -1,6 +1,6 @@
 import { useGetProductQuery } from "@shelby/api";
 
-import Wrapper from "@/components/elements/Wrapper";
+import Wrapper from "@/app/admin/_components/Wrapper";
 
 import { Button } from "@/components/ui/button";
 import {

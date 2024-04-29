@@ -1,13 +1,5 @@
 import { Transform } from "class-transformer";
-import {
-  IsNumber,
-  IsOptional,
-  IsString,
-  Max,
-  MaxLength,
-  Min,
-  MinLength,
-} from "class-validator";
+import { IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
 
 export class UpdateProductDTO {
   @IsString()
@@ -28,6 +20,18 @@ export class UpdateProductDTO {
   @MaxLength(100)
   @IsOptional()
   description?: string;
+
+  @IsString()
+  @MinLength(3)
+  @MaxLength(100)
+  @IsOptional()
+  readonly sku?: string;
+
+  @IsString()
+  @MinLength(3)
+  @MaxLength(100)
+  @IsOptional()
+  readonly label?: string;
 
   @IsString()
   @MinLength(3)

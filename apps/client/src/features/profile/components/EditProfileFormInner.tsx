@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetProfileQuery } from "@shelby/api";
 
-import Wrapper from "@/components/elements/Wrapper";
+import Wrapper from "@/app/admin/_components/Wrapper";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

@@ -1,18 +1,29 @@
-import { IsNumberString, IsString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsNumber, IsNumberString, IsString } from "class-validator";
 
 export class AddProductDTO {
   @IsString()
-  name: string;
+  readonly name: string;
 
-  @IsNumberString()
-  price: number;
-
-  @IsString()
-  imageUrl: string;
+  @IsNumber()
+  @Transform(({ value }) => parseInt(value))
+  readonly price: number;
 
   @IsString()
-  slug: string;
+  readonly imageUrl: string[];
 
   @IsString()
-  description: string;
+  readonly slug: string;
+
+  @IsString()
+  readonly description: string;
+
+  @IsString()
+  readonly sku: string;
+
+  @IsString()
+  readonly label: string;
+
+  @IsString()
+  readonly category: string;
 }
