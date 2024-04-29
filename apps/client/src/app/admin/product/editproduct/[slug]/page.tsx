@@ -5,9 +5,6 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useUpdateProductMutation } from "@shelby/api";
 
-import Container from "@/components/elements/Container";
-import { HeadMetaData } from "@/components/meta/HeadMetaData";
-
 import {
   EditProductFormInnerr,
   ProductDisplaySection,
@@ -15,7 +12,6 @@ import {
 
 import { queryClient } from "@/lib/react-query";
 import { EditProductFormSchema } from "@/types";
-import { supabaseClient } from "@/utils/supabase/client";
 
 const EditProductPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -49,8 +45,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <HeadMetaData title="Edit Product" />
-      <Container className="flex min-h-screen items-center justify-center flex-col gap-8 lg:gap-10">
+      <div className="flex min-h-screen items-center justify-center flex-col gap-8 lg:gap-10">
         {isEditMode ? (
           <>
             <EditProductFormInnerr
@@ -65,7 +60,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
             slug={slug}
           />
         )}
-      </Container>
+      </div>
     </>
   );
 };

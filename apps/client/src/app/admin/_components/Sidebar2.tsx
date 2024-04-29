@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import * as Icon from "lucide-react";
 
-interface SidebarProps {
+type SidebarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
-}
+};
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+const Sidebar2: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
   const pathname = usePathname();
 
   const trigger = useRef<any>(null);
@@ -60,7 +60,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-10 flex h-screen w-72.5 flex-col overflow-y-hidden bg-slate-900 duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`fixed top-0 inset-0 z-50 flex h-screen w-64 flex-col overflow-y-hidden bg-slate-900 duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -73,14 +73,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         >
           <Icon.LucideX color="white" size={18} />
         </button>
-      </div>
-
-      <div className="hidden lg:flex items-center justify-between gap-2 px-6 mt-6 lg:mt-6.5 ">
-        <Link href="/">
-          <h1 className="text-lg md:text-2xl font-bold uppercase text-white">
-            <span className="text-red-500">S</span>helby.Shop
-          </h1>
-        </Link>
       </div>
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
@@ -125,18 +117,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <Link
-                  href="/admin/chart"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("chart") && "bg-accent dark:bg-meta-4"
-                  }`}
-                >
-                  <Icon.BarChart />
-                  Chart
-                </Link>
-              </li>
-
-              <li>
-                <Link
                   href="/admin/setting"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("setting") && "bg-accent dark:bg-meta-4"
@@ -149,10 +129,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </ul>
           </div>
         </nav>
-        ]
       </div>
     </aside>
   );
 };
 
-export default Sidebar;
+export default Sidebar2;

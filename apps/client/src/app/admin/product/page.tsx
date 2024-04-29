@@ -68,6 +68,12 @@ const Product = () => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild className="focus:bg-yellow-500">
+                      <Link href={`/admin/product/${product.slug}/addvariant`}>
+                        <Icon.Plus size={14} className="mr-2" />
+                        Add variant
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="focus:bg-yellow-500">
                       <Link href={`/admin/product/editproduct/${product.slug}`}>
                         <Icon.Pen size={14} className="mr-2" />
                         Edit

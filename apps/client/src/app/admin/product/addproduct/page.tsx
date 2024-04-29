@@ -3,8 +3,6 @@
 import { AxiosError } from "axios";
 import { useAddProductMutation } from "@shelby/api";
 
-import Container from "@/components/elements/Container";
-
 import { AddProductFormInner } from "@/features/product/form/AddProduct";
 
 import { queryClient } from "@/lib/react-query";
@@ -36,9 +34,9 @@ const Add = () => {
 
   return (
     <>
-      <Container className="flex h-screen justify-center items-center">
+      <div className="flex h-screen justify-center items-center">
         <AddProductFormInner onSubmit={handleAddProductSubmit} />
-      </Container>
+      </div>
     </>
   );
 };
