@@ -1,28 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  MaxFileSizeValidator,
-  Param,
-  ParseFilePipe,
-  Patch,
-  Post,
-  Query,
-  Req,
-  Res,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Delete, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 
-import { AddProductDTO, UpdateProductDTO } from "./dto";
+import { AddProductDTO, AddProductVariantDTO, UpdateProductDTO } from "./dto";
 
 import { ProductService } from "./product.service";
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { Product } from "@prisma/client";
 
 @Controller("products")
 export class ProductContoller {
@@ -55,8 +37,26 @@ export class ProductContoller {
     )
     imageFile: Express.Multer.File,
   ) {
-    console.log(imageFile);
     const product = await this.productService.addProduct(addProductDTO, imageFile);
+
+    return product;
+  }
+
+  @Post("/:slug")
+  @UseGuards(SupabaseGuard)
+  @UseInterceptors(FileInterceptor("imageFile"))
+  public async addVariantProduct(
+    @Param("slug") slug: string,
+    @Body() addProductVariantDTO: AddProductVariantDTO,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 })],
+        fileIsRequired: false,
+      }),
+    )
+    imageFile: Express.Multer.File,
+  ) {
+    const product = await this.productService.addProductVariant(slug, addProductVariantDTO, imageFile);
 
     return product;
   }
@@ -76,6 +76,7 @@ export class ProductContoller {
     imageFile: Express.Multer.File,
   ) {
     const updateProduct = await this.productService.updateProduct(slug, updateProductDTO, imageFile);
+
     return updateProduct;
   }
 
