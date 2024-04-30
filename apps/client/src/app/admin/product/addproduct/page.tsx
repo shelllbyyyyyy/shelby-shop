@@ -34,7 +34,7 @@ const Add = () => {
 
   return (
     <>
-      <div className="flex h-screen justify-center items-center">
+      <div className="flex h-screen justify-center items-center my-36 sm:mt-2 sm:mb-24">
         <AddProductFormInner onSubmit={handleAddProductSubmit} />
       </div>
     </>

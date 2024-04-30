@@ -2,8 +2,6 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import Wrapper from "@/components/elements/Wrapper";
-
 import {
   SignInWithFacebookButton,
   SignInWithGithubButton,
@@ -15,7 +13,7 @@ import Register from "./register";
 export function Form() {
   return (
     <>
-      <Wrapper className="flex flex-col justify-center items-center">
+      <div className="flex w-[800px] flex-col justify-center items-center">
         <Tabs defaultValue="signin" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign In</TabsTrigger>
@@ -36,7 +34,7 @@ export function Form() {
           <SignInWithGoogleButton />
           <SignInWithFacebookButton />
         </div>
-      </Wrapper>
+      </div>
     </>
   );
 }

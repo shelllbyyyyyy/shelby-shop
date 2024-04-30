@@ -21,7 +21,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-col hover:scale-105 transition duration-300 space-y-2 overflow-hidden">
           <div className="relative rounded-lg w-full h-auto bg-white shadow-md aspect-square border border-black-100 hover:shadow-lg">
             <Image
-              src={imageUrl}
+              src={imageUrl[0]}
               alt={name}
               fill
               className="object-contain p-5"

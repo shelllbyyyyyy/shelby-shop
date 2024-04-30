@@ -8,7 +8,4 @@ export class EditProfileDTO {
   @IsString()
   @Length(12)
   readonly phoneNumber?: string;
-
-  @IsString()
-  readonly address?: string;
 }

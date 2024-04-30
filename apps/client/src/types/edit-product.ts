@@ -6,7 +6,7 @@ export const editProductFormSchema = z.object({
   description: z.string(),
   price: z.number(),
   slug: z.string(),
-  imageUrl: z.string(),
+  imageUrl: z.array(z.string()),
 });
 
 export type EditProductFormSchema = z.infer<typeof editProductFormSchema>;

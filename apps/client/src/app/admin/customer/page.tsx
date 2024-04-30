@@ -47,7 +47,6 @@ const UserPage = () => {
               <TableCell className="font-bold">{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.phoneNumber}</TableCell>
-              <TableCell>{user.address}</TableCell>
               <TableCell className="flex gap-2 justify-end">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="self-start">

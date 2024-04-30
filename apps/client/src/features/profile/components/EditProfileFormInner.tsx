@@ -48,7 +48,6 @@ export const EditProfileFormInner: React.FC<EditProfileFormInnerProps> = ({
     defaultValues: {
       name: profile?.data.name || undefined,
       phoneNumber: profile?.data.phoneNumber || undefined,
-      address: profile?.data.address || undefined,
     },
     resolver: zodResolver(editProfileFormSchema),
     reValidateMode: "onChange",
@@ -155,25 +154,6 @@ export const EditProfileFormInner: React.FC<EditProfileFormInnerProps> = ({
                             <Input
                               {...field}
                               placeholder="Enter your number . . ."
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Address</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Enter your address . . ."
                             />
                           </FormControl>
                           <FormMessage />

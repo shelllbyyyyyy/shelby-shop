@@ -11,7 +11,7 @@ export const editProfile: ApiFn<EditProfileDTOWithFile, AxiosPromise<User>> = (
   editProfileDTO,
   { axios = defaultAxios }
 ) => {
-  const { name, address, phoneNumber, profilePictureFile } = editProfileDTO;
+  const { name, phoneNumber, profilePictureFile } = editProfileDTO;
 
   const editProfileFormData = new FormData();
 

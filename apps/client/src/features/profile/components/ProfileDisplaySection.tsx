@@ -54,14 +54,6 @@ export const ProfileDisplaySection: React.FC<ProfileDisplaySection> = ({
                 </h3>
               </div>
             </CardContent>
-            <CardContent className="flex">
-              <div className="flex justify-between items-center w-full space-x-4 rounded-md border p-4">
-                <p className="text-sm md:text-md">Address :</p>
-                <h3 className="text-md md:text-lg font-semibold sm:text-2xl">
-                  {profile?.data.address}
-                </h3>
-              </div>
-            </CardContent>
             <CardFooter>
               <Button onClick={onEditProfile} variant="secondary">
                 Edit Profile

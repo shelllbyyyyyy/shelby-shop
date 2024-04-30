@@ -27,7 +27,7 @@ export const ProductDisplaySection: React.FC<ProductDisplaySection> = ({
   return (
     <div className="flex flex-col h-screen w-full gap-4 lg:gap-8">
       <div className="flex h-[400px] w-full justify-center items-center bg-accent/80">
-        <img src={product?.imageUrl} alt={product?.name} className="h-96" />
+        <img src={product?.imageUrl[0]} alt={product?.name} className="h-96" />
       </div>
 
       <div className="flex flex-col h-auto w-full justify-center items-center">

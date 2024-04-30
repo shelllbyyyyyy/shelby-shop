@@ -51,7 +51,7 @@ export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
       description: product?.description || "",
       price: product?.price || 0,
       slug: product?.slug || "",
-      imageUrl: product?.imageUrl || "",
+      imageUrl: product?.imageUrl || [""],
     },
     resolver: zodResolver(editProductFormSchema),
     reValidateMode: "onChange",
@@ -84,7 +84,7 @@ export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
         <div className="flex flex-col w-full justify-center items-center">
           <div className="flex h-[400px] w-full bg-accent/80 justify-center items-center">
             <img
-              src={previewProductPictureUrl}
+              src={previewProductPictureUrl[0]}
               alt={product?.name}
               className="h-96"
             />

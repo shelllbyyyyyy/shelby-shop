@@ -4,6 +4,6 @@ export type ProductCardProps = {
   name: string;
   description: string | undefined;
   price: number | undefined;
-  imageUrl: string;
+  imageUrl: string[];
   slug: string | undefined;
 };

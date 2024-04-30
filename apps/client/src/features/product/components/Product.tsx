@@ -45,7 +45,7 @@ export const Product = async ({ slug }: { slug: string }) => {
       <div className="flex flex-col w-full sm:grid sm:grid-cols-2 max-sm:space-y-5">
         <div className="relative h-auto w-full aspect-square bg-white shadow-md rounded-xl hover:shadow-xl hover:scale-105 transition duration-300 overflow-hidden">
           <Image
-            src={product!.imageUrl}
+            src={product!.imageUrl[0]}
             alt={product!.name}
             fill
             className="object-contain p-5"
@@ -76,12 +76,12 @@ export const Product = async ({ slug }: { slug: string }) => {
             <AddToCart
               id={product!.id}
               name={product!.name}
-              imageUrl={product!.imageUrl}
+              imageUrl={product!.imageUrl[0]}
               price={product!.price}
             />
             <BuyNow
               name={product!.name}
-              imageUrl={product!.imageUrl}
+              imageUrl={product!.imageUrl[0]}
               price={product!.price}
             />
           </div>
