@@ -6,7 +6,7 @@ export const addProductFormSchema = z.object({
   description: z.string(),
   price: z.number(),
   slug: z.string(),
-  imageUrl: z.array(z.string()),
+  imageUrl: z.string(),
   sku: z.string(),
   label: z.string(),
   category: z.string(),

@@ -2,9 +2,9 @@ import { cache } from "@/lib/chace";
 import { ProductGridSection } from "./ProductCard";
 import db from "@/db";
 
-const getAllProduct = cache(() => {
+const getAllProduct = () => {
   return db.product.findMany({});
-}, ["/home", "getAllProducts"]);
+};
 
 export const ProductList = async () => {
   return (

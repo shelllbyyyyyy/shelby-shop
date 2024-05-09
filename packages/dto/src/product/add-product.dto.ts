@@ -8,7 +8,7 @@ export class AddProductDTO {
   readonly price: number;
 
   @IsString()
-  readonly imageUrl: string[];
+  readonly imageUrl: string;
 
   @IsString()
   readonly slug: string;

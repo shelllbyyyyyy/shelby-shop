@@ -3,11 +3,10 @@ import React from "react";
 import Container from "@/components/elements/Container";
 import db from "@/db";
 import { ProductGridSection } from "@/features/product/components/ProductCard";
-import { cache } from "@/lib/chace";
 
-const getNewProducts = cache(() => {
+const getNewProducts = () => {
   return db.product.findMany({ orderBy: { name: "desc" }, take: 4 });
-}, ["/", "getNewProducts"]);
+};
 
 export const NewDrop = async () => {
   return (

@@ -49,7 +49,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
       price: 0,
       slug: "",
       imageFile: undefined,
-      imageUrl: [preview],
+      imageUrl: "",
       sku: "",
       label: "",
       category: "",

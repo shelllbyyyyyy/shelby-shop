@@ -5,13 +5,9 @@ import db from "@/db";
 import { ProductGridSection } from "@/features/product/components/ProductCard";
 import { cache } from "@/lib/chace";
 
-const getPopularProducts = cache(
-  () => {
-    return db.product.findMany({ orderBy: { name: "asc" }, take: 4 });
-  },
-  ["/", "getPopularProducts"],
-  { revalidate: 60 * 60 * 24 }
-);
+const getPopularProducts = () => {
+  return db.product.findMany({ orderBy: { name: "asc" }, take: 4 });
+};
 
 export const PopularProduct = async () => {
   return (
