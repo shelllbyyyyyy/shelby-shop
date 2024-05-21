@@ -10,7 +10,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ setSidebarOpen, sidebarOpen }) => {
   return (
-    <header className="fixed top-0 z-10 flex justify-between items-center h-16 sm:h-24 w-full bg-white shadow">
+    <header className="fixed top-0 z-20 flex justify-between items-center h-16 sm:h-24 w-full bg-white shadow">
       <div className="flex items-center gap-2 sm:gap-4 ml-6">
         <button
           aria-controls="sidebar"

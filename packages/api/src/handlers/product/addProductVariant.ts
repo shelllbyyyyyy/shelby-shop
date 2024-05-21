@@ -15,13 +15,9 @@ const addProductVariant: ApiFn<
   AddProductVariantDTOWithFile,
   AxiosPromise<ProductVariant>
 > = (payloadInput, { axios = defaultAxios }) => {
-  const { name, price, imageFile, sku, label, slug } = payloadInput;
+  const { price, imageFile, sku, label, slug } = payloadInput;
 
   const addProductFormData = new FormData();
-
-  if (name) {
-    addProductFormData.append("name", name);
-  }
 
   if (price) {
     addProductFormData.append("price", price.toString());

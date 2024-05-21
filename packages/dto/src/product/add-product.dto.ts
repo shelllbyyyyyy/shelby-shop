@@ -1,4 +1,4 @@
-import { IsNumberString, IsString } from "class-validator";
+import { IsArray, IsNumberString, IsString } from "class-validator";
 
 export class AddProductDTO {
   @IsString()
@@ -7,8 +7,9 @@ export class AddProductDTO {
   @IsNumberString()
   readonly price: number;
 
-  @IsString()
-  readonly imageUrl: string;
+  @IsArray()
+  @IsString({ each: true })
+  readonly imageUrl: string[];
 
   @IsString()
   readonly slug: string;

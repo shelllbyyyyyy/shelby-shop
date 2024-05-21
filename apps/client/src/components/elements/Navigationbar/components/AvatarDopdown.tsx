@@ -45,7 +45,7 @@ export const AvatarDropdown = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/admin/dashboard">Admin</Link>
+          <Link href="/admin/overview">Admin</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>

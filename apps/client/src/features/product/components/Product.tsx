@@ -12,7 +12,7 @@ import { ImageCarousel } from "./items/ImageCarousel";
 const getProducts = ({ slug }: { slug: string }) => {
   const product = db.product.findUnique({
     where: { slug: slug },
-    include: { ProductVariant: true },
+    include: { productVariant: true },
   });
 
   return product;

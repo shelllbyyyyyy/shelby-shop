@@ -40,18 +40,18 @@ type AddProductVariantFormInnerProps = {
   ) => void;
   onCancel?: () => void;
   slug: string;
+  isLoading: boolean;
 };
 
 export const AddProductVariantFormInner: React.FC<
   AddProductVariantFormInnerProps
-> = ({ onSubmit, onCancel, slug }) => {
+> = ({ onSubmit, onCancel, slug, isLoading }) => {
   const [selectedProductImageFile, setSelectedProductImageFile] =
     useState<File | null>();
   const [preview, setPreview] = useState<string>("");
 
   const form = useForm<AddProductVariantFormSchema>({
     defaultValues: {
-      name: "",
       price: 0,
       imageFile: undefined,
       imageUrl: "",
@@ -99,22 +99,6 @@ export const AddProductVariantFormInner: React.FC<
                 )}
                 className="flex flex-col gap-1"
               >
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-
                 <CardContent>
                   <FormField
                     control={form.control}
@@ -202,11 +186,16 @@ export const AddProductVariantFormInner: React.FC<
 
                 <CardFooter>
                   <div className="mt-4 flex gap-2">
-                    <Button size="sm" type="submit">
+                    <Button size="sm" type="submit" disabled={isLoading}>
                       Submit
                     </Button>
                     {onCancel && (
-                      <Button onClick={onCancel} size="sm" variant="secondary">
+                      <Button
+                        onClick={onCancel}
+                        size="sm"
+                        variant="secondary"
+                        disabled={isLoading}
+                      >
                         Cancel
                       </Button>
                     )}

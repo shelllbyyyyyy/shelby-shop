@@ -19,7 +19,7 @@ export default function DefaultLayout({
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className="relative flex w-full min-h-screen mt-20 sm:mt-28">
           <Sidebar2 sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <div className="px-4 w-full lg:w-[calc(100%-256px)] lg:ml-64">
+          <div className="px-4 w-full lg:w-[calc(100%-256px)] lg:ml-64 mb-5">
             {children}
           </div>
         </main>

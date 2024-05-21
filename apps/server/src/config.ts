@@ -16,6 +16,9 @@ export const config = {
   get supabaseUrl() {
     return getRequired("SUPABASE_URL").asString();
   },
+  get supabaseBucketUrl() {
+    return getRequired("SUPABASE_BUCKET_URL").asString();
+  },
   get supabaseKey() {
     return getRequired("SUPABASE_KEY").asString();
   },

@@ -10,22 +10,22 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-accent/80 text-primary-foreground hover:bg-accent uppercase",
+          "bg-accent text-primary-foreground hover:bg-accent/90 capitalize",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 uppercase",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 capitalize",
         outline:
-          "border border-input bg-background hover:border-accent hover:text-accent uppercase",
+          "border border-input bg-white/10 hover:border-accent hover:text-accent capitalize",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 uppercase",
-        ghost: "hover:text-accent-foreground uppercase",
-        link: "text-primary underline-offset-4 hover:underline uppercase",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 capitalize",
+        ghost: "hover:bg-accent hover:text-accent-foreground capitalize",
+        link: "text-primary underline-offset-4 hover:underline capitalize",
       },
       size: {
-        default: "h-8 md:h-10 px-4 py-2",
-        sm: "h-8 rounded-md px-3",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        circle: "h-8 w-8 md:h-10 md:w-10 rounded-3xl",
+        circle: "h-10 w-10 rounded-full",
       },
     },
     defaultVariants: {

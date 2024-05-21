@@ -7,45 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+    id                String                @id(map: "User_pkey") @default(dbgenerated("auth.uid()")) @db.Uuid
+    email             String?               @unique(map: "User_email_key") @db.VarChar
+    name              String?
+    profilePictureUrl String?
+    phoneNumber       String?               @db.VarChar(50)
+    createdAt         DateTime              @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime              @updatedAt @db.Timestamptz(6)
+
+    cart    Cart[]
+    address Address[]
+}
+
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Cart {
-  id               String         @id @default(dbgenerated("gen_random_uuid()"))
-  userId           String         @db.Uuid
+  id               String                 @id @default(dbgenerated("gen_random_uuid()"))
   quantity         Int
   deletedAt        DateTime?
   checkoutAt       DateTime?
+  createdAt        DateTime               @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime               @updatedAt @db.Timestamptz(6)
+  
   productVariantId String
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime?      @updatedAt
-  item             ProductVariant @relation(fields: [productVariantId], references: [id])
-  Profiles         User           @relation(fields: [userId], references: [id])
+  ProductVariant   ProductVariant         @relation(fields: [productVariantId], references: [id])
+
+  userId           String                 @db.Uuid
+  User             User                   @relation(fields: [userId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Category {
   id                   String                 @id @default(dbgenerated("gen_random_uuid()"))
   name                 String                 @unique
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime?
-  CategoriesOnProducts CategoriesOnProducts[]
-}
+  createdAt            DateTime               @default(now()) @db.Timestamptz(6)
+  updatedAt            DateTime               @updatedAt @db.Timestamptz(6)
 
-model CategoriesOnProducts {
-  productId  String
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  product    Product  @relation(fields: [productId], references: [id])
-
-  @@id([productId, categoryId])
+  categoriesOnProducts CategoriesOnProducts[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Inventory {
-  id               String          @id @default(dbgenerated("gen_random_uuid()"))
-  productVariantId String
-  quantity         Int
-  status           InventoryStatus
-  item             ProductVariant  @relation(fields: [productVariantId], references: [id])
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()"))
+  quantity             Int
+  status               InventoryStatus
+
+  productVariantId     String
+  ProductVariant       ProductVariant         @relation(fields: [productVariantId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -53,57 +61,68 @@ model Product {
   id                   String                 @id @default(dbgenerated("gen_random_uuid()"))
   name                 String
   price                Int
+  imageUrl             String[]
   slug                 String                 @unique
   description          String                 @default("")
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime?              @updatedAt
-  imageUrl             String[]
-  CategoriesOnProducts CategoriesOnProducts[]
-  ProductVariant       ProductVariant[]
+  createdAt            DateTime               @default(now()) @db.Timestamptz(6)
+  updatedAt            DateTime               @updatedAt @db.Timestamptz(6)
+
+  categoriesOnProducts CategoriesOnProducts[]
+  productVariant       ProductVariant[]
+}
+
+model CategoriesOnProducts {
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@id([productId, categoryId])
 }
 
 model ProductVariant {
-  id        String      @id @default(dbgenerated("gen_random_uuid()"))
-  sku       String
-  label     String
-  productId String
-  imageUrl  String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime?
-  name      String
-  price     Int
-  Cart      Cart[]
-  Inventory Inventory[]
-  product   Product     @relation(fields: [productId], references: [id])
+  id                String                 @id @default(dbgenerated("gen_random_uuid()"))
+  sku               String                 
+  price             Int
+  imageUrl          String
+  label             String
+  productId         String
+  createdAt         DateTime               @default(now()) @db.Timestamptz(6)
+  updatedAt         DateTime               @updatedAt @db.Timestamptz(6)
+  
+  cart              Cart[]
+  inventory         Inventory[]
+  product           Product?                @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model Address {
-  id            String    @id @default(dbgenerated("gen_random_uuid()"))
-  label         String
-  detail        String
-  googleMapsUrl String
-  phoneNumber   String
-  recipientName String
-  userId        String    @db.Uuid
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime?
-  User          User      @relation(fields: [userId], references: [id])
-}
-
-model User {
-  id                String    @id @default(dbgenerated("auth.uid()")) @db.Uuid
-  email             String?   @unique @db.VarChar
-  name              String?
-  profilePictureUrl String?
-  phoneNumber       String?   @db.VarChar(50)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime?
-  Address           Address[]
-  Cart              Cart[]
-}
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 
 enum InventoryStatus {
   AVAILABLE
   ON_ORDER
   RESERVED
+}
+
+model Address {
+    id                String                @id @default(dbgenerated("gen_random_uuid()"))
+    user              User                  @relation(fields: [userId], references: [id])
+    userId            String                @db.Uuid
+    label             String
+    detail            String
+    googleMapsUrl     String
+    phoneNumber       String
+    recipientName     String
+    createdAt         DateTime              @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime              @updatedAt @db.Timestamptz(6)
+}
+
+model Billboard {
+  id                String                  @id @default(dbgenerated("gen_random_uuid()"))
+  tittle            String
+  label             String
+  section           String                  @unique
+  imageUrl          String
+  createdAt         DateTime                @default(now()) @db.Timestamptz(6)
+  updatedAt         DateTime                @updatedAt @db.Timestamptz(6)
 }

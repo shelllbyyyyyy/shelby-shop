@@ -1,7 +1,7 @@
 import React from "react";
 
 import Container from "@/components/elements/Container";
-import { ProductList } from "@/features/product/components/ProductList";
+import { ProductList } from "@/features/product";
 
 const HomePage = () => {
   return (

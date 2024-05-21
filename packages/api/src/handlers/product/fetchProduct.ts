@@ -5,7 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ApiFn, ExtractFnReturnType, QueryConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const product = Prisma.validator<Prisma.ProductDefaultArgs>()({});
+const product = Prisma.validator<Prisma.ProductDefaultArgs>()({
+  include: {
+    categoriesOnProducts: { select: { category: { select: { name: true } } } },
+  },
+});
 
 type Product = Prisma.ProductGetPayload<typeof product>;
 
@@ -28,7 +32,6 @@ export const useFetchProductQuery = ({ config }: UseGetProductQueryOptions) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     queryKey: ["product"],
     queryFn: () => fetchProduct({}, { axios }),
-    staleTime: 60 * 1000, // 60 seconds
     ...config,
   });
 };

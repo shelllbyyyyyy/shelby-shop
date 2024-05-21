@@ -10,7 +10,7 @@ import { HeadMetaData } from "@/components/meta/HeadMetaData";
 import {
   EditProfileFormInner,
   ProfileDisplaySection,
-} from "@/features/profile/components";
+} from "@/features/profile";
 
 import { queryClient } from "@/lib/react-query";
 import { EditProfileFormSchema } from "@/types";

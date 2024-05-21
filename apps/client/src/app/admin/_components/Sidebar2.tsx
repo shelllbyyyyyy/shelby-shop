@@ -81,13 +81,37 @@ const Sidebar2: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <Link
-                  href="/admin/dashboard"
+                  href="/admin/overview"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("dashboard") && "bg-accent dark:bg-meta-4"
+                    pathname.includes("overview") && "bg-accent dark:bg-meta-4"
                   }`}
                 >
                   <Icon.LayoutDashboardIcon />
-                  Dashboard
+                  Overview
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/admin/billboard"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("billboard") && "bg-accent dark:bg-meta-4"
+                  }`}
+                >
+                  <Icon.LucideWalletCards />
+                  Billboard
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/admin/category"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("category") && "bg-accent dark:bg-meta-4"
+                  }`}
+                >
+                  <Icon.List />
+                  Category
                 </Link>
               </li>
 

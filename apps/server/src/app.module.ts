@@ -6,9 +6,11 @@ import { LoggerMiddleware } from "@/core/logger/logger.middleware";
 import { ProductModule } from "@/core/product/product.module";
 import { ProfileModule } from "@/core/profile/profile.module";
 import { UserModule } from "@/core/user/user.module";
+import { CategoryModule } from "@/core/category/category.module";
+import { BillboardModule } from "./core/billboard/billboard.module";
 
 @Module({
-  imports: [PassportModule, SupabaseModule, ProfileModule, ProductModule, UserModule],
+  imports: [PassportModule, SupabaseModule, CategoryModule, BillboardModule, ProfileModule, ProductModule, UserModule],
   controllers: [],
   providers: [],
 })

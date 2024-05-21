@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/table";
 
 import { axios } from "@/lib/axios";
-import { toRupiah } from "@/lib/utils";
+import { formatDate, toRupiah } from "@/lib/utils";
 
 const Product = () => {
   const { data: product } = useFetchProductQuery({});
@@ -37,15 +37,17 @@ const Product = () => {
       <div className="flex justify-between mb-5">
         <h1 className="text-4xl font-medium">Product</h1>
         <Link href="/admin/product/addproduct">
-          <Button className="bg-green-500">Add a Product</Button>
+          <Button className="bg-primary">Add a Product</Button>
         </Link>
       </div>
       <Table>
-        <TableHeader className="bg-accent/90 text-white">
+        <TableHeader>
           <TableRow className="hover:bg-muted/0">
             <TableHead>Product Name</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Updated At</TableHead>
             <TableHead className="w-0">
               <span className="sr-only">Others</span>
             </TableHead>
@@ -56,7 +58,11 @@ const Product = () => {
             <TableRow key={product.id}>
               <TableCell className="font-bold">{product.name}</TableCell>
               <TableCell>{toRupiah(product.price)}</TableCell>
-              <TableCell>{product.description}</TableCell>
+              <TableCell className="line-clamp-1">
+                {product.description}
+              </TableCell>
+              <TableCell>{product.createdAt.toLocaleString()}</TableCell>
+              <TableCell>{product.updatedAt.toLocaleString()}</TableCell>
               <TableCell className="flex gap-2 justify-end">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="self-start">

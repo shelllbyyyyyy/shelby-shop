@@ -1,6 +1,6 @@
 import { Body, Controller, Get, MaxFileSizeValidator, NotFoundException, ParseFilePipe, Patch, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { EditProfileDTO } from "./dto";
+import { EditProfileDTO } from "@shelby/dto";
 
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
 import { AuthUser } from "@/core/auth/types";

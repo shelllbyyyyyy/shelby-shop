@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 
-import { AddProductDTO, AddProductVariantDTO, UpdateProductDTO } from "./dto";
+import { AddProductDTO, AddProductVariantDTO, UpdateProductDTO } from "@shelby/dto";
 
 import { ProductService } from "./product.service";
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
@@ -84,5 +84,11 @@ export class ProductContoller {
   @UseGuards(SupabaseGuard)
   public async deleteProduct(@Param("slug") slug: string) {
     await this.productService.deleteProduct(slug);
+  }
+
+  @Delete("/variant/:id")
+  @UseGuards(SupabaseGuard)
+  public async deleteProductVariant(@Param("id") id: string) {
+    await this.productService.deleteProductVariant(id);
   }
 }

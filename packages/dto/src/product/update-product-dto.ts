@@ -1,5 +1,6 @@
 import { Transform } from "class-transformer";
 import {
+  IsArray,
   IsNumber,
   IsOptional,
   IsString,
@@ -11,31 +12,24 @@ import {
 
 export class UpdateProductDTO {
   @IsString()
-  @MinLength(3)
-  @MaxLength(100)
   @IsOptional()
-  name?: string;
+  readonly name?: string;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
-  price?: number;
+  readonly price?: number;
 
   @IsString()
-  @MinLength(3)
-  @MaxLength(100)
   @IsOptional()
-  description?: string;
+  readonly description?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  readonly imageUrl?: string[];
 
   @IsString()
-  @MinLength(3)
-  @MaxLength(100)
   @IsOptional()
-  image?: string;
-
-  @IsString()
-  @MinLength(3)
-  @MaxLength(100)
-  @IsOptional()
-  slug?: string;
+  readonly slug?: string;
 }

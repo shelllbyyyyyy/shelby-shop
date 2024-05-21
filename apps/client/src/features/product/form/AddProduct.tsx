@@ -32,11 +32,13 @@ import { Textarea } from "@/components/ui/textarea";
 type AddProductFormInnerProps = {
   onSubmit: (values: AddProductFormSchema & { imageFile: File | null }) => void;
   onCancel?: () => void;
+  isLoading: boolean;
 };
 
 export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
   onSubmit,
   onCancel,
+  isLoading,
 }) => {
   const [selectedProductImageFile, setSelectedProductImageFile] =
     useState<File | null>();
@@ -49,7 +51,7 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
       price: 0,
       slug: "",
       imageFile: undefined,
-      imageUrl: "",
+      imageUrl: [""],
       sku: "",
       label: "",
       category: "",
@@ -146,22 +148,6 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
                 <CardContent>
                   <FormField
                     control={form.control}
-                    name="sku"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>SKU</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-
-                <CardContent>
-                  <FormField
-                    control={form.control}
                     name="label"
                     render={({ field }) => (
                       <FormItem>
@@ -228,11 +214,16 @@ export const AddProductFormInner: React.FC<AddProductFormInnerProps> = ({
 
                 <CardFooter>
                   <div className="mt-4 flex gap-2">
-                    <Button size="sm" type="submit">
+                    <Button size="sm" type="submit" disabled={isLoading}>
                       Submit
                     </Button>
                     {onCancel && (
-                      <Button onClick={onCancel} size="sm" variant="secondary">
+                      <Button
+                        onClick={onCancel}
+                        disabled={isLoading}
+                        size="sm"
+                        variant="secondary"
+                      >
                         Cancel
                       </Button>
                     )}

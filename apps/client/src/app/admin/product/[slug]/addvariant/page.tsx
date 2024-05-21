@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { AxiosError } from "axios";
 import { useAddProductVariantMutation } from "@shelby/api";
 
-import { AddProductVariantFormInner } from "@/features/product/form/AddVariant";
+import { AddProductVariantFormInner } from "@/features/product";
 
 import { queryClient } from "@/lib/react-query";
 import { AddProductVariantFormSchema } from "@/types";
 
 const Add = ({ params }: { params: { slug: string } }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { slug } = params;
 
   const { mutateAsync: addProductVariantMutate } = useAddProductVariantMutation(
@@ -28,6 +30,7 @@ const Add = ({ params }: { params: { slug: string } }) => {
     }
   ) => {
     try {
+      setLoading(true);
       await addProductVariantMutate(values);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -36,6 +39,8 @@ const Add = ({ params }: { params: { slug: string } }) => {
         alert(err.response?.data.errors[0]);
         return;
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,6 +50,7 @@ const Add = ({ params }: { params: { slug: string } }) => {
         <AddProductVariantFormInner
           onSubmit={handleAddProductSubmit}
           slug={slug}
+          isLoading={loading}
         />
       </div>
     </>

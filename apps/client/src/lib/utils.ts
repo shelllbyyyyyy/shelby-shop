@@ -31,3 +31,5 @@ export const getItem = cache(async (slug: string) => {
 export const wait = (duration: number) => {
   return new Promise((resolve) => setTimeout(resolve, duration));
 };
+
+export const formatDate = (date: string) => new Date(date).toISOString();

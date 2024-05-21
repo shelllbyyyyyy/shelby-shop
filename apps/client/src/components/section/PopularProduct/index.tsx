@@ -2,8 +2,7 @@ import React from "react";
 
 import Container from "@/components/elements/Container";
 import db from "@/db";
-import { ProductGridSection } from "@/features/product/components/ProductCard";
-import { cache } from "@/lib/chace";
+import { ProductGridSection } from "@/features/product";
 
 const getPopularProducts = () => {
   return db.product.findMany({ orderBy: { name: "asc" }, take: 4 });
