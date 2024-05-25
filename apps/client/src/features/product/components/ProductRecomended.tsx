@@ -15,7 +15,7 @@ export const ProductRecomended = async () => {
         <h2 className="text-xl font-semibold sm:text-2xl text-center">
           You may also like
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 sm:gap-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6 gap-2">
           <ProductGridSection productsFetcher={getRecommendedProduct} />
         </div>
       </div>

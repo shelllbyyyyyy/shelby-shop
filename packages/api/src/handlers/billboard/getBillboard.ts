@@ -26,7 +26,7 @@ export const useGetBillboardQuery = (
   const { axios, api } = useApiClient();
 
   return useQuery({
-    queryKey: ["billboard", query],
+    queryKey: ["getBillboard", query],
     queryFn: async () => {
       const Billboard = await api(getBillboard(query, { axios }));
 

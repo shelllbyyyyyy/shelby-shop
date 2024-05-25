@@ -24,7 +24,7 @@ export class ProductService {
               category: true,
             },
           },
-          productVariant: true,
+          productVariant: { include: { inventory: true } },
         },
       });
     } catch (error) {
@@ -83,6 +83,12 @@ export class ProductService {
               imageUrl: fileUrl,
               label: addProductDTO.label,
               sku: upperCase(sku),
+              inventory: {
+                create: {
+                  quantity: 1,
+                  status: "AVAILABLE",
+                },
+              },
             },
           },
           categoriesOnProducts: {
@@ -97,7 +103,7 @@ export class ProductService {
           },
         },
         include: {
-          productVariant: true,
+          productVariant: { include: { inventory: true } },
           categoriesOnProducts: {
             include: {
               category: true,
@@ -194,6 +200,18 @@ export class ProductService {
     }
   }
 
+  public async getAllProductVariant() {
+    try {
+      return await this.prismaService.productVariant.findMany({
+        include: {
+          inventory: true,
+        },
+      });
+    } catch (error) {
+      throw new UnprocessableEntityException("something went wrong !!!");
+    }
+  }
+
   public async addProductVariant(slug: string, addProductVariantDTO: AddProductVariantDTO, imageFile: Express.Multer.File): Promise<ProductVariantModel> {
     const addProductPayload: Prisma.ProductVariantCreateInput = {
       ...addProductVariantDTO,
@@ -234,6 +252,12 @@ export class ProductService {
           price: addProductPayload.price,
           label: addProductPayload.label,
           sku: upperCase(addProductPayload.sku),
+          inventory: {
+            create: {
+              status: "AVAILABLE",
+              quantity: 1,
+            },
+          },
           product: {
             connect: {
               slug: slug,

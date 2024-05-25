@@ -28,7 +28,7 @@ export const useFetchCategoryQuery = ({
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["category"],
+    queryKey: ["getCategory"],
     queryFn: () => fetchCategory({}, { axios }),
     staleTime: 60 * 1000, // 60 seconds
     ...config,

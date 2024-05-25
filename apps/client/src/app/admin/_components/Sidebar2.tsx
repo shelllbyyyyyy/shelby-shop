@@ -129,6 +129,18 @@ const Sidebar2: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
               <li>
                 <Link
+                  href="/admin/inventory"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("inventory") && "bg-accent dark:bg-meta-4"
+                  }`}
+                >
+                  <Icon.IceCream />
+                  Inventory
+                </Link>
+              </li>
+
+              <li>
+                <Link
                   href="/admin/customer"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("customer") && "bg-accent dark:bg-meta-4"

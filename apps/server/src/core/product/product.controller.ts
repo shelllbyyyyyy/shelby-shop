@@ -80,6 +80,12 @@ export class ProductContoller {
     return updateProduct;
   }
 
+  @Get("/variants")
+  @UseGuards(SupabaseGuard)
+  public async getAllProductVariant() {
+    return await this.productService.getAllProductVariant();
+  }
+
   @Delete("/:slug")
   @UseGuards(SupabaseGuard)
   public async deleteProduct(@Param("slug") slug: string) {

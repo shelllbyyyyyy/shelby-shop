@@ -36,7 +36,7 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
   const { mutateAsync: addCartMutate } = useAddCartMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["cart", String(data.id)],
+        queryKey: ["getCart"],
       });
     },
   });

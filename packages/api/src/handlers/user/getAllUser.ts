@@ -26,7 +26,7 @@ export const useGetAllUserQuery = ({ config }: UseGetAllUserQueryOptions) => {
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["user"],
+    queryKey: ["getUser"],
     queryFn: () => getAllUser({}, { axios }),
     staleTime: 60 * 1000, // 60 seconds
     ...config,

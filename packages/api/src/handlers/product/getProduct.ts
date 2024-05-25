@@ -23,7 +23,7 @@ export const useGetProductQuery = (
   const { axios, api } = useApiClient();
 
   return useQuery({
-    queryKey: ["product", query],
+    queryKey: ["getProduct", query],
     queryFn: async () => {
       const product = await api(getProduct(query, { axios }));
 

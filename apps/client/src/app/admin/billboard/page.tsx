@@ -4,7 +4,6 @@ import { useFetchBillboardQuery } from "@shelby/api";
 import Link from "next/link";
 import * as Icon from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +22,7 @@ import {
 } from "@/components/ui/table";
 
 import { axios } from "@/lib/axios";
+import { AddBillboard, EditBillboard } from "@/features/billboard";
 
 const Billboard = () => {
   const { data: billboard } = useFetchBillboardQuery({});
@@ -35,9 +35,7 @@ const Billboard = () => {
     <>
       <div className="flex justify-between mb-5">
         <h1 className="text-4xl font-medium">Billboard</h1>
-        <Link href="/admin/billboard/addbillboard">
-          <Button className="bg-primary">Add a Billboard</Button>
-        </Link>
+        <AddBillboard />
       </div>
       <Table>
         <TableHeader>
@@ -70,13 +68,15 @@ const Billboard = () => {
                       Preferences
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="focus:bg-yellow-500">
-                      <Link
-                        href={`/admin/billboard/editbillboard/${billboard.id}`}
-                      >
+                    <DropdownMenuItem
+                      asChild
+                      className="focus:bg-yellow-500"
+                      onSelect={(e) => e.preventDefault()}
+                    >
+                      <div>
                         <Icon.Pen size={14} className="mr-2" />
-                        Edit
-                      </Link>
+                        <EditBillboard id={billboard.id} />
+                      </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="font-semibold text-red-500"

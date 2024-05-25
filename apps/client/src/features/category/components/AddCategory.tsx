@@ -3,25 +3,24 @@
 import { AxiosError } from "axios";
 import { useAddCategoryMutation } from "@shelby/api";
 
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AddCategoryFormInner } from "@/features/category";
 
 import { queryClient } from "@/lib/react-query";
 import { AddCategoryFormSchema } from "@/types";
-import { useState } from "react";
 
-const AddCategory = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { mutateAsync: addCategoryMutate } = useAddCategoryMutation({
+export const AddCategory = () => {
+  const { mutateAsync: addCategoryMutate, isPending } = useAddCategoryMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["category"],
+        queryKey: ["getCategory"],
       });
     },
   });
 
   const handleAddCategorySubmit = async (values: AddCategoryFormSchema) => {
     try {
-      setLoading(true);
       await addCategoryMutate(values);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -30,21 +29,22 @@ const AddCategory = () => {
         alert(err.response?.data.errors[0]);
         return;
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className="flex h-screen">
-        <AddCategoryFormInner
-          onSubmit={handleAddCategorySubmit}
-          isLoading={loading}
-        />
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Update Inventory</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[900px]">
+          <AddCategoryFormInner
+            onSubmit={handleAddCategorySubmit}
+            isLoading={isPending}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
-
-export default AddCategory;

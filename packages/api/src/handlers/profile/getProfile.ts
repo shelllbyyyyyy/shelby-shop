@@ -26,7 +26,7 @@ export const useGetProfileQuery = ({ config }: UseGetProfileQueryOptions) => {
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["profile"],
+    queryKey: ["getProfile"],
     queryFn: () => getProfile({}, { axios }),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...config,

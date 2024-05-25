@@ -25,7 +25,7 @@ export const useGetCategoryQuery = (
   const { axios, api } = useApiClient();
 
   return useQuery({
-    queryKey: ["category", query],
+    queryKey: ["getCategory", query],
     queryFn: async () => {
       const category = await api(getCategory(query, { axios }));
 

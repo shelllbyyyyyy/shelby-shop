@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 
 import { axios } from "@/lib/axios";
+import { AddCategory } from "@/features/category";
 
 const category = () => {
   const { data: category } = useFetchCategoryQuery({});
@@ -35,9 +36,7 @@ const category = () => {
     <>
       <div className="flex justify-between mb-5">
         <h1 className="text-4xl font-medium">Category</h1>
-        <Link href="/admin/category/addcategory">
-          <Button className="bg-primary">Add a category</Button>
-        </Link>
+        <AddCategory />
       </div>
       <Table>
         <TableHeader>

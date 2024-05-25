@@ -15,18 +15,20 @@ type ImageCarouselProps = {
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [thumbnailApi, setThumbnailApi] = useState<CarouselApi>();
-  const [mainApi, setMainApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  const [mainApi, setMainApi] = useState<CarouselApi | undefined>();
+  const [current, setCurrent] = useState<number>(0);
 
   const mainImage = useMemo(
     () =>
       images.map((image, index) => (
-        <CarouselItem key={index} className="relative aspect-square w-full">
+        <CarouselItem
+          key={index}
+          className="h-96 w-full aspect-square overflow-hidden"
+        >
           <Image
             src={image}
             alt={`Carousel Main Image ${index + 1}`}
-            width={900}
-            height={0}
+            fill
             style={{ objectFit: "contain" }}
           />
         </CarouselItem>
@@ -34,25 +36,22 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     [images]
   );
 
-  const thumbnailImages = useMemo(
-    () =>
-      images.map((image, index) => (
-        <CarouselItem
-          key={index}
-          className="relative aspect-square w-full basis-1/4 cursor-pointer"
-          onClick={() => handleClick(index)}
-        >
-          <Image
-            className={`${index === current ? "border-4 rounded-xl border-slate-200" : ""}`}
-            src={image}
-            fill
-            alt={`Carousel Thumbnail Image ${index + 1}`}
-            style={{ objectFit: "contain" }}
-          />
-        </CarouselItem>
-      )),
-    [images, current]
-  );
+  const thumbnailImages = () =>
+    images.map((image, index) => (
+      <CarouselItem
+        key={index}
+        className="relative aspect-square w-full basis-1/4 cursor-pointer"
+        onClick={() => handleClick(index)}
+      >
+        <Image
+          className={`${index === current ? "border-2 rounded-xl border-accent/50" : ""}`}
+          src={image}
+          fill
+          alt={`Carousel Thumbnail Image ${index + 1}`}
+          style={{ objectFit: "contain" }}
+        />
+      </CarouselItem>
+    ));
 
   useEffect(() => {
     if (!mainApi || !thumbnailApi) {
@@ -102,7 +101,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         className="w-full max-w-xs"
       >
         <CarouselContent className="m-1 gap-2">
-          {thumbnailImages}
+          {thumbnailImages()}
         </CarouselContent>
       </Carousel>
     </div>

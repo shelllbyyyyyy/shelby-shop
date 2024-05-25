@@ -3,18 +3,18 @@
 import { AxiosError } from "axios";
 import { useAddProductMutation } from "@shelby/api";
 
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AddProductFormInner } from "@/features/product";
 
 import { queryClient } from "@/lib/react-query";
 import { AddProductFormSchema } from "@/types";
-import { useState } from "react";
 
-const Add = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { mutateAsync: addProductMutate } = useAddProductMutation({
+export const AddProduct = () => {
+  const { mutateAsync: addProductMutate, isPending } = useAddProductMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["product"],
+        queryKey: ["getProduct"],
       });
     },
   });
@@ -23,7 +23,6 @@ const Add = () => {
     values: AddProductFormSchema & { imageFile: File | null }
   ) => {
     try {
-      setLoading(true);
       await addProductMutate(values);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -32,21 +31,22 @@ const Add = () => {
         alert(err.response?.data.errors[0]);
         return;
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className="flex h-screen justify-center items-center my-36 sm:mt-2 sm:mb-24">
-        <AddProductFormInner
-          onSubmit={handleAddProductSubmit}
-          isLoading={loading}
-        />
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Add product</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[900px]">
+          <AddProductFormInner
+            onSubmit={handleAddProductSubmit}
+            isLoading={isPending}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
-
-export default Add;

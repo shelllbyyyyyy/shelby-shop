@@ -8,13 +8,12 @@ import { useGetProductQuery } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -78,136 +77,124 @@ export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
 
   return (
     <>
-      <div className="flex flex-col h-screen w-full gap-5">
-        <div className="relative h-auto w-full rounded-xl overflow-hidden aspect-square">
-          {preview.length ? (
-            <Image
-              src={preview as string}
-              alt={product?.name as string}
-              fill
-              className="object-contain rounded-xl"
+      <div className="flex flex-col w-full gap-2 py-10">
+        <DialogHeader>
+          <DialogTitle>Update Product</DialogTitle>
+          <div className="relative h-96 w-full rounded-xl overflow-hidden aspect-square">
+            {preview.length ? (
+              <Image
+                src={preview as string}
+                alt={product?.name as string}
+                fill
+                className="object-contain rounded-xl"
+              />
+            ) : (
+              <Image
+                src={product?.imageUrl[0] as string}
+                alt={product?.name as string}
+                fill
+                className="object-contain rounded-xl"
+              />
+            )}
+          </div>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit((values) =>
+              onSubmit({
+                ...values,
+                imageFile: selectedProductImageFile || undefined,
+              })
+            )}
+            className="flex flex-col gap-1"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          ) : (
-            <Image
-              src={product?.imageUrl[0] as string}
-              alt={product?.name as string}
-              fill
-              className="object-contain rounded-xl"
-            />
-          )}
-        </div>
 
-        <div className="flex flex-col h-auto w-full justify-center items-center">
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>Edit Product</CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit((values) =>
-                  onSubmit({
-                    ...values,
-                    imageFile: selectedProductImageFile || undefined,
-                  })
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="price"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...form.register("price", {
+                        valueAsNumber: true,
+                      })}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="imageFile"
+              rules={{ required: "Product image is required" }}
+              render={({ field: { value, onChange, ...field } }) => (
+                <FormItem>
+                  <FormLabel>Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={value?.fileName}
+                      accept="image/jpg, image/jpeg, image/svg"
+                      onChange={handleInputProductPictureChange}
+                      type="file"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <DialogFooter>
+              <div className="mt-4 flex gap-2">
+                <Button disabled={isLoading} size="sm" type="submit">
+                  Save
+                </Button>
+                {onCancel && (
+                  <Button
+                    onClick={onCancel}
+                    size="sm"
+                    variant="secondary"
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </Button>
                 )}
-                className="flex flex-col gap-1"
-              >
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="price"
-                    render={() => (
-                      <FormItem>
-                        <FormLabel>Price</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...form.register("price", {
-                              valueAsNumber: true,
-                            })}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="imageFile"
-                    rules={{ required: "Product image is required" }}
-                    render={({ field: { value, onChange, ...field } }) => (
-                      <FormItem>
-                        <FormLabel>Image</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            value={value?.fileName}
-                            accept="image/jpg, image/jpeg, image/svg"
-                            onChange={handleInputProductPictureChange}
-                            type="file"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-
-                <CardFooter>
-                  <div className="mt-4 flex gap-2">
-                    <Button disabled={isLoading} size="sm" type="submit">
-                      Save
-                    </Button>
-                    {onCancel && (
-                      <Button
-                        onClick={onCancel}
-                        size="sm"
-                        variant="secondary"
-                        disabled={isLoading}
-                      >
-                        Cancel
-                      </Button>
-                    )}
-                  </div>
-                </CardFooter>
-              </form>
-            </Form>
-          </Card>
-        </div>
+              </div>
+            </DialogFooter>
+          </form>
+        </Form>
       </div>
     </>
   );

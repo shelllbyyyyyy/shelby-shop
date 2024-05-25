@@ -30,7 +30,7 @@ export const useFetchProductQuery = ({ config }: UseGetProductQueryOptions) => {
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["product"],
+    queryKey: ["getProduct"],
     queryFn: () => fetchProduct({}, { axios }),
     ...config,
   });

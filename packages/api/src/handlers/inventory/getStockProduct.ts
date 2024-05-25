@@ -26,7 +26,7 @@ export const useGetStockProductQuery = (
   const { axios, api } = useApiClient();
 
   return useQuery({
-    queryKey: ["Inventory", query],
+    queryKey: ["getInventory", query],
     queryFn: async () => {
       const Inventory = await api(GetStockProduct(query, { axios }));
 

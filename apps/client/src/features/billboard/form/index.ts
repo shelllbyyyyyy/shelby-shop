@@ -1,3 +1,3 @@
-export * from "./AddBillboard";
+export * from "./AddBillboardformInner";
 export * from "./EditBillboardFormInner";
-export * from "./ProductBillboardSection";
+export * from "./BillboardDisplaySection";

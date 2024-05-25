@@ -28,7 +28,7 @@ export const useFetchBillboardQuery = ({
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["billboard"],
+    queryKey: ["getBillboard"],
     queryFn: () => fetchBillboard({}, { axios }),
     staleTime: 60 * 1000, // 60 seconds
     ...config,

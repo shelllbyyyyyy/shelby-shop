@@ -39,7 +39,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           </div>
         </div>
 
-        <div>
+        <>
           <p className="text-md sm:text-2xl font-semibold text-slate-900 line-clamp-1">
             {data.name}
           </p>
@@ -49,7 +49,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               {toRupiah(data.price)}
             </span>
           </p>
-        </div>
+        </>
       </div>
     </>
   );
@@ -96,6 +96,6 @@ const ProductSuspense = async ({
   productsFetcher: () => Promise<Product[]>;
 }) => {
   return (await productsFetcher()).map((product) => (
-    <ProductCard data={product} />
+    <ProductCard key={product.id} data={product} />
   ));
 };

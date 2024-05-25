@@ -1,27 +1,27 @@
 "use client";
 
-import { useState } from "react";
 import { AxiosError } from "axios";
 import { useAddProductVariantMutation } from "@shelby/api";
 
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AddProductVariantFormInner } from "@/features/product";
 
 import { queryClient } from "@/lib/react-query";
 import { AddProductVariantFormSchema } from "@/types";
 
-const Add = ({ params }: { params: { slug: string } }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { slug } = params;
+interface AddVariantProps {
+  slug: string;
+}
 
-  const { mutateAsync: addProductVariantMutate } = useAddProductVariantMutation(
-    {
+export const AddVariant: React.FC<AddVariantProps> = ({ slug }) => {
+  const { mutateAsync: addProductVariantMutate, isPending } =
+    useAddProductVariantMutation({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["productVariant"],
+          queryKey: ["getProductVariant"],
         });
       },
-    }
-  );
+    });
 
   const handleAddProductSubmit = async (
     values: AddProductVariantFormSchema & {
@@ -30,7 +30,6 @@ const Add = ({ params }: { params: { slug: string } }) => {
     }
   ) => {
     try {
-      setLoading(true);
       await addProductVariantMutate(values);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -39,22 +38,23 @@ const Add = ({ params }: { params: { slug: string } }) => {
         alert(err.response?.data.errors[0]);
         return;
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className="flex h-screen justify-center items-center">
-        <AddProductVariantFormInner
-          onSubmit={handleAddProductSubmit}
-          slug={slug}
-          isLoading={loading}
-        />
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <span>Add Variant</span>
+        </DialogTrigger>
+        <DialogContent className="  sm:max-w-[900px]">
+          <AddProductVariantFormInner
+            onSubmit={handleAddProductSubmit}
+            slug={slug}
+            isLoading={isPending}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
-
-export default Add;
