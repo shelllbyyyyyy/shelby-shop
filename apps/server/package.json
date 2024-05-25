@@ -27,6 +27,7 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@ruraim/nestjs-midtrans": "^0.0.12",
     "@shelby/db": "workspace:*",
     "@shelby/dto": "workspace:*",
     "@supabase/supabase-js": "^2.39.3",

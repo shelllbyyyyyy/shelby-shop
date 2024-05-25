@@ -30,10 +30,10 @@ model Cart {
   updatedAt        DateTime               @updatedAt @db.Timestamptz(6)
   
   productVariantId String
-  ProductVariant   ProductVariant         @relation(fields: [productVariantId], references: [id])
+  productVariant   ProductVariant         @relation(fields: [productVariantId], references: [id])
 
   userId           String                 @db.Uuid
-  User             User                   @relation(fields: [userId], references: [id])
+  user             User                   @relation(fields: [userId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -53,7 +53,7 @@ model Inventory {
   status               InventoryStatus
 
   productVariantId     String
-  ProductVariant       ProductVariant         @relation(fields: [productVariantId], references: [id])
+  productVariant       ProductVariant         @relation(fields: [productVariantId], references: [id])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

@@ -7,10 +7,12 @@ import { ProductModule } from "@/core/product/product.module";
 import { ProfileModule } from "@/core/profile/profile.module";
 import { UserModule } from "@/core/user/user.module";
 import { CategoryModule } from "@/core/category/category.module";
-import { BillboardModule } from "./core/billboard/billboard.module";
+import { BillboardModule } from "@/core/billboard/billboard.module";
+import { CartModule } from "@/core/cart/cart.module";
+import { InventoryModule } from "@/core/inventory/inventory.module";
 
 @Module({
-  imports: [PassportModule, SupabaseModule, CategoryModule, BillboardModule, ProfileModule, ProductModule, UserModule],
+  imports: [InventoryModule, CartModule, PassportModule, SupabaseModule, CategoryModule, BillboardModule, ProfileModule, ProductModule, UserModule],
   controllers: [],
   providers: [],
 })

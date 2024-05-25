@@ -2,38 +2,18 @@ import * as Icon from "lucide-react";
 
 import db from "@/db";
 import { AddToCart, BuyNow } from "@/features/cart";
-
-import { cache } from "@/lib/chace";
 import { toRupiah } from "@/lib/utils";
-// import { createClient } from "@/utils/supabase/server";
 
 import { ImageCarousel } from "./items/ImageCarousel";
 
-const getProducts = ({ slug }: { slug: string }) => {
-  const product = db.product.findUnique({
+const getProducts = async ({ slug }: { slug: string }) => {
+  return await db.product.findUnique({
     where: { slug: slug },
-    include: { productVariant: true },
+    include: {
+      productVariant: true,
+    },
   });
-
-  return product;
 };
-
-// const getData = async ({ slug }: { slug: string }) => {
-//   const { data } = await createClient().auth.getSession();
-
-//   const token = data.session?.access_token;
-
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }
-//   );
-
-//   return res.json();
-// };
 
 export const Product = async ({ slug }: { slug: string }) => {
   const product = await getProducts({ slug });
@@ -62,10 +42,8 @@ export const Product = async ({ slug }: { slug: string }) => {
 
         <div className="flex max-sm:flex-col gap-5 mt-2">
           <AddToCart
-            id={product!.id}
-            name={product!.name}
-            imageUrl={product!.imageUrl[0]}
-            price={product!.price}
+            productName={product!.name}
+            data={product!.productVariant[0]}
           />
           <BuyNow
             name={product!.name}
