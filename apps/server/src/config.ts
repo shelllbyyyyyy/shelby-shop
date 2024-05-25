@@ -34,4 +34,7 @@ export const config = {
   get midMerchantID() {
     return getRequired("MIDTRANS_MERCHANT_ID").asString();
   },
+  get sandbox() {
+    return getRequired("SANBOX").asBool();
+  },
 };
