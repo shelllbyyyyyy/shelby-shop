@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { useEditProfileMutation } from "@shelby/api";
+import { useAddAddressMutation, useEditProfileMutation } from "@shelby/api";
 
 import Container from "@/components/elements/Container";
 import { HeadMetaData } from "@/components/meta/HeadMetaData";
 
 import {
+  AddAddressFormInner,
   EditProfileFormInner,
   ProfileDisplaySection,
 } from "@/features/profile";
 
 import { queryClient } from "@/lib/react-query";
-import { EditProfileFormSchema } from "@/types";
+import { AddAddressFormSchema, EditProfileFormSchema } from "@/types";
 
 const ProfilePage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -42,10 +43,31 @@ const ProfilePage = () => {
     }
   };
 
+  const { mutateAsync: addAddressMutate, isPending } = useAddAddressMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getAddress"],
+      });
+    },
+  });
+
+  const handleAddAddressSubmit = async (values: AddAddressFormSchema) => {
+    try {
+      await addAddressMutate(values);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const err = error as AxiosError<{ errors: string[] }>;
+
+        alert(err.response?.data.errors[0]);
+        return;
+      }
+    }
+  };
+
   return (
     <>
       <HeadMetaData title="Profile" />
-      <Container className="px-0">
+      <Container className="space-y-8">
         {isEditMode ? (
           <>
             <EditProfileFormInner
@@ -56,6 +78,11 @@ const ProfilePage = () => {
         ) : (
           <ProfileDisplaySection onEditProfile={() => setIsEditMode(true)} />
         )}
+
+        <AddAddressFormInner
+          onSubmit={handleAddAddressSubmit}
+          isLoading={isPending}
+        />
       </Container>
     </>
   );

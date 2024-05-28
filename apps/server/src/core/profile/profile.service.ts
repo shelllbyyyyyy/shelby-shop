@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma } from "@shelby/db";
-import { EditProfileDTO } from "@shelby/dto";
+import { AddAddressDTO, EditProfileDTO } from "@shelby/dto";
 
 import { PrismaService } from "@/lib/prisma.service";
 import { SupabaseService } from "@/lib/supabase.service";
@@ -42,5 +42,15 @@ export class ProfileService {
     });
 
     return updatedProfile;
+  }
+
+  public async addAddress(id: string, addAddressDTO: AddAddressDTO) {
+    const addAddressPayload = {
+      ...addAddressDTO,
+    };
+
+    return await this.prismaService.address.create({
+      data: { ...addAddressPayload, user: { connect: { id } } },
+    });
   }
 }

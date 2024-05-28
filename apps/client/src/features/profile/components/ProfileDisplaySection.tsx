@@ -23,7 +23,7 @@ export const ProfileDisplaySection: React.FC<ProfileDisplaySection> = ({
   const { data: profile } = useGetProfileQuery({});
 
   return (
-    <div className="flex flex-col h-screen w-full gap-4 lg:gap-8">
+    <div className="flex flex-col  w-full gap-4 lg:gap-8">
       <div className="flex h-72 w-full justify-center items-center bg-accent/80">
         <Avatar className="h-36 w-36 sm:h-48 sm:w-48">
           <AvatarFallback>{profile?.data.name?.charAt(0)}</AvatarFallback>

@@ -1,6 +1,6 @@
-import { Body, Controller, Get, MaxFileSizeValidator, NotFoundException, ParseFilePipe, Patch, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, MaxFileSizeValidator, NotFoundException, ParseFilePipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { EditProfileDTO } from "@shelby/dto";
+import { AddAddressDTO, EditProfileDTO } from "@shelby/dto";
 
 import { SupabaseGuard } from "@/core/auth/supabase/supabase.guard";
 import { AuthUser } from "@/core/auth/types";
@@ -40,5 +40,11 @@ export class ProfileController {
     const profile = await this.profileService.editProfile(user.sub, editProfileDTO, profilePictureFile);
 
     return profile;
+  }
+
+  @Post("/address")
+  @UseGuards(SupabaseGuard)
+  public async addAddress(@User() user: AuthUser, @Body() addAddressDTO: AddAddressDTO) {
+    return await this.profileService.addAddress(user.sub, addAddressDTO);
   }
 }
