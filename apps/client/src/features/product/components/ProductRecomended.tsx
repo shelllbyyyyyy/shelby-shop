@@ -5,7 +5,7 @@ import { ProductGridSection } from "./ProductCard";
 import db from "@/db";
 
 const getRecommendedProduct = () => {
-  return db.product.findMany({ take: 4, orderBy: { name: "desc" } });
+  return db.product.findMany({ take: 6, orderBy: { name: "desc" } });
 };
 
 export const ProductRecomended = async () => {

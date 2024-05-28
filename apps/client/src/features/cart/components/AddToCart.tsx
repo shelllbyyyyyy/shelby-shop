@@ -30,10 +30,9 @@ type CartProps = {
 };
 
 export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [qty, setQty] = useState<number>(1);
 
-  const { mutateAsync: addCartMutate } = useAddCartMutation({
+  const { mutateAsync: addToCartMutate, isPending } = useAddCartMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getCart"],
@@ -41,11 +40,9 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
     },
   });
 
-  const handleAddCategorySubmit = async (values: AddToCartDTO) => {
+  const handleAddToCartSubmit = async (values: AddToCartDTO) => {
     try {
-      setLoading(true);
-      await addCartMutate(values);
-      console.log(addCartMutate);
+      await addToCartMutate(values);
     } catch (error) {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
@@ -53,8 +50,6 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
         alert(err.response?.data.errors[0]);
         return;
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -114,12 +109,12 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
             <Button
               size="lg"
               onClick={() =>
-                handleAddCategorySubmit({
+                handleAddToCartSubmit({
                   id: data.id as string,
                   quantity: qty,
                 })
               }
-              disabled={loading}
+              disabled={isPending}
             >
               Add To Cart
             </Button>

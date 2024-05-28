@@ -1,14 +1,22 @@
 "use client";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
-import { useGetCartQuery } from "@shelby/api";
+import { AxiosError } from "axios";
+import { CheckoutDTO } from "@shelby/dto";
+import {
+  useCheckoutMutation,
+  useGetCartQuery,
+  useSuccessMutation,
+} from "@shelby/api";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
@@ -19,15 +27,36 @@ import {
 import { useCountProductQuantity, useTotaPrice, toRupiah } from "@/lib/utils";
 
 import { CartItem } from "./CardItem";
-import { useState } from "react";
+import { queryClient } from "@/lib/react-query";
 
 export const Cart = () => {
-  const { refetch, data: cart } = useGetCartQuery({});
-
+  const [token, setToken] = useState<string | undefined>("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const { data: cart } = useGetCartQuery({});
 
   const totalPrice = useTotaPrice(cart?.data);
   const totalQuantity = useCountProductQuantity(cart?.data);
+
+  const { mutateAsync: checkout, isPending } = useCheckoutMutation({
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["getCart"],
+      });
+      if (data.data.token) {
+        setToken(data.data.token);
+      } else {
+      }
+    },
+  });
+
+  const { mutateAsync: success } = useSuccessMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getCart"],
+      });
+    },
+  });
 
   const renderCart = () => {
     if (!cart?.data.length) {
@@ -76,11 +105,44 @@ export const Cart = () => {
     });
   };
 
-  const handleCheckout = () => {
-    // Perform checkout logic with midtrans
-    console.log("Selected items:", selectedItems);
-    refetch();
+  const handleCheckout = async (values: CheckoutDTO) => {
+    if (selectedItems.length == 0 || totalPrice == 0 || totalQuantity == 0) {
+      return alert("Please select an item to checkout");
+    } else {
+      try {
+        await checkout(values);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const err = error as AxiosError<{ errors: string[] }>;
+
+          alert(err.response?.data.errors[0]);
+          return;
+        }
+      }
+    }
   };
+
+  useEffect(() => {
+    if (token) {
+      if (typeof window.snap !== "undefined") {
+        window.snap.pay(token, {
+          onSuccess: async () => {
+            await success({});
+            setToken("");
+          },
+          onError: (data) => {
+            // Payment failed
+            console.error("Payment failed:", data);
+          },
+          onClose: () => {
+            // Payment dialog closed
+          },
+        });
+      } else {
+        console.error("Midtrans SDK not loaded");
+      }
+    }
+  }, [token]);
 
   return (
     <Sheet>
@@ -116,14 +178,21 @@ export const Cart = () => {
           </div>
         </div>
         <SheetFooter>
-          <span
-            onClick={handleCheckout}
-            className={buttonVariants({
-              className: "w-full",
-            })}
-          >
-            Continue to Checkout
-          </span>
+          <SheetClose asChild>
+            <Button
+              onClick={() =>
+                handleCheckout({
+                  items: selectedItems,
+                })
+              }
+              className={buttonVariants({
+                className: "w-full",
+              })}
+              disabled={isPending}
+            >
+              Continue to Checkout
+            </Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>

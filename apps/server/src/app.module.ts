@@ -10,9 +10,30 @@ import { CategoryModule } from "@/core/category/category.module";
 import { BillboardModule } from "@/core/billboard/billboard.module";
 import { CartModule } from "@/core/cart/cart.module";
 import { InventoryModule } from "@/core/inventory/inventory.module";
+import { OrderModule } from "./core/order/order.module";
+import { MidtransModule } from "./lib/midtrans/midtrans.module";
+import { config } from "./config";
 
 @Module({
-  imports: [InventoryModule, CartModule, PassportModule, SupabaseModule, CategoryModule, BillboardModule, ProfileModule, ProductModule, UserModule],
+  imports: [
+    MidtransModule.register({
+      clientKey: config.midClientKey,
+      serverKey: config.midServerKey,
+      merchantId: config.midMerchantID,
+      sandbox: true,
+      isGlobal: true, // default: false, register module globally
+    }),
+    OrderModule,
+    InventoryModule,
+    CartModule,
+    PassportModule,
+    SupabaseModule,
+    CategoryModule,
+    BillboardModule,
+    ProfileModule,
+    ProductModule,
+    UserModule,
+  ],
   controllers: [],
   providers: [],
 })

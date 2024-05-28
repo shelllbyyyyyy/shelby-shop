@@ -194,8 +194,6 @@ export class ProductService {
 
       return updatedProduct;
     } catch (error) {
-      console.log(error);
-
       throw new UnprocessableEntityException("something went wrong !!!");
     }
   }

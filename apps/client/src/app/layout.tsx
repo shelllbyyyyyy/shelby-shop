@@ -6,6 +6,7 @@ import MyProvider from "@/components/provider/my-provider";
 import ReduxProvider from "@/components/provider/redux-provider";
 
 import { cn } from "@/lib/utils";
+import Script from "next/script";
 
 const rajdhani = Rajdhani({
   subsets: ["latin"],
@@ -24,6 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script
+        type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key={`${process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}`}
+      />
       <body
         className={cn(
           "relative h-full font-sans antialiased",
