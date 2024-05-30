@@ -15,20 +15,18 @@ type ImageCarouselProps = {
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [thumbnailApi, setThumbnailApi] = useState<CarouselApi>();
-  const [mainApi, setMainApi] = useState<CarouselApi | undefined>();
-  const [current, setCurrent] = useState<number>(0);
+  const [mainApi, setMainApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
   const mainImage = useMemo(
     () =>
       images.map((image, index) => (
-        <CarouselItem
-          key={index}
-          className="h-96 w-full aspect-square overflow-hidden"
-        >
+        <CarouselItem key={index} className="relative aspect-square w-full">
           <Image
             src={image}
             alt={`Carousel Main Image ${index + 1}`}
-            fill
+            width={900}
+            height={0}
             style={{ objectFit: "contain" }}
           />
         </CarouselItem>

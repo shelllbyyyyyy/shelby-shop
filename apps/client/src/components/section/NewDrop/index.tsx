@@ -5,7 +5,15 @@ import db from "@/db";
 import { ProductGridSection } from "@/features/product";
 
 const getNewProducts = () => {
-  return db.product.findMany({ orderBy: { name: "desc" }, take: 4 });
+  return db.product.findMany({
+    orderBy: { name: "desc" },
+    take: 4,
+    include: {
+      productVariant: {
+        include: { inventory: { select: { quantity: true } } },
+      },
+    },
+  });
 };
 
 export const NewDrop = async () => {

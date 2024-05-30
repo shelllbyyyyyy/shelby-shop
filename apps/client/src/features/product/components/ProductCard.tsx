@@ -5,9 +5,10 @@ import * as Icon from "lucide-react";
 
 import { toRupiah } from "@/lib/utils";
 
-import { Product } from "@shelby/db";
+import { Product } from "@shelby/api";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AddToCart } from "@/features/cart";
 
 type ProductCardProps = {
   onClick?: () => void;
@@ -28,7 +29,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           <div className="absolute flex w-full h-full justify-center items-center opacity-0 group-hover:opacity-100 transition duration-300 ">
             <div className="flex justify-evenly items-center text-white w-full">
               <Button variant="outline" size="circle">
-                <Icon.ShoppingCart className="mr-1" />
+                <AddToCart
+                  key={data.id}
+                  button={<Icon.ShoppingCart className="mr-1" />}
+                  productName={data.name}
+                  data={data.productVariant}
+                />
               </Button>
               <Link href={`/product/${data.slug}`}>
                 <Button variant="outline" size="circle">

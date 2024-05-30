@@ -8,7 +8,19 @@ import { ProductCard } from "@/features/product";
 const getProduct = async (id: string) => {
   return await db.category.findFirst({
     where: { id },
-    select: { categoriesOnProducts: { select: { product: true } } },
+    select: {
+      categoriesOnProducts: {
+        select: {
+          product: {
+            include: {
+              productVariant: {
+                include: { inventory: { select: { quantity: true } } },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 };
 

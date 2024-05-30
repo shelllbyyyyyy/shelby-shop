@@ -3,7 +3,13 @@ import { ProductGridSection } from "./ProductCard";
 import db from "@/db";
 
 const getAllProduct = () => {
-  return db.product.findMany({});
+  return db.product.findMany({
+    include: {
+      productVariant: {
+        include: { inventory: { select: { quantity: true } } },
+      },
+    },
+  });
 };
 
 export const ProductList = async () => {
