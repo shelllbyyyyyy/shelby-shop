@@ -1,38 +1,38 @@
 "use client";
 
 import { AxiosError } from "axios";
-import Image from "next/image";
 import React, { useState } from "react";
+import { Minus, Plus } from "lucide-react";
 
-import { useAddCartMutation } from "@shelby/api";
-import { Prisma, ProductVariant } from "@shelby/db";
-import { AddToCartDTO } from "@shelby/dto";
+import { ProductVariant, useAddCartMutation } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
 import { queryClient } from "@/lib/react-query";
-import { toRupiah } from "@/lib/utils";
-import { Minus, Plus } from "lucide-react";
+import { Variant } from "./item/variant";
 
 type CartProps = {
   productName: string;
-  data: ProductVariant;
+  data: ProductVariant[];
+  button: React.ReactElement | string;
 };
 
-export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
+export const AddToCart: React.FC<CartProps> = ({
+  productName,
+  data,
+  button,
+}) => {
+  const [variant, selectVariant] = useState<ProductVariant | null>(data[0]);
   const [qty, setQty] = useState<number>(1);
 
-  const { mutateAsync: addToCartMutate, isPending } = useAddCartMutation({
+  const { mutateAsync: addCartMutate, isPending } = useAddCartMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getCart"],
@@ -40,9 +40,12 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
     },
   });
 
-  const handleAddToCartSubmit = async (values: AddToCartDTO) => {
+  const handleAddToCartSubmit = async () => {
     try {
-      await addToCartMutate(values);
+      await addCartMutate({
+        id: variant?.id as string,
+        quantity: qty,
+      });
     } catch (error) {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
@@ -53,27 +56,40 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
     }
   };
 
+  const render = () => {
+    return data.map((item) => {
+      return (
+        <>
+          <Button
+            variant="outline"
+            onClick={() => selectVariant(item)}
+            className={`${item.id === variant?.id && "border-accent text-accent"}`}
+          >
+            {item.label}
+          </Button>
+        </>
+      );
+    });
+  };
+
   return (
     <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="outline" size="lg">
-          Add To Cart
-        </Button>
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{button}</DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader className="flex w-full">
-            <DrawerTitle className="relative aspect-square w-3/4">
-              <Image src={data.imageUrl} alt={data.label} fill sizes="sm" />
-            </DrawerTitle>
-            <DrawerDescription className="font-semibold text-xl w-full">
-              <div className="flex flex-col items-start mt-10">
-                <span className="font-black text-xl">{productName}</span>
-                <span className="font-black text-lg">{data.label}</span>
-                <span className="text-accent ">{toRupiah(data.price)}</span>
-              </div>
-            </DrawerDescription>
-          </DrawerHeader>
+          {variant && (
+            <Variant
+              key={variant.id}
+              item={variant}
+              productName={productName}
+              stock={variant.inventory[0].quantity}
+            />
+          )}
+
+          <div>
+            <h1 className="font-semibold">Variant :</h1>
+            <div className="space-x-2">{render()}</div>
+          </div>
 
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">
@@ -108,13 +124,8 @@ export const AddToCart: React.FC<CartProps> = ({ productName, data }) => {
           <DrawerFooter>
             <Button
               size="lg"
-              onClick={() =>
-                handleAddToCartSubmit({
-                  id: data.id as string,
-                  quantity: qty,
-                })
-              }
-              disabled={isPending}
+              onClick={() => handleAddToCartSubmit()}
+              disabled={!variant || isPending}
             >
               Add To Cart
             </Button>

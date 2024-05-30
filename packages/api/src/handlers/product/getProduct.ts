@@ -5,9 +5,17 @@ import { UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { ApiFn } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const product = Prisma.validator<Prisma.ProductDefaultArgs>()({});
+const product = Prisma.validator<Prisma.ProductDefaultArgs>()({
+  include: {
+    productVariant: { include: { inventory: { select: { quantity: true } } } },
+  },
+});
+const variant = Prisma.validator<Prisma.ProductVariantDefaultArgs>()({
+  include: { inventory: { select: { quantity: true } } },
+});
 
-type Product = Prisma.ProductGetPayload<typeof product>;
+export type Product = Prisma.ProductGetPayload<typeof product>;
+export type ProductVariant = Prisma.ProductVariantGetPayload<typeof variant>;
 
 export const getProduct: ApiFn<{ slug: string }, AxiosPromise<Product>> = (
   { slug },

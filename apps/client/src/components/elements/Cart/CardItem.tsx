@@ -127,15 +127,12 @@ export const CartItem: React.FC<CartItemProps> = ({
             </span>
 
             <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
-              Quantity: {data.quantity}
-            </span>
-            <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
               Stocks: {stock}
             </span>
 
             <div className="mt-4 text-xs text-muted-foreground">
               <button
-                onClick={() => deleteItem({})}
+                onClick={() => deleteItem({ id: productVariant.id })}
                 className="flex items-center gap-0.5"
               >
                 <X className="w-3 h-4" />

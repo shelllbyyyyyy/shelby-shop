@@ -4,9 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 
 import { ApiFn, MutationConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
-import { Order } from "@shelby/db";
+import { SuccessDTO } from "@shelby/dto";
 
-const success: ApiFn<{}, AxiosPromise<Order>> = (
+const success: ApiFn<SuccessDTO, AxiosPromise<any>> = (
   payloadInput,
   { axios = defaultAxios }
 ) => {

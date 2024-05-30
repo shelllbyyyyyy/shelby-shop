@@ -28,9 +28,9 @@ export class CartContoller {
     return await this.cartService.updateCart(updateCartDTO.productVariantId, updateCartDTO.quantity, updateCartDTO.cartId);
   }
 
-  @Put()
+  @Patch("/:id")
   @UseGuards(SupabaseGuard)
-  public async deleteCart(@User() user: AuthUser) {
-    return await this.cartService.deleteItem(user.sub);
+  public async deleteCart(@User() user: AuthUser, @Param("id") id: string) {
+    return await this.cartService.deleteItem(user.sub, id);
   }
 }

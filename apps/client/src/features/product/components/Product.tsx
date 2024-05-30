@@ -5,12 +5,15 @@ import { AddToCart, BuyNow } from "@/features/cart";
 import { toRupiah } from "@/lib/utils";
 
 import { ImageCarousel } from "./items/ImageCarousel";
+import { Button } from "@/components/ui/button";
 
 const getProducts = async ({ slug }: { slug: string }) => {
   return await db.product.findUnique({
     where: { slug: slug },
     include: {
-      productVariant: true,
+      productVariant: {
+        include: { inventory: { select: { quantity: true } } },
+      },
     },
   });
 };
@@ -42,13 +45,19 @@ export const Product = async ({ slug }: { slug: string }) => {
 
         <div className="flex max-sm:flex-col gap-5 mt-2">
           <AddToCart
+            key={product?.id}
+            button={
+              <Button variant="outline" size="lg">
+                Add To Cart
+              </Button>
+            }
             productName={product!.name}
-            data={product!.productVariant[0]}
+            data={product!.productVariant}
           />
           <BuyNow
-            name={product!.name}
-            imageUrl={product!.imageUrl[0]}
-            price={product!.price}
+            key={product?.id}
+            productName={product!.name}
+            data={product!.productVariant}
           />
         </div>
       </div>

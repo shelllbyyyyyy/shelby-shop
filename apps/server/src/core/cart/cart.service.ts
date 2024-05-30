@@ -105,20 +105,32 @@ export class CartService {
     });
   }
 
-  public async deleteItem(id: string) {
-    const cartByProductId = await this.prismaService.cart.findFirst({
-      where: {
-        userId: id,
-      },
-    });
+  public async deleteItem(userId: string, id: string) {
+    try {
+      return await this.prismaService.$transaction(async tx => {
+        const cartByProductId = await tx.cart.findFirst({
+          where: {
+            userId,
+            productVariantId: id,
+            checkoutAt: null,
+            deletedAt: null,
+          },
+        });
 
-    return await this.prismaService.cart.update({
-      where: {
-        id: cartByProductId.id,
-      },
-      data: {
-        deletedAt: new Date(),
-      },
-    });
+        if (cartByProductId) {
+          await tx.cart.update({
+            where: {
+              id: cartByProductId.id,
+              productVariantId: id,
+            },
+            data: {
+              deletedAt: new Date(),
+            },
+          });
+        }
+      });
+    } catch (error) {
+      throw new UnprocessableEntityException("Something went wrong !!!");
+    }
   }
 }

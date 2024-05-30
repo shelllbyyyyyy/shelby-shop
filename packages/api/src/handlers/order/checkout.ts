@@ -6,11 +6,13 @@ import { ApiFn, MutationConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 import { CheckoutDTO } from "@shelby/dto";
 
-const checkout: ApiFn<CheckoutDTO, AxiosPromise<any>> = (
+type Checkout = CheckoutDTO;
+
+const checkout: ApiFn<Checkout, AxiosPromise<any>> = (
   payloadInput,
   { axios = defaultAxios }
 ) => {
-  return axios.post(`/order/token`, payloadInput);
+  return axios.post(`/order/get-token`, payloadInput);
 };
 
 type MutationFnType = typeof checkout;

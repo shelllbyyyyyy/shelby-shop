@@ -45,7 +45,6 @@ export const Cart = () => {
       });
       if (data.data.token) {
         setToken(data.data.token);
-      } else {
       }
     },
   });
@@ -87,7 +86,7 @@ export const Cart = () => {
         <CartItem
           key={cartItem.id}
           data={cartItem}
-          stock={cartItem.productVariant.inventory[0].quantity}
+          stock={cartItem.productVariant.inventory[0]?.quantity}
           isChecked={selectedItems.includes(cartItem.productVariantId)}
           onToggle={handleToggle}
         />
@@ -105,12 +104,14 @@ export const Cart = () => {
     });
   };
 
-  const handleCheckout = async (values: CheckoutDTO) => {
+  const handleCheckout = async () => {
     if (selectedItems.length == 0 || totalPrice == 0 || totalQuantity == 0) {
       return alert("Please select an item to checkout");
     } else {
       try {
-        await checkout(values);
+        await checkout({
+          items: selectedItems,
+        });
       } catch (error) {
         if (error instanceof AxiosError) {
           const err = error as AxiosError<{ errors: string[] }>;
@@ -180,11 +181,7 @@ export const Cart = () => {
         <SheetFooter>
           <SheetClose asChild>
             <Button
-              onClick={() =>
-                handleCheckout({
-                  items: selectedItems,
-                })
-              }
+              onClick={() => handleCheckout()}
               className={buttonVariants({
                 className: "w-full",
               })}

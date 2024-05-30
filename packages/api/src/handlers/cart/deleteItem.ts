@@ -5,11 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiFn, MutationConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const deleteCart: ApiFn<{}, AxiosPromise<Cart>> = (
-  {},
+const deleteCart: ApiFn<{ id: string }, AxiosPromise<Cart>> = (
+  payload,
   { axios = defaultAxios }
 ) => {
-  return axios.put(`/cart`, {});
+  return axios.patch(`/cart/${payload.id}`, payload);
 };
 
 type MutationFnType = typeof deleteCart;
