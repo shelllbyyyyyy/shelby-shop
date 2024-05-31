@@ -12,7 +12,17 @@ const addProduct: ApiFn<AddProductDTOWithFile, AxiosPromise<Product>> = (
   addProductDTO,
   { axios = defaultAxios }
 ) => {
-  const { name, price, description, imageFile, slug } = addProductDTO;
+  const {
+    name,
+    price,
+    description,
+    imageUrl,
+    imageFile,
+    slug,
+    sku,
+    label,
+    category,
+  } = addProductDTO;
 
   const addProductFormData = new FormData();
 
@@ -26,6 +36,22 @@ const addProduct: ApiFn<AddProductDTOWithFile, AxiosPromise<Product>> = (
 
   if (description) {
     addProductFormData.append("description", description);
+  }
+
+  if (imageUrl) {
+    addProductFormData.append("imageUrl", imageUrl[0]);
+  }
+
+  if (sku) {
+    addProductFormData.append("sku", sku);
+  }
+
+  if (label) {
+    addProductFormData.append("label", label);
+  }
+
+  if (category) {
+    addProductFormData.append("category", category);
   }
 
   if (slug) {

@@ -5,9 +5,9 @@ import defaultAxios, { AxiosPromise } from "axios";
 import { ApiFn, ExtractFnReturnType, QueryConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const profile = Prisma.validator<Prisma.ProfilesDefaultArgs>()({});
+const profile = Prisma.validator<Prisma.UserDefaultArgs>()({});
 
-export type Profile = Prisma.ProfilesGetPayload<typeof profile>;
+export type Profile = Prisma.UserGetPayload<typeof profile>;
 
 export const getProfile: ApiFn<{}, AxiosPromise<Profile>> = (
   {},
@@ -26,7 +26,7 @@ export const useGetProfileQuery = ({ config }: UseGetProfileQueryOptions) => {
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["profile"],
+    queryKey: ["getProfile"],
     queryFn: () => getProfile({}, { axios }),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...config,

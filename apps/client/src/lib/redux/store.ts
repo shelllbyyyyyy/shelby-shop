@@ -13,7 +13,6 @@ import {
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
 import authSlice from "@/features/auth/modules/authSlice";
-import cartSlice from "@/features/cart/modules/cartSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 const createNoopStorage = () => {
@@ -44,7 +43,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   authSlice,
-  cartSlice,
 });
 
 const persistedReducer = persistReducer<ReturnType<typeof rootReducer>>(

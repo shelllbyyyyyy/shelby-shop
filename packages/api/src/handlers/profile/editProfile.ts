@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Profiles } from "@shelby/db";
+import { User } from "@shelby/db";
 import { EditProfileDTO } from "@shelby/dto";
 import defaultAxios, { AxiosPromise } from "axios";
 import { ApiFn, MutationConfig } from "../../lib/react-query";
@@ -7,11 +7,11 @@ import { useApiClient } from "../../providers";
 
 type EditProfileDTOWithFile = EditProfileDTO & { profilePictureFile?: File };
 
-export const editProfile: ApiFn<
-  EditProfileDTOWithFile,
-  AxiosPromise<Profiles>
-> = (editProfileDTO, { axios = defaultAxios }) => {
-  const { name, address, phoneNumber, profilePictureFile } = editProfileDTO;
+export const editProfile: ApiFn<EditProfileDTOWithFile, AxiosPromise<User>> = (
+  editProfileDTO,
+  { axios = defaultAxios }
+) => {
+  const { name, phoneNumber, profilePictureFile } = editProfileDTO;
 
   const editProfileFormData = new FormData();
 
@@ -19,9 +19,6 @@ export const editProfile: ApiFn<
     editProfileFormData.append("name", name);
   }
 
-  if (address) {
-    editProfileFormData.append("address", address);
-  }
   if (phoneNumber) {
     editProfileFormData.append("phoneNumber", phoneNumber);
   }

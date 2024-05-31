@@ -6,7 +6,7 @@ export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
   public async getAllUser() {
-    const getAllUser = await this.prismaService.profiles.findMany({
+    const getAllUser = await this.prismaService.user.findMany({
       select: {
         id: true,
         name: true,
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   public async deleteUser(id: string) {
-    return await this.prismaService.profiles.delete({
+    return await this.prismaService.user.delete({
       where: { id },
     });
   }

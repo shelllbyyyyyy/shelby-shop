@@ -15,8 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { clearCart } from "@/features/cart";
-
 import { supabaseClient } from "@/utils/supabase/client";
 import { AppDispatch } from "@/lib/redux/store";
 
@@ -25,11 +23,11 @@ export const AvatarDropdown = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { data: profile } = useGetProfileQuery({});
+  const admin = process.env.NEXT_PUBLIC_EMAIL_ADMIN as string;
 
   const logout = () => {
     supabaseClient.auth.signOut();
 
-    dispatch(clearCart());
     router.push("/");
   };
 
@@ -44,9 +42,11 @@ export const AvatarDropdown = () => {
       <DropdownMenuContent align="end" sideOffset={8}>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/admin/dashboard">Admin</Link>
-        </DropdownMenuItem>
+        {(profile?.data.email as string) === admin && (
+          <DropdownMenuItem asChild>
+            <Link href="/admin/overview">Admin</Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>
         </DropdownMenuItem>

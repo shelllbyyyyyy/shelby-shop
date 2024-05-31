@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
+"use client";
+
 import React, { PropsWithChildren, useCallback } from "react";
 import defaultAxios, { AxiosInstance, AxiosPromise } from "axios";
 

@@ -46,7 +46,11 @@ const NavigationBar = () => {
                       <Cart />
                       <AvatarDropdown />
                     </>
-                  ) : null}
+                  ) : (
+                    <NavigationMenuLink href="/auth">
+                      <h2 className="hover:text-accent">Login</h2>
+                    </NavigationMenuLink>
+                  )}
                 </div>
               </NavigationMenuItem>
             </NavigationMenuList>

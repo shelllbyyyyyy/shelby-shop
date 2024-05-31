@@ -1,94 +1,110 @@
 "use client";
 
-import * as React from "react";
+import { AxiosError } from "axios";
+import React, { useState } from "react";
 import { Minus, Plus } from "lucide-react";
-import Image from "next/image";
-import { useDispatch } from "react-redux";
+
+import { ProductVariant, useAddCartMutation } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { toRupiah } from "@/lib/utils";
-import { AppDispatch } from "@/lib/redux/store";
-import { addItemsToCart } from "../modules";
+import { queryClient } from "@/lib/react-query";
+import { Variant } from "./item/variant";
 
 type CartProps = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  price: number;
+  productName: string;
+  data: ProductVariant[];
+  button: React.ReactElement | string;
 };
 
 export const AddToCart: React.FC<CartProps> = ({
-  id,
-  name,
-  imageUrl,
-  price,
+  productName,
+  data,
+  button,
 }) => {
-  const [quantity, setQuantity] = React.useState<number>(1);
+  const [variant, selectVariant] = useState<ProductVariant | null>(data[0]);
+  const [qty, setQty] = useState<number>(1);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const { mutateAsync: addCartMutate, isPending } = useAddCartMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getCart"],
+      });
+    },
+  });
 
-  const addToCart = (productId: string) => {
-    const cartProduct = {
-      id: productId,
-      quantity: quantity,
-      totalPrice: price * quantity,
-      product: {
-        id,
-        name,
-        imageUrl,
-        price,
-      },
-    };
-    dispatch(addItemsToCart(cartProduct));
+  const handleAddToCartSubmit = async () => {
+    try {
+      await addCartMutate({
+        id: variant?.id as string,
+        quantity: qty,
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const err = error as AxiosError<{ errors: string[] }>;
+
+        alert(err.response?.data.errors[0]);
+        return;
+      }
+    }
+  };
+
+  const render = () => {
+    return data.map((item) => {
+      return (
+        <>
+          <Button
+            variant="outline"
+            onClick={() => selectVariant(item)}
+            className={`${item.id === variant?.id && "border-accent text-accent"}`}
+          >
+            {item.label}
+          </Button>
+        </>
+      );
+    });
   };
 
   return (
     <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="outline" size="lg">
-          Add To Cart
-        </Button>
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{button}</DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader className="flex">
-            <DrawerTitle>
-              <Image src={imageUrl} alt={name} width={100} height={100} />
-            </DrawerTitle>
-            <DrawerDescription className="font-semibold text-xl">
-              <div className="flex flex-col items-start mt-10">
-                <span className="text-accent ">{toRupiah(price)}</span>
-                <span>Stock: 10</span>
-              </div>
-            </DrawerDescription>
-          </DrawerHeader>
+          {variant && (
+            <Variant
+              key={variant.id}
+              item={variant}
+              productName={productName}
+              stock={variant.inventory[0]?.quantity}
+            />
+          )}
+
+          <div>
+            <h1 className="font-semibold">Variant :</h1>
+            <div className="space-x-2">{render()}</div>
+          </div>
+
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">
               <Button
                 variant="outline"
                 size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                disabled={quantity <= 1}
+                onClick={() => qty > 1 && setQty(qty - 1)}
+                disabled={qty <= 1}
               >
                 <Minus className="h-4 w-4" />
                 <span className="sr-only">Decrease</span>
               </Button>
-              <div className="flex-1 text-center">
-                <div className="text-7xl font-bold tracking-tighter">
-                  {quantity}
-                </div>
+              <div className="flex-1 text-center items-center">
+                <div className="text-7xl font-bold tracking-tighter">{qty}</div>
                 <div className="text-[0.70rem] uppercase text-muted-foreground">
                   Pcs
                 </div>
@@ -97,15 +113,20 @@ export const AddToCart: React.FC<CartProps> = ({
                 variant="outline"
                 size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => setQuantity(quantity + 1)}
+                onClick={() => setQty(qty + 1)}
               >
                 <Plus className="h-4 w-4" />
                 <span className="sr-only">Increase</span>
               </Button>
             </div>
           </div>
+
           <DrawerFooter>
-            <Button size="lg" onClick={() => addToCart(id)}>
+            <Button
+              size="lg"
+              onClick={() => handleAddToCartSubmit()}
+              disabled={!variant || isPending}
+            >
               Add To Cart
             </Button>
             <DrawerClose asChild>

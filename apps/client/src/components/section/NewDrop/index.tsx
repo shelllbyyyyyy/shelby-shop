@@ -2,12 +2,29 @@ import React from "react";
 
 import Container from "@/components/elements/Container";
 import db from "@/db";
-import { ProductGridSection } from "@/features/product/components/ProductCard";
+import { ProductGridSection } from "@/features/product";
 import { cache } from "@/lib/chace";
 
-const getNewProducts = cache(() => {
-  return db.product.findMany({ orderBy: { name: "desc" }, take: 4 });
-}, ["/", "getNewProducts"]);
+const getNewProducts = cache(
+  () => {
+    return db.product.findMany({
+      where: {
+        productVariant: {
+          every: { inventory: { some: { status: "AVAILABLE" } } },
+        },
+      },
+      orderBy: { name: "desc" },
+      take: 4,
+      include: {
+        productVariant: {
+          include: { inventory: { select: { quantity: true } } },
+        },
+      },
+    });
+  },
+  ["/", "getNewProducts"],
+  { revalidate: 60 }
+);
 
 export const NewDrop = async () => {
   return (

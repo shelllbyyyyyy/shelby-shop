@@ -8,11 +8,11 @@ import Container from "@/components/elements/Container";
 export const Services = () => {
   return (
     <Container>
-      <section className="flex justify-center items-center text-center flex-wrap gap-9 px-5 py-5 md:px-20 md:py-10 bg-slate-200 border border-slate-100 rounded-xl">
+      <section className="grid sm:grid-cols-3 grid-cols-1 w-full bg-slate-200 border border-accent rounded-xl p-8 text-center gap-5">
         {services.map((service, index) => (
           <ServiceCard
             key={index}
-            img={<service.img size={40} />}
+            img={<service.img size={40} className="text-accent" />}
             label={service.label}
             subtext={service.subtext}
           />

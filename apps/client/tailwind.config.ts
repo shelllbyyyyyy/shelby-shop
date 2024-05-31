@@ -25,6 +25,9 @@ const config = {
       rajdhani: "var(--font-rajdhani)",
     },
     extend: {
+      backgroundImage: {
+        hero: "url('../assets/hero.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

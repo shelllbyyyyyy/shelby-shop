@@ -6,7 +6,7 @@
   "types": "./src/index.ts",
   "scripts": {
     "db:generate": "pnpm prisma generate",
-    "db:push": "pnpm prisma db push --skip-generate",
+    "db:push": "pnpm prisma db push",
     "db:migration": "pnpm prisma migrate dev",
     "db:deploy": "pnpm prisma migrate deploy",
     "db:pull": "pnpm prisma db pull",

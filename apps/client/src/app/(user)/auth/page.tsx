@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Container from "@/components/elements/Container";
-
-import { Form } from "@/features/auth/form";
+import { Form } from "@/features/auth";
 import { supabaseClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
 
 const AuthPage = () => {
   const router = useRouter();

@@ -5,9 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ApiFn, ExtractFnReturnType, QueryConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const user = Prisma.validator<Prisma.ProfilesDefaultArgs>()({});
+const user = Prisma.validator<Prisma.UserDefaultArgs>()({});
 
-type User = Prisma.ProfilesGetPayload<typeof user>;
+type User = Prisma.UserGetPayload<typeof user>;
 
 export const getAllUser: ApiFn<{}, AxiosPromise<User[]>> = (
   {},
@@ -26,7 +26,7 @@ export const useGetAllUserQuery = ({ config }: UseGetAllUserQueryOptions) => {
   const { axios } = useApiClient();
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["user"],
+    queryKey: ["getUser"],
     queryFn: () => getAllUser({}, { axios }),
     staleTime: 60 * 1000, // 60 seconds
     ...config,

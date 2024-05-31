@@ -8,7 +8,7 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <Container className="px-0">
+      <Container className="pt-10">
         <Product slug={slug} />
         <ProductRecomended />
       </Container>

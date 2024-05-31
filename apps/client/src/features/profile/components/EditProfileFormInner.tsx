@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetProfileQuery } from "@shelby/api";
 
-import Wrapper from "@/components/elements/Wrapper";
+import Wrapper from "@/app/admin/_components/Wrapper";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -48,7 +48,6 @@ export const EditProfileFormInner: React.FC<EditProfileFormInnerProps> = ({
     defaultValues: {
       name: profile?.data.name || undefined,
       phoneNumber: profile?.data.phoneNumber || undefined,
-      address: profile?.data.address || undefined,
     },
     resolver: zodResolver(editProfileFormSchema),
     reValidateMode: "onChange",
@@ -77,7 +76,7 @@ export const EditProfileFormInner: React.FC<EditProfileFormInnerProps> = ({
 
   return (
     <>
-      <div className="flex flex-col h-screen w-full max-sm:mb-24">
+      <div className="flex flex-col w-full max-sm:mb-24">
         <div className="flex flex-col w-full justify-center items-center">
           <div className="flex h-72 w-full bg-accent/80 justify-center items-center">
             <Avatar className="h-36 w-36 sm:h-48 sm:w-48">
@@ -155,25 +154,6 @@ export const EditProfileFormInner: React.FC<EditProfileFormInnerProps> = ({
                             <Input
                               {...field}
                               placeholder="Enter your number . . ."
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Address</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Enter your address . . ."
                             />
                           </FormControl>
                           <FormMessage />

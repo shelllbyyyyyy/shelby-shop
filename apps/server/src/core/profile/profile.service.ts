@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
-import { EditProfileDTO } from "./dto";
+import { Prisma } from "@shelby/db";
+import { AddAddressDTO, EditProfileDTO } from "@shelby/dto";
 
 import { PrismaService } from "@/lib/prisma.service";
 import { SupabaseService } from "@/lib/supabase.service";
@@ -14,7 +14,7 @@ export class ProfileService {
   ) {}
 
   public async getProfile(id: string) {
-    const profile = await this.prismaService.profiles.findUnique({
+    const profile = await this.prismaService.user.findUnique({
       where: {
         id,
       },
@@ -24,7 +24,7 @@ export class ProfileService {
   }
 
   public async editProfile(id: string, editProfileDTO: EditProfileDTO, profilePictureFile?: Express.Multer.File) {
-    const editProfilePayload: Prisma.ProfilesUpdateInput = {
+    const editProfilePayload: Prisma.UserUpdateInput = {
       ...editProfileDTO,
     };
 
@@ -34,7 +34,7 @@ export class ProfileService {
       editProfilePayload.profilePictureUrl = fileUrl;
     }
 
-    const updatedProfile = await this.prismaService.profiles.update({
+    const updatedProfile = await this.prismaService.user.update({
       where: {
         id,
       },
@@ -42,5 +42,15 @@ export class ProfileService {
     });
 
     return updatedProfile;
+  }
+
+  public async addAddress(id: string, addAddressDTO: AddAddressDTO) {
+    const addAddressPayload = {
+      ...addAddressDTO,
+    };
+
+    return await this.prismaService.address.create({
+      data: { ...addAddressPayload, user: { connect: { id } } },
+    });
   }
 }

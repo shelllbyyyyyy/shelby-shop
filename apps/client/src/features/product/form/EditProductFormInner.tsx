@@ -1,21 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import { ChangeEventHandler, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetProductQuery } from "@shelby/api";
 
-import Wrapper from "@/components/elements/Wrapper";
-
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -33,17 +31,20 @@ type EditProductFormInnerProps = {
   onSubmit: (values: EditProductFormSchema & { imageFile?: File }) => void;
   onCancel?: () => void;
   slug: string;
+  isLoading: boolean;
 };
 
 export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
   onSubmit,
   onCancel,
   slug,
+  isLoading,
 }) => {
   const { data: product } = useGetProductQuery({ slug });
+
   const [selectedProductImageFile, setSelectedProductImageFile] =
     useState<File | null>(null);
-  const inputProductPictureRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string>("");
 
   const form = useForm<EditProductFormSchema>({
     defaultValues: {
@@ -51,7 +52,7 @@ export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
       description: product?.description || "",
       price: product?.price || 0,
       slug: product?.slug || "",
-      imageUrl: product?.imageUrl || "",
+      imageUrl: product?.imageUrl || [""],
     },
     resolver: zodResolver(editProductFormSchema),
     reValidateMode: "onChange",
@@ -61,146 +62,139 @@ export const EditProductFormInnerr: React.FC<EditProductFormInnerProps> = ({
     HTMLInputElement
   > = (event) => {
     const MAX_SIZE = 5 * 1024 * 1024;
+    const image = event.target.files;
 
-    if (event.target.files?.length) {
-      if (event.target.files[0].size > MAX_SIZE) {
-        return alert("Batas file size 5 MB");
+    if (image?.length) {
+      const urlImage = URL.createObjectURL(image[0]);
+      setPreview(urlImage);
+      if (image[0].size > MAX_SIZE) {
+        return alert("Max image size is 5MB.");
       }
 
-      setSelectedProductImageFile(event.target.files[0]);
+      setSelectedProductImageFile(image[0]);
     }
   };
 
-  const previewProductPictureUrl = useMemo(() => {
-    if (selectedProductImageFile)
-      return URL.createObjectURL(selectedProductImageFile);
-
-    return product?.imageUrl || "";
-  }, [product?.imageUrl, selectedProductImageFile]);
-
   return (
     <>
-      <div className="flex flex-col h-screen w-full max-sm:mb-24">
-        <div className="flex flex-col w-full justify-center items-center">
-          <div className="flex h-[400px] w-full bg-accent/80 justify-center items-center">
-            <img
-              src={previewProductPictureUrl}
-              alt={product?.name}
-              className="h-96"
-            />
-            <Input
-              onChange={handleInputProductPictureChange}
-              type="file"
-              className="hidden"
-              ref={inputProductPictureRef}
-            />
+      <div className="flex flex-col w-full gap-2 py-10">
+        <DialogHeader>
+          <DialogTitle>Update Product</DialogTitle>
+          <div className="relative h-96 w-full rounded-xl overflow-hidden aspect-square">
+            {preview.length ? (
+              <Image
+                src={preview as string}
+                alt={product?.name as string}
+                fill
+                className="object-contain rounded-xl"
+              />
+            ) : (
+              <Image
+                src={product?.imageUrl[0] as string}
+                alt={product?.name as string}
+                fill
+                className="object-contain rounded-xl"
+              />
+            )}
           </div>
-          <div className="flex gap-2 py-4">
-            <Button
-              onClick={() => inputProductPictureRef.current?.click()}
-              size="sm"
-            >
-              Change
-            </Button>
-            <Button
-              onClick={() => setSelectedProductImageFile(null)}
-              variant="secondary"
-              size="sm"
-            >
-              Remove
-            </Button>
-          </div>
-        </div>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit((values) =>
+              onSubmit({
+                ...values,
+                imageFile: selectedProductImageFile || undefined,
+              })
+            )}
+            className="flex flex-col gap-1"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <div className="flex flex-col h-auto w-full justify-center items-center">
-          <Wrapper>
-            <Card>
-              <CardHeader>
-                <CardTitle>Edit Product</CardTitle>
-                <CardDescription></CardDescription>
-              </CardHeader>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit((values) =>
-                    onSubmit({
-                      ...values,
-                      imageFile: selectedProductImageFile || undefined,
-                    })
-                  )}
-                  className="flex flex-col gap-1"
-                >
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+            <FormField
+              control={form.control}
+              name="price"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...form.register("price", {
+                        valueAsNumber: true,
+                      })}
                     />
-                  </CardContent>
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="price"
-                      render={() => (
-                        <FormItem>
-                          <FormLabel>Price</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...form.register("price", {
-                                valueAsNumber: true,
-                              })}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                  <CardFooter>
-                    <div className="mt-4 flex gap-2">
-                      <Button size="sm" type="submit">
-                        Save
-                      </Button>
-                      {onCancel && (
-                        <Button
-                          onClick={onCancel}
-                          size="sm"
-                          variant="secondary"
-                        >
-                          Cancel
-                        </Button>
-                      )}
-                    </div>
-                  </CardFooter>
-                </form>
-              </Form>
-            </Card>
-          </Wrapper>
-        </div>
+            <FormField
+              control={form.control}
+              name="imageFile"
+              rules={{ required: "Product image is required" }}
+              render={({ field: { value, onChange, ...field } }) => (
+                <FormItem>
+                  <FormLabel>Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={value?.fileName}
+                      accept="image/jpg, image/jpeg, image/svg"
+                      onChange={handleInputProductPictureChange}
+                      type="file"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <DialogFooter>
+              <div className="mt-4 flex gap-2">
+                <Button disabled={isLoading} size="sm" type="submit">
+                  Save
+                </Button>
+                {onCancel && (
+                  <Button
+                    onClick={onCancel}
+                    size="sm"
+                    variant="secondary"
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </DialogFooter>
+          </form>
+        </Form>
       </div>
     </>
   );

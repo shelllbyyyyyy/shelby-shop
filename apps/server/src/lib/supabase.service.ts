@@ -51,4 +51,12 @@ export class SupabaseService {
 
     return uploadedFilePublicUrl.data.publicUrl;
   }
+
+  public async deleteFilesFromStorage(bucketName: SupabaseBucket, file: string[]) {
+    const { data, error } = await this.getClient().storage.from(bucketName).remove(file);
+
+    if (error) throw new InternalServerErrorException("delete failed: " + error.message);
+
+    return data;
+  }
 }
