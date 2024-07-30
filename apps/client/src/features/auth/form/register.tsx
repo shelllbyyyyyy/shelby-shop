@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 
 import { supabaseClient } from "@/utils/supabase/client";
 import { RegisterFormSchema, registerFormSchema } from "@/types";
+import { toast } from "sonner";
 
 const Register = () => {
   const {
@@ -36,15 +37,23 @@ const Register = () => {
   const signInWithPassword: SubmitHandler<RegisterFormSchema> = async (
     value
   ) => {
-    await supabaseClient.auth.signUp({
-      email: value.email,
-      password: value.password,
-      options: {
-        data: {
-          full_name: value.name,
+    try {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: value.email,
+        password: value.password,
+        options: {
+          data: {
+            full_name: value.name,
+          },
         },
-      },
-    });
+      });
+
+      if (error) throw toast(error.message);
+      if (data)
+        toast.success("Registration success", {
+          description: "Please check your email to verify account",
+        });
+    } catch (error) {}
   };
 
   return (
