@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetchCategoryQuery } from "@shelby/api";
+import { useDeleteCategoryMutation, useFetchCategoryQuery } from "@shelby/api";
 import Link from "next/link";
 import * as Icon from "lucide-react";
 
@@ -22,14 +22,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { axios } from "@/lib/axios";
 import { AddCategory } from "@/features/category";
+import { queryClient } from "@/lib/react-query";
+import { toast } from "sonner";
+import { Delete } from "@/components/action/Delete";
+import { EditCategory } from "@/features/category/components/EditCategory";
 
 const category = () => {
   const { data: category } = useFetchCategoryQuery({});
 
-  const handleDelete = async (id: string) => {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/category/${id}`);
+  const { mutateAsync: deleteCategory } = useDeleteCategoryMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getCategory"],
+      });
+      toast.success("Category has been deleted");
+    },
+  });
+
+  const handleDelete = async (values: { id: string }) => {
+    await deleteCategory(values);
   };
 
   return (
@@ -65,20 +77,23 @@ const category = () => {
                       Preferences
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="focus:bg-yellow-500">
-                      <Link
-                        href={`/admin/category/editcategory/${category.id}`}
-                      >
+                    <DropdownMenuItem
+                      asChild
+                      className="focus:bg-yellow-500"
+                      onSelect={(e) => e.preventDefault()}
+                    >
+                      <div>
                         <Icon.Pen size={14} className="mr-2" />
-                        Edit
-                      </Link>
+                        <EditCategory id={category.id} />
+                      </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="font-semibold text-red-500"
-                      onClick={() => handleDelete(category.id)}
+                      onSelect={(e) => e.preventDefault()}
                     >
-                      <Icon.Trash size={14} className="mr-2" />
-                      Delete
+                      <Delete
+                        onClick={() => handleDelete({ id: category.id })}
+                      />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

@@ -6,39 +6,35 @@ import db from "@/db";
 import { ProductCard } from "@/features/product";
 import { cache } from "@/lib/chace";
 
-const getProduct = cache(
-  async (id: string) => {
-    return await db.category.findFirst({
-      where: {
-        id,
-        categoriesOnProducts: {
-          every: {
-            product: {
+const getProduct = async (id: string) => {
+  return await db.category.findFirst({
+    where: {
+      id,
+      categoriesOnProducts: {
+        every: {
+          product: {
+            productVariant: {
+              every: { inventory: { some: { status: "AVAILABLE" } } },
+            },
+          },
+        },
+      },
+    },
+    select: {
+      categoriesOnProducts: {
+        select: {
+          product: {
+            include: {
               productVariant: {
-                every: { inventory: { some: { status: "AVAILABLE" } } },
+                include: { inventory: { select: { quantity: true } } },
               },
             },
           },
         },
       },
-      select: {
-        categoriesOnProducts: {
-          select: {
-            product: {
-              include: {
-                productVariant: {
-                  include: { inventory: { select: { quantity: true } } },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-  },
-  [],
-  { revalidate: 60 * 60 }
-);
+    },
+  });
+};
 
 const ProductPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;

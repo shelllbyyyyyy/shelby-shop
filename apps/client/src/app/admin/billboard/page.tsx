@@ -1,7 +1,10 @@
 "use client";
 
-import { useFetchBillboardQuery } from "@shelby/api";
-import Link from "next/link";
+import {
+  useDeleteBillboardMutation,
+  useFetchBillboardQuery,
+} from "@shelby/api";
+import { toast } from "sonner";
 import * as Icon from "lucide-react";
 
 import {
@@ -21,14 +24,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { axios } from "@/lib/axios";
 import { AddBillboard, EditBillboard } from "@/features/billboard";
+import { Delete } from "@/components/action/Delete";
+import { queryClient } from "@/lib/react-query";
 
 const Billboard = () => {
   const { data: billboard } = useFetchBillboardQuery({});
 
-  const handleDelete = async (id: string) => {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/billboard/${id}`);
+  const { mutateAsync: deleteBillboard } = useDeleteBillboardMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getBillboard"],
+      });
+      toast.success("Billboard has been deleted");
+    },
+    onError: (data) => {
+      toast.error(`${data.cause}`);
+    },
+  });
+
+  const handleDelete = async (values: { id: string }) => {
+    await deleteBillboard(values);
   };
 
   return (
@@ -80,10 +96,11 @@ const Billboard = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="font-semibold text-red-500"
-                      onClick={() => handleDelete(billboard.id)}
+                      onSelect={(e) => e.preventDefault()}
                     >
-                      <Icon.Trash size={14} className="mr-2" />
-                      Delete
+                      <Delete
+                        onClick={() => handleDelete({ id: billboard.id })}
+                      />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

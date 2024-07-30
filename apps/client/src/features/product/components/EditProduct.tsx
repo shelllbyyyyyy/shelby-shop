@@ -12,6 +12,7 @@ import {
 
 import { queryClient } from "@/lib/react-query";
 import { EditProductFormSchema } from "@/types";
+import { toast } from "sonner";
 
 interface EditProductProps {
   slug: string;
@@ -26,6 +27,8 @@ export const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         queryClient.invalidateQueries({
           queryKey: ["getProduct"],
         });
+
+        toast.success("Product has been updated");
       },
     });
 
@@ -39,7 +42,7 @@ export const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

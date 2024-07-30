@@ -14,9 +14,12 @@ export class OrderService {
   public async getSnapToken(userId: string, checkoutDTO: CheckoutDTO) {
     return await this.prismaService.$transaction(async tx => {
       const { items, qty } = checkoutDTO;
+
       const address = await tx.address.findFirst({
         where: { userId: userId },
       });
+
+      if (!address) throw new UnprocessableEntityException("Please complete your profile first !!!");
 
       const customerDetails = {
         id: address.id,

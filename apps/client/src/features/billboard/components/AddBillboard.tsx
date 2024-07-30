@@ -1,6 +1,7 @@
 "use client";
 
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 import { useAddBillboardMutation } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,8 @@ export const AddBillboard = () => {
         queryClient.invalidateQueries({
           queryKey: ["getBillboard"],
         });
+
+        toast.success("Billboard has been added");
       },
     });
 
@@ -29,7 +32,7 @@ export const AddBillboard = () => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

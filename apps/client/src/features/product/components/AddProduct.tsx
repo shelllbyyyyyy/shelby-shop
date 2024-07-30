@@ -1,6 +1,7 @@
 "use client";
 
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 import { useAddProductMutation } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,8 @@ export const AddProduct = () => {
       queryClient.invalidateQueries({
         queryKey: ["getProduct"],
       });
+
+      toast.success("Product has been added");
     },
   });
 
@@ -28,7 +31,7 @@ export const AddProduct = () => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

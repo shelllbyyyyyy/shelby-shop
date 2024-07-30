@@ -22,6 +22,8 @@ import {
 import { queryClient } from "@/lib/react-query";
 import { Variant } from "./item/variant";
 import { toRupiah } from "@/lib/utils";
+import { toast } from "sonner";
+import Link from "next/link";
 
 type BuyNowProps = {
   productName: string;
@@ -44,6 +46,9 @@ export const BuyNow: React.FC<BuyNowProps> = ({ productName, data }) => {
         setToken(data.data.token);
       }
     },
+    onMutate: () => {
+      toast.info("Please wait ...");
+    },
   });
 
   const { mutateAsync: success } = useSuccessMutation({
@@ -51,6 +56,8 @@ export const BuyNow: React.FC<BuyNowProps> = ({ productName, data }) => {
       queryClient.invalidateQueries({
         queryKey: ["getInventory"],
       });
+
+      toast.success("Thankyou for your purchase");
     },
   });
 
@@ -64,7 +71,13 @@ export const BuyNow: React.FC<BuyNowProps> = ({ productName, data }) => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0], {
+          action: (
+            <Link href="/profile">
+              <Button variant={"outline"}>Click this</Button>
+            </Link>
+          ),
+        });
         return;
       }
     }
@@ -96,14 +109,14 @@ export const BuyNow: React.FC<BuyNowProps> = ({ productName, data }) => {
           },
           onError: (data) => {
             // Payment failed
-            console.error("Payment failed:", data);
+            toast.error(`Payment failed: ${data}`);
           },
           onClose: () => {
             // Payment dialog closed
           },
         });
       } else {
-        console.error("Midtrans SDK not loaded");
+        toast.error("Midtrans SDK not loaded");
       }
     }
   }, [token]);
@@ -164,13 +177,15 @@ export const BuyNow: React.FC<BuyNowProps> = ({ productName, data }) => {
               <span>Total amount : </span>
               <span>{toRupiah(totalPrice)}</span>
             </div>
-            <Button
-              size="lg"
-              onClick={() => handleCheckoutSubmit()}
-              disabled={!variant || isPending}
-            >
-              Checkout
-            </Button>
+            <DrawerClose asChild>
+              <Button
+                size="lg"
+                onClick={() => handleCheckoutSubmit()}
+                disabled={!variant || isPending}
+              >
+                Checkout
+              </Button>
+            </DrawerClose>
             <DrawerClose asChild>
               <Button variant="outline" size="lg">
                 Cancel

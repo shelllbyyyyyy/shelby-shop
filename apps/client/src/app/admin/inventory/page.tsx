@@ -24,15 +24,10 @@ import {
 
 import { UpdateInventory } from "@/features/inventory";
 
-import { axios } from "@/lib/axios";
 import { toRupiah } from "@/lib/utils";
 
 const Inventory = () => {
   const { data: inventory } = useFetchInventoryQuery({});
-
-  const handleDelete = async (id: string) => {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/inventory/${id}`);
-  };
 
   return (
     <>
@@ -92,13 +87,6 @@ const Inventory = () => {
                         <Icon.Pen size={14} className="mr-2" />
                         <UpdateInventory id={inventory.id} />
                       </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="font-semibold text-red-500"
-                      onClick={() => handleDelete(inventory.id)}
-                    >
-                      <Icon.Trash size={14} className="mr-2" />
-                      Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

@@ -2,19 +2,15 @@ import { cache } from "@/lib/chace";
 import { ProductGridSection } from "./ProductCard";
 import db from "@/db";
 
-const getAllProduct = cache(
-  () => {
-    return db.product.findMany({
-      include: {
-        productVariant: {
-          include: { inventory: { select: { quantity: true } } },
-        },
+const getAllProduct = () => {
+  return db.product.findMany({
+    include: {
+      productVariant: {
+        include: { inventory: { select: { quantity: true } } },
       },
-    });
-  },
-  ["/product", "/home", "getAllProduct"],
-  { revalidate: 60 }
-);
+    },
+  });
+};
 
 export const ProductList = async () => {
   return (

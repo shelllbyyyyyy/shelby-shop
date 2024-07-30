@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
+import { Loader2, ShoppingBag } from "lucide-react";
 import { AxiosError } from "axios";
 import { CheckoutDTO } from "@shelby/dto";
 import {
@@ -10,6 +10,7 @@ import {
   useGetCartQuery,
   useSuccessMutation,
 } from "@shelby/api";
+import { toast } from "sonner";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,6 +29,7 @@ import { useCountProductQuantity, useTotaPrice, toRupiah } from "@/lib/utils";
 
 import { CartItem } from "./CardItem";
 import { queryClient } from "@/lib/react-query";
+import { Loading } from "@/features/loading";
 
 export const Cart = () => {
   const [token, setToken] = useState<string | undefined>("");
@@ -47,6 +49,9 @@ export const Cart = () => {
         setToken(data.data.token);
       }
     },
+    onMutate: () => {
+      toast.info(` Please wait ...`);
+    },
   });
 
   const { mutateAsync: success } = useSuccessMutation({
@@ -54,6 +59,8 @@ export const Cart = () => {
       queryClient.invalidateQueries({
         queryKey: ["getCart"],
       });
+
+      toast.success("Thankyou for your purchase");
     },
   });
 
@@ -116,7 +123,7 @@ export const Cart = () => {
         if (error instanceof AxiosError) {
           const err = error as AxiosError<{ errors: string[] }>;
 
-          alert(err.response?.data.errors[0]);
+          toast.error(err.response?.data.errors[0]);
           return;
         }
       }
@@ -133,14 +140,12 @@ export const Cart = () => {
           },
           onError: (data) => {
             // Payment failed
-            console.error("Payment failed:", data);
+            toast.error(`Payment failed: ${data}`);
           },
-          onClose: () => {
-            // Payment dialog closed
-          },
+          onClose: () => {},
         });
       } else {
-        console.error("Midtrans SDK not loaded");
+        toast.error("Midtrans SDK not loaded");
       }
     }
   }, [token]);

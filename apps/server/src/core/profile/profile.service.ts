@@ -18,6 +18,7 @@ export class ProfileService {
       where: {
         id,
       },
+      include: { address: true },
     });
 
     return profile;

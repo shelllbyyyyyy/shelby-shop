@@ -8,6 +8,7 @@ import { AddProductVariantFormInner } from "@/features/product";
 
 import { queryClient } from "@/lib/react-query";
 import { AddProductVariantFormSchema } from "@/types";
+import { toast } from "sonner";
 
 interface AddVariantProps {
   slug: string;
@@ -20,6 +21,8 @@ export const AddVariant: React.FC<AddVariantProps> = ({ slug }) => {
         queryClient.invalidateQueries({
           queryKey: ["getProductVariant"],
         });
+
+        toast.success("Product variant has been added");
       },
     });
 
@@ -35,7 +38,7 @@ export const AddVariant: React.FC<AddVariantProps> = ({ slug }) => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 import { useUpdateBillboardMutation } from "@shelby/api";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -26,6 +27,8 @@ export const EditBillboard: React.FC<EditBillboardProps> = ({ id }) => {
         queryClient.invalidateQueries({
           queryKey: ["getBillboard"],
         });
+
+        toast.success("Billboard has been updated");
       },
     });
 
@@ -39,7 +42,7 @@ export const EditBillboard: React.FC<EditBillboardProps> = ({ id }) => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

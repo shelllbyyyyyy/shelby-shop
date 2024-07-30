@@ -14,6 +14,8 @@ import { queryClient } from "@/lib/react-query";
 import { AppDispatch, useAppSelector } from "@/lib/redux/store";
 
 import { supabaseClient } from "@/utils/supabase/client";
+import { Toaster } from "../ui/sonner";
+import { toast } from "sonner";
 
 type MyProviderProps = {
   children: React.ReactNode;
@@ -37,6 +39,7 @@ const MyProvider = ({ children }: MyProviderProps) => {
         localStorage.setItem("access_token", session?.access_token);
         dispatch(onAuthSuccess(isLogin));
       } else if (event === "SIGNED_OUT") {
+        toast.info("You've been logout");
         localStorage.clear();
         dispatch(onLogout());
         router.push("/");
@@ -48,7 +51,23 @@ const MyProvider = ({ children }: MyProviderProps) => {
 
   return (
     <ApiClientProvider axiosInstance={axiosManager.axios}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <Toaster
+          toastOptions={{
+            unstyled: true,
+            classNames: {
+              error:
+                "card bg-card p-3 rounded-md shadow-md border border-gray right-0 text-red-400",
+              success:
+                "card bg-card p-3 rounded-md shadow-md border border-gray right-0 text-green-400",
+              warning:
+                "card bg-card p-3 rounded-md shadow-md border border-gray right-0 text-yellow-400",
+              info: "card bg-card p-3 rounded-md shadow-md border border-gray right-0 text-blue-400",
+            },
+          }}
+        />
+      </QueryClientProvider>
     </ApiClientProvider>
   );
 };

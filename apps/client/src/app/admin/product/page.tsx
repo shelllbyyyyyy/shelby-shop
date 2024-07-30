@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetchProductQuery } from "@shelby/api";
+import { useDeleteProductMutation, useFetchProductQuery } from "@shelby/api";
 import * as Icon from "lucide-react";
 
 import {
@@ -22,14 +22,25 @@ import {
 
 import { AddProduct, AddVariant, EditProduct } from "@/features/product";
 
-import { axios } from "@/lib/axios";
 import { toRupiah } from "@/lib/utils";
+import { Delete } from "@/components/action/Delete";
+import { toast } from "sonner";
+import { queryClient } from "@/lib/react-query";
 
 const Product = () => {
   const { data: product } = useFetchProductQuery({});
 
-  const handleDelete = async (slug: string) => {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`);
+  const { mutateAsync: deleteProduct } = useDeleteProductMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getProduct"],
+      });
+      toast.success("Product has been deleted");
+    },
+  });
+
+  const handleDelete = async (values: { slug: string }) => {
+    await deleteProduct(values);
   };
 
   return (
@@ -73,7 +84,7 @@ const Product = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       asChild
-                      className="focus:bg-yellow-500"
+                      className="focus:bg-green-500"
                       onSelect={(e) => e.preventDefault()}
                     >
                       <div>
@@ -93,10 +104,11 @@ const Product = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="font-semibold text-red-500"
-                      onClick={() => handleDelete(product.slug)}
+                      onSelect={(e) => e.preventDefault()}
                     >
-                      <Icon.Trash size={14} className="mr-2" />
-                      Delete
+                      <Delete
+                        onClick={() => handleDelete({ slug: product.slug })}
+                      />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

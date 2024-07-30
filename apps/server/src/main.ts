@@ -12,7 +12,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.enableCors({
-    origin: ["http://localhost:3000", "https://shelby-shop.mangaip.online"],
+    origin: ["http://localhost:3000", "https://shelby-shop.mangaip.online", "http://172.21.16.1:8200"],
+    credentials: true,
   });
 
   const httpAdapterHost = app.get(HttpAdapterHost);

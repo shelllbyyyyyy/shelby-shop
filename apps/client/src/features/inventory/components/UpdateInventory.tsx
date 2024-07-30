@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { UpdateInventoryFormInner } from "../form";
 import { UpdateInventoryFormSchema } from "@/types";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface UpdateInventoryProps {
   id: string;
@@ -20,6 +21,8 @@ export const UpdateInventory: React.FC<UpdateInventoryProps> = ({ id }) => {
         queryClient.invalidateQueries({
           queryKey: ["getInventory"],
         });
+
+        toast.success(`Inventory has been updated`);
       },
     });
 
@@ -32,7 +35,7 @@ export const UpdateInventory: React.FC<UpdateInventoryProps> = ({ id }) => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }

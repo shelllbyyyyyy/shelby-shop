@@ -5,7 +5,9 @@ import defaultAxios, { AxiosPromise } from "axios";
 import { ApiFn, ExtractFnReturnType, QueryConfig } from "../../lib/react-query";
 import { useApiClient } from "../../providers";
 
-const profile = Prisma.validator<Prisma.UserDefaultArgs>()({});
+const profile = Prisma.validator<Prisma.UserDefaultArgs>()({
+  include: { address: true },
+});
 
 export type Profile = Prisma.UserGetPayload<typeof profile>;
 

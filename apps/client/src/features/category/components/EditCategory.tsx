@@ -2,27 +2,37 @@
 
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { useAddCategoryMutation } from "@shelby/api";
+import { useEditCategoryMutation } from "@shelby/api";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { AddCategoryFormInner } from "@/features/category";
+import { EditCategoryFormInner } from "@/features/category";
 
 import { queryClient } from "@/lib/react-query";
 import { AddCategoryFormSchema } from "@/types";
 
-export const AddCategory = () => {
-  const { mutateAsync: addCategoryMutate, isPending } = useAddCategoryMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["getCategory"],
-      });
+interface EditCategoryProps {
+  id: string;
+}
 
-      toast.success("Add category has been successfully");
-    },
-  });
+export const EditCategory: React.FC<EditCategoryProps> = ({ id }) => {
+  const { mutateAsync: addCategoryMutate, isPending } = useEditCategoryMutation(
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["getCategory"],
+        });
 
-  const handleAddCategorySubmit = async (values: AddCategoryFormSchema) => {
+        toast.success("Category has been updated");
+      },
+    }
+  );
+
+  const handleAddCategorySubmit = async (
+    values: AddCategoryFormSchema & {
+      id: string;
+    }
+  ) => {
     try {
       await addCategoryMutate(values);
     } catch (error) {
@@ -39,12 +49,13 @@ export const AddCategory = () => {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button>Add Category</Button>
+          <span>Edit Category</span>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[900px]">
-          <AddCategoryFormInner
+          <EditCategoryFormInner
             onSubmit={handleAddCategorySubmit}
             isLoading={isPending}
+            id={id}
           />
         </DialogContent>
       </Dialog>

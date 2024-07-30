@@ -3,6 +3,7 @@
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { toast } from "sonner";
 
 import { ProductVariant, useAddCartMutation } from "@shelby/api";
 
@@ -37,6 +38,8 @@ export const AddToCart: React.FC<CartProps> = ({
       queryClient.invalidateQueries({
         queryKey: ["getCart"],
       });
+
+      toast.success("Product has been added to your cart");
     },
   });
 

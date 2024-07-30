@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AddressCard } from "./AddressCard";
 
 interface ProfileDisplaySection {
   onEditProfile: () => void;
@@ -61,6 +62,10 @@ export const ProfileDisplaySection: React.FC<ProfileDisplaySection> = ({
             </CardFooter>
           </Card>
         </Wrapper>
+      </div>
+
+      <div>
+        <AddressCard data={profile?.data.address} />
       </div>
     </div>
   );

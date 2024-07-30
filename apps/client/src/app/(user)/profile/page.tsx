@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { useAddAddressMutation, useEditProfileMutation } from "@shelby/api";
+import { useEditProfileMutation } from "@shelby/api";
+import { toast } from "sonner";
 
 import Container from "@/components/elements/Container";
 import { HeadMetaData } from "@/components/meta/HeadMetaData";
 
 import {
-  AddAddressFormInner,
   EditProfileFormInner,
   ProfileDisplaySection,
 } from "@/features/profile";
 
 import { queryClient } from "@/lib/react-query";
-import { AddAddressFormSchema, EditProfileFormSchema } from "@/types";
+import { EditProfileFormSchema } from "@/types";
 
 const ProfilePage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -24,6 +24,7 @@ const ProfilePage = () => {
       queryClient.invalidateQueries({
         queryKey: ["profile"],
       });
+      toast.success("Profile has been updated");
     },
   });
 
@@ -37,28 +38,7 @@ const ProfilePage = () => {
       if (error instanceof AxiosError) {
         const err = error as AxiosError<{ errors: string[] }>;
 
-        alert(err.response?.data.errors[0]);
-        return;
-      }
-    }
-  };
-
-  const { mutateAsync: addAddressMutate, isPending } = useAddAddressMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["getAddress"],
-      });
-    },
-  });
-
-  const handleAddAddressSubmit = async (values: AddAddressFormSchema) => {
-    try {
-      await addAddressMutate(values);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const err = error as AxiosError<{ errors: string[] }>;
-
-        alert(err.response?.data.errors[0]);
+        toast.error(err.response?.data.errors[0]);
         return;
       }
     }
@@ -78,11 +58,6 @@ const ProfilePage = () => {
         ) : (
           <ProfileDisplaySection onEditProfile={() => setIsEditMode(true)} />
         )}
-
-        <AddAddressFormInner
-          onSubmit={handleAddAddressSubmit}
-          isLoading={isPending}
-        />
       </Container>
     </>
   );
