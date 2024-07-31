@@ -8,8 +8,8 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(dbgenerated("auth.uid()")) @db.Uuid
-  email             String?   @unique @db.VarChar
+  id                String    @id(map: "User_pkey") @default(dbgenerated("auth.uid()")) @db.Uuid
+  email             String?   @unique(map: "User_email_key") @db.VarChar
   name              String?
   profilePictureUrl String?
   phoneNumber       String?   @db.VarChar(50)
